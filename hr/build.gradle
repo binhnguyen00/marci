@@ -1,22 +1,16 @@
-plugins {
-  id 'java'
-}
-
-group = 'net.marci'
-version = '0.0.1-SNAPSHOT'
-
-java {
-  toolchain {
-    languageVersion = JavaLanguageVersion.of(21)
-  }
-}
-
-repositories {
-  mavenCentral()
-}
+allprojects {}
 
 subprojects {
   apply plugin: 'java'
+
+  group = 'net.marci'
+  version = '1.0.0'
+
+  java {
+    toolchain {
+      languageVersion = JavaLanguageVersion.of(21)
+    }
+  }
 
   repositories {
     mavenCentral()
@@ -44,7 +38,7 @@ subprojects {
     sourceSets*.resources.srcDirs*.each { it.mkdirs() }
   }
 
-  test {
+  tasks.named('test') {
     useJUnitPlatform()
   }
 }
