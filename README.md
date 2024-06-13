@@ -5,7 +5,7 @@ Human Resources Management
 ## Clone project
 1. Generate ssh key: ssh-keygen -t rsa -b 4096 -C "jackjack2000.kahp@gmail.com"
 2. Copy key from ~/.ssh/id_rsa.pub, add key to Github
-3. Config the file ~/.ssh/config
+3. Config the file ~/.ssh/config\n
     Host github.com
         Preferredauthentications publickey
         User <your_github_user_name>
