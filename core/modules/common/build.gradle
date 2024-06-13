@@ -1,5 +1,1 @@
-plugins {
-  id 'java'
-}
-
 archivesBaseName = "marci-core-common"

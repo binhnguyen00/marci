@@ -1,7 +1,7 @@
 rootProject.name = 'marci-hr'
 
-include 'department'
-project(':department').projectDir = new File('department')
+include 'marci-hr-department'
+project(':marci-hr-department').projectDir = new File('department')
 
-include 'employee'
-project(':employee').projectDir = new File('employee')
+include 'marci-hr-employee'
+project(':marci-hr-employee').projectDir = new File('employee')
