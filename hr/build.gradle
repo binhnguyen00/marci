@@ -3,7 +3,7 @@ allprojects {}
 subprojects {
   apply plugin: 'java'
 
-  group = 'net.marci'
+  group = 'net.marci.hr'
   version = '1.0.0'
 
   java {
