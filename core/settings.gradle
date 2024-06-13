@@ -1,0 +1,4 @@
+rootProject.name = 'marci-core'
+
+include 'marci-modules-common'
+project(':marci-modules-common').projectDir = new File('modules/common')
