@@ -9,5 +9,5 @@ Human Resources Management
     Host github.com
         Preferredauthentications publickey
         User <your_github_user_name>
-        IdentityFile ~/.ssh/id_rsa_github
+        IdentityFile ~/.ssh/<your_id_rsa_file_name>
 4. git clone git@github.com:binhnguyen00/marci.git
