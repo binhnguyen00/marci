@@ -5,3 +5,9 @@ project(':marci-hr-department').projectDir = new File('department')
 
 include 'marci-hr-employee'
 project(':marci-hr-employee').projectDir = new File('employee')
+
+include 'marci-hr-app-core'
+project(':marci-hr-app-core').projectDir = new File('app/core')
+
+include 'marci-hr-app-release'
+project(':marci-hr-app-release').projectDir = new File('app/release')
