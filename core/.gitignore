@@ -1,4 +1,43 @@
+# Ignore Gradle build files
+.gradle/
 build/
-.gradle
+
+# Ignore IntelliJ IDEA files
 .idea/
-/*.iml
+*.iml
+
+# Ignore Eclipse files
+.project
+.classpath
+.settings/
+
+# Ignore VS Code files
+.vscode/
+
+# Ignore log files
+*.log
+
+# Ignore compiled Java class files
+*.class
+
+# Ignore generated JAR files
+*.jar
+
+# Ignore generated WAR files
+*.war
+
+# Ignore generated EAR files
+*.ear
+
+# Ignore temporary files
+*.tmp
+*.swp
+*.swo
+*.bak
+
+# Ignore macOS files
+.DS_Store
+
+# Ignore Windows files
+Thumbs.db
+desktop.ini

@@ -8,8 +8,8 @@ allprojects {}
 subprojects {
   apply plugin: 'java'
   apply plugin: 'java-library'
+  apply plugin: 'maven-publish'
   apply plugin: 'org.springframework.boot'
-  apply plugin: 'io.spring.dependency-management'
 
   group = 'net.marci.hr'
   version = '1.0.0'
@@ -25,13 +25,40 @@ subprojects {
     mavenCentral()
   }
 
+  tasks.register('sourcesJar', Jar) {
+    dependsOn classes
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+  }
+
+  artifacts { // This comes with task "sourcesJar"
+    archives sourcesJar
+  }
+
+  publishing {
+    publications {
+      "$project.name"(MavenPublication) {
+        groupId project.group
+        artifactId project.name
+        version project.version
+        from components.java
+        artifact tasks.sourcesJar
+      }
+    }
+  }
+
   dependencies {
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
-    implementation "jakarta.persistence:jakarta.persistence-api:${jakartaPersistenceApiVersion}"
+    implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: "${jakartaPersistenceApiVersion}"
+
+    implementation group: 'org.springframework', name: 'spring-core', version: "${springFrameworkVersion}"
+    implementation group: 'org.springframework', name: 'spring-context', version: "${springFrameworkVersion}"
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "${springBootVersion}"
 
     // Using Lib from other project
     api group: 'net.marci.core', name: 'marci-modules-common', version: "${marciCore}"
