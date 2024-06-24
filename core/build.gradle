@@ -3,6 +3,7 @@ allprojects {}
 subprojects {
   apply plugin: 'java'
   apply plugin: 'java-library'
+  apply plugin: 'maven-publish'
 
   group = 'net.marci.core'
   version = '1.0.0'
@@ -14,7 +15,30 @@ subprojects {
   }
 
   repositories {
+    mavenLocal()
     mavenCentral()
+  }
+
+  tasks.register('sourcesJar', Jar) {
+    dependsOn classes
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+  }
+
+  artifacts {
+    archives sourcesJar
+  }
+
+  publishing {
+    publications {
+      "$project.name"(MavenPublication) {
+        groupId project.group
+        artifactId project.name
+        version project.version
+        from components.java
+        artifact tasks.sourcesJar
+      }
+    }
   }
 
   dependencies {

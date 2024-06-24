@@ -1,5 +1,0 @@
-archivesBaseName = "marci-hr-department"
-
-dependencies {
-  implementation project(':marci-hr-employee')
-}
