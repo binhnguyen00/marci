@@ -19,7 +19,13 @@ subprojects {
     mavenCentral()
   }
 
-  artifacts {
+  tasks.register('sourcesJar', Jar) {
+    dependsOn classes
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+  }
+
+  artifacts { // This comes with task "sourcesJar"
     archives sourcesJar
   }
 
@@ -53,12 +59,6 @@ subprojects {
   tasks.register("create-dirs") {
     sourceSets*.java.srcDirs*.each { it.mkdirs() }
     sourceSets*.resources.srcDirs*.each { it.mkdirs() }
-  }
-
-  tasks.register('sourcesJar', Jar) {
-    dependsOn classes
-    archiveClassifier = 'sources'
-    from sourceSets.main.allSource
   }
 
   tasks.named('test') {
