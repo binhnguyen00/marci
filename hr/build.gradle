@@ -64,7 +64,7 @@ subprojects {
     api group: 'net.marci.core', name: 'marci-modules-common', version: "${marciCore}"
 
     // Using Lib from this project
-    // api project(':datatp-erp-module-settings')
+    // api project(':marci-modules-<module_name>')
   }
 
   configurations {
