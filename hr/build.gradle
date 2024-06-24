@@ -21,6 +21,7 @@ subprojects {
   }
 
   repositories {
+    mavenLocal()
     mavenCentral()
   }
 
@@ -38,7 +39,7 @@ subprojects {
 
     implementation "jakarta.persistence:jakarta.persistence-api:${jakartaPersistenceApiVersion}"
 
-    // implementation project(":marci-core-common")
+    api "net.marci.core:marci-modules-common:1.0.0"
   }
 
   configurations {
