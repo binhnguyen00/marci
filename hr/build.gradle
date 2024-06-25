@@ -49,6 +49,8 @@ subprojects {
 
     implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: "${jakartaPersistenceApiVersion}"
 
+    implementation group: 'org.postgresql', name: 'postgresql', version: "${postgresVersion}"
+
     implementation group: 'org.springframework', name: 'spring-core', version: "${springFrameworkVersion}"
     implementation group: 'org.springframework', name: 'spring-context', version: "${springFrameworkVersion}"
     implementation group: 'org.springframework', name: 'spring-webmvc', version: "${springFrameworkVersion}"

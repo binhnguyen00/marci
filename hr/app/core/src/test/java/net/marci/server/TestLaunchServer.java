@@ -2,6 +2,7 @@ package net.marci.server;
 
 import net.marci.hr.app.ServerApp;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.concurrent.TimeUnit;
 
