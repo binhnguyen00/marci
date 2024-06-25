@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.marci.BaseEntity;
 
+import java.time.LocalDate;
+
 @Table(name = "employee")
 @Getter @Setter
 @NoArgsConstructor
@@ -17,6 +19,9 @@ public class Employee extends BaseEntity {
 
   @Column(name = "nick_name")
   private String nickName;
+
+  @Column(name = "date_of_birth")
+  private LocalDate dateOfBirth;
 
   @Column(name = "account_id")
   private Long accountId;

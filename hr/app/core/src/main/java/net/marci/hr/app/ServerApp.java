@@ -8,12 +8,13 @@ public class ServerApp {
 
   static public ConfigurableApplicationContext run(String[] args, long wait) throws Exception {
     // TODO: Replace System.out.println @Slf4j info
-    System.out.println("Launch ClientShell with args");
     StringBuilder b = new StringBuilder();
-    b.append("Args: \n");
+    b.append("----------------------------- \n");
+    b.append("Launch ClientShell with Args: \n");
     for(String arg : args) {
       b.append("  ").append(arg).append("\n");
     }
+    b.append("----------------------------- \n");
     System.out.println(b);
 
     context = SpringApplication.run(ServerAppConfig.class, args);
