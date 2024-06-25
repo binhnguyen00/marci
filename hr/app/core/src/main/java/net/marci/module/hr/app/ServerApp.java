@@ -1,4 +1,4 @@
-package net.marci.hr.app;
+package net.marci.module.hr.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -6,12 +6,12 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class ServerApp {
   static ConfigurableApplicationContext context;
 
-  static public ConfigurableApplicationContext run(String[] args, long wait) throws Exception {
+  static public void run(String[] args, long wait) throws Exception {
     // TODO: Replace System.out.println @Slf4j info
     StringBuilder b = new StringBuilder();
     b.append("----------------------------- \n");
     b.append("Launch ClientShell with Args: \n");
-    for(String arg : args) {
+    for (String arg : args) {
       b.append("  ").append(arg).append("\n");
     }
     b.append("----------------------------- \n");
@@ -19,7 +19,6 @@ public class ServerApp {
 
     context = SpringApplication.run(ServerAppConfig.class, args);
     isRunning(wait);
-    return context;
   }
 
   static public void isRunning(long waitTime) {

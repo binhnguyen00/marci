@@ -1,17 +1,17 @@
 package net.marci.server;
 
-import net.marci.hr.app.ServerApp;
+import net.marci.module.hr.app.ServerApp;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.concurrent.TimeUnit;
 
 public class TestLaunchServer {
 
-  @Test
+  @Test @Tag("unit")
   public void start() throws Exception {
     String[] args = new String[] {
-      "--spring.config.location=src/main/resources/application.yml",
+      "--spring.config.location=src/main/resources/application.yaml",
       "--app.home=./build/app"
     };
     ServerApp.run(args, TimeUnit.MINUTES.toMillis(30));

@@ -1,6 +1,7 @@
-package net.marci.hr.entity;
+package net.marci.module.hr.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import net.marci.BaseEntity;
 
 import java.time.LocalDate;
 
+@Entity
 @Table(name = "employee")
 @Getter @Setter
 @NoArgsConstructor

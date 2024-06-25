@@ -1,7 +1,7 @@
-package net.marci.hr;
+package net.marci.module.hr;
 
-import net.marci.hr.entity.Employee;
-import net.marci.hr.repository.EmployeeRepository;
+import net.marci.module.hr.entity.Employee;
+import net.marci.module.hr.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

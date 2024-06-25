@@ -1,6 +1,6 @@
-package net.marci.hr.repository;
+package net.marci.module.hr.repository;
 
-import net.marci.hr.entity.Employee;
+import net.marci.module.hr.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.io.Serializable;

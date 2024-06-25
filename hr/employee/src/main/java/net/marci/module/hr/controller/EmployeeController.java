@@ -1,27 +1,37 @@
-package net.marci.hr.controller;
+package net.marci.module.hr.controller;
 
-import net.marci.hr.EmployeeService;
-import net.marci.hr.entity.Employee;
+import net.marci.module.hr.EmployeeService;
+import net.marci.module.hr.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/hr/employee")
 public class EmployeeController {
 
   @Autowired
   private EmployeeService service;
 
+  @PostMapping("/test")
+  public void test() {
+    System.out.println("Call Marci Server");
+  }
+
   @GetMapping("/{id}")
   public Employee getById(@PathVariable(value = "id") long id) {
     return service.getById(id);
   }
 
-  @PostMapping("/save")
+  @PostMapping("/create")
+  @ResponseStatus(HttpStatus.CREATED)
+  public Employee create(@RequestBody Employee employee) {
+    return service.save(employee);
+  }
+
+  @PutMapping("/save")
   public Employee save(@RequestBody Employee employee) {
     return service.save(employee);
   }
