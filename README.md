@@ -1,5 +1,4 @@
-# marci
-Human Resources Management
+# Human Resources Management
 
 # Setup
 ### Clone Project
