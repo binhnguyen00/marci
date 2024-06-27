@@ -3,9 +3,11 @@
 # Setup
 ### Clone Project
 1. Generate ssh key
-```ssh-keygen -t rsa -b 4096 -C "jackjack2000.kahp@gmail.com"```
-2. Copy key from ~/.ssh/id_rsa.pub, add key to Github
-3. Config the file ~/.ssh/config
+```
+ssh-keygen -t rsa -b 4096 -C "jackjack2000.kahp@gmail.com"
+```
+3. Copy key from ~/.ssh/id_rsa.pub, add key to Github
+4. Config the file ~/.ssh/config
 ```plaintext
 Host github.com
     Preferredauthentications publickey
