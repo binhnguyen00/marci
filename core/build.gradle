@@ -6,7 +6,7 @@ subprojects {
   apply plugin: 'maven-publish'
 
   group = 'net.marci.core'
-  version = '1.0.0'
+  version = "${marciCoreVersion}"
 
   java {
     toolchain {
