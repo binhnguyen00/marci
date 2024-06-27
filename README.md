@@ -2,7 +2,8 @@
 - Java Spring, Gradle, PostgreSQL, React Typescript project 
 # Setup
 ### Clone Project
-1. Generate ssh key: ssh-keygen -t rsa -b 4096 -C "jackjack2000.kahp@gmail.com"
+1. Generate ssh key
+```ssh-keygen -t rsa -b 4096 -C "jackjack2000.kahp@gmail.com"```
 2. Copy key from ~/.ssh/id_rsa.pub, add key to Github
 3. Config the file ~/.ssh/config
 ```plaintext
