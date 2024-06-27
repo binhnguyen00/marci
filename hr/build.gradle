@@ -47,18 +47,18 @@ subprojects {
     testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
-    implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: "${jakartaPersistenceApiVersion}"
-
-    implementation group: 'org.postgresql', name: 'postgresql', version: "${postgresVersion}"
-
     implementation group: 'org.springframework', name: 'spring-core', version: "${springFrameworkVersion}"
     implementation group: 'org.springframework', name: 'spring-context', version: "${springFrameworkVersion}"
     implementation group: 'org.springframework', name: 'spring-webmvc', version: "${springFrameworkVersion}"
-
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "${springBootVersion}"
+
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: "${slf4jVersion}"
+    implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: "${jakartaPersistenceApiVersion}"
+    implementation group: 'org.postgresql', name: 'postgresql', version: "${postgresVersion}"
 
     // Using Lib from other project
     api group: 'net.marci.core', name: 'marci-modules-common', version: "${marciCore}"
+    api group: 'net.marci.core', name: 'marci-lib-common', version: "${marciCore}"
 
     // Using Lib from this project
     // api project(':marci-modules-<module_name>')
