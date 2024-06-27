@@ -6,7 +6,7 @@ subprojects {
   apply plugin: 'maven-publish'
 
   group = 'net.marci.hr'
-  version = '1.0.0'
+  version = "${marciHrVersion}"
 
   java {
     toolchain {
@@ -57,8 +57,8 @@ subprojects {
     implementation group: 'org.postgresql', name: 'postgresql', version: "${postgresVersion}"
 
     // Using Lib from other project
-    api group: 'net.marci.core', name: 'marci-modules-common', version: "${marciCore}"
-    api group: 'net.marci.core', name: 'marci-lib-common', version: "${marciCore}"
+    api group: 'net.marci.core', name: 'marci-modules-common', version: "${marciCoreVersion}"
+    api group: 'net.marci.core', name: 'marci-lib-common', version: "${marciCoreVersion}"
 
     // Using Lib from this project
     // api project(':marci-modules-<module_name>')

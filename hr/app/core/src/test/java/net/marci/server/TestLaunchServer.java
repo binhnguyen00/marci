@@ -1,10 +1,8 @@
 package net.marci.server;
 
-import net.marci.module.hr.app.ServerApp;
+import net.marci.app.core.ServerApp;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.util.concurrent.TimeUnit;
 
 public class TestLaunchServer {
 
@@ -14,7 +12,7 @@ public class TestLaunchServer {
       "--spring.config.location=src/main/resources/application.yaml",
       "--app.home=./build/app"
     };
-    ServerApp.run(args, TimeUnit.MINUTES.toMillis(30));
+    ServerApp.run(args);
     Thread.currentThread().join();
   }
 }

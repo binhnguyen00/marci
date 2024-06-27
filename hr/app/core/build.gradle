@@ -6,9 +6,51 @@ plugins {
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
+configurations {
+  commonJars { transitive = true }
+  springJars { transitive = true }
+  hibernateJars { transitive = false }
+  serverAppJars { transitive = false }
+}
+
 dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
   testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+  api project(":marci-hr-employee")
+}
+
+tasks.register('releaseServer') {
+  doLast {
+    println "\n====================================================";
+    def serverAppDir = "/Users/linuss/Dev/projects/training/training-java/app/server";
+    println "\nDeploy => ${serverAppDir}";
+
+    println "\nDeploy Common Jars";
+    configurations.commonJars.each { File file ->
+      copy { from file into "${serverAppDir}/libs/common" }
+    }
+
+    println "\nDeploy Spring Jars";
+    configurations.springJars.each { File file ->
+      copy { from file into "${serverAppDir}/libs/spring" }
+    }
+
+    println "\nDeploy Hibernate Jars";
+    configurations.hibernateJars.each { File file ->
+      copy { from file into "${serverAppDir}/libs/hibernate" }
+    }
+
+    println "\nDeploy Server Jars";
+    configurations.serverAppJars.each { File file ->
+      copy { from file into "${serverAppDir}/libs" }
+    }
+  }
+}
+
+tasks.register('release') {
+  dependsOn 'build'
+  dependsOn 'releaseServer'
 }

@@ -1,21 +1,15 @@
-package net.marci;
+package net.marci.common;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
 
-@Setter @Getter
-@NoArgsConstructor
-abstract public class BaseEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  protected Long id;
+@MappedSuperclass
+@Getter @Setter @NoArgsConstructor
+abstract public class BaseEntity extends Persistable<Long> {
 
   @Column(name = "creator")
   protected String creator;
@@ -28,4 +22,9 @@ abstract public class BaseEntity {
 
   @Column(name = "modified_time")
   protected Date modifiedTime;
+
+  @Override
+  public String toString() {
+    return String.format("Entity of type %s with id: %s", this.getClass().getName(), getId());
+  }
 }

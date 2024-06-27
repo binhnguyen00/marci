@@ -1,9 +1,9 @@
-package net.marci.module.hr.app;
+package net.marci.app.core;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-public class ServerApp {
+public class ServerAppDeprecated {
   static ConfigurableApplicationContext context;
 
   static public void run(String[] args, long wait) throws Exception {
