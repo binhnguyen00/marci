@@ -23,7 +23,7 @@ import java.util.List;
 @SpringBootApplication
 public class ServerApp {
 
-  static public void run(String[] args) throws Exception {
+  static public void run(String[] args) {
     StringBuilder b = new StringBuilder();
     b.append("----------------------------- \n");
     b.append("Launch ClientShell with Args: \n");
@@ -58,7 +58,7 @@ public class ServerApp {
     URL resource = ServerApp.class.getResource(fileName);
     StringBuilder sb = new StringBuilder();
     if (resource == null) {
-      throw new IllegalArgumentException("file not found! " + fileName);
+      throw new IllegalArgumentException("File not found! " + fileName);
     } else {
       try {
         List<String> lines = Files.readAllLines(Paths.get(resource.toURI()));
@@ -66,7 +66,7 @@ public class ServerApp {
           sb.append(line).append("\n");
         }
       } catch (IOException | URISyntaxException e) {
-        e.printStackTrace();
+        log.error("Error reading file: ", e);
       }
     }
     Banner banner = new Banner() {
