@@ -12,7 +12,7 @@ public class EmployeeService {
   @Autowired
   private EmployeeLogic logic;
 
-  public Employee getById(long id) {
+  public Employee getById(Long id) {
     return logic.getById(id);
   }
 
