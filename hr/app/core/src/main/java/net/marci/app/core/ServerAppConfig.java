@@ -15,10 +15,6 @@ import java.util.Arrays;
  * @Email jackjack2000.kahp@gmail.com
  */
 
-/* Usage:
- *
- */
-
 @Slf4j
 @ComponentScan(
   basePackages = {

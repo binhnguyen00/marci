@@ -1,9 +1,18 @@
+plugins {
+  id 'java'
+  id 'java-library'
+  id 'maven-publish'
+
+  id 'com.adarshr.test-logger'          version "${testLoggerVersion}"
+}
+
 allprojects {}
 
 subprojects {
   apply plugin: 'java'
   apply plugin: 'java-library'
   apply plugin: 'maven-publish'
+  apply plugin: 'com.adarshr.test-logger'
 
   group = 'net.marci.hr'
   version = "${marciHrVersion}"
@@ -78,7 +87,19 @@ subprojects {
     sourceSets*.resources.srcDirs*.each { it.mkdirs() }
   }
 
+
   test {
-    useJUnitPlatform()
+    testlogger {
+      theme 'mocha-parallel' // other options: 'plain', 'standard', 'mocha', 'mocha-parallel'
+      showStandardStreams true
+      showPassed true
+      showSkipped true
+      showFailed true
+    }
+    useJUnitPlatform() {
+      includeEngines 'junit-jupiter'
+      excludeTags 'skip'
+      includeTags 'unit'
+    }
   }
 }
