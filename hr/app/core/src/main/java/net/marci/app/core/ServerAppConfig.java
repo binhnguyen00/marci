@@ -10,6 +10,15 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 
+/*
+ * @author Bình Nguyễn
+ * @Email jackjack2000.kahp@gmail.com
+ */
+
+/* Usage:
+ *
+ */
+
 @Slf4j
 @ComponentScan(
   basePackages = {

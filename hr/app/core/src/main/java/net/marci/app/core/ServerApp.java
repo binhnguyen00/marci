@@ -1,7 +1,6 @@
 package net.marci.app.core;
 
 import lombok.extern.slf4j.Slf4j;
-import net.marci.module.config.EmployeeModuleConfig;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,9 +16,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * @author Bình Nguyễn
+ * @Email jackjack2000.kahp@gmail.com
+ */
+
 @Slf4j
-@Configuration
-@EnableConfigurationProperties
+@Configuration // Remove?
+@EnableConfigurationProperties // Remove?
 @SpringBootApplication
 public class ServerApp {
 
@@ -36,7 +40,6 @@ public class ServerApp {
     final Class<?>[] source = {
       ServerApp.class,
       ServerAppConfig.class,
-      EmployeeModuleConfig.class
     };
 
     SpringApplication springApp = new SpringApplication(source);

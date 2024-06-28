@@ -79,8 +79,6 @@ subprojects {
   }
 
   test {
-    useJUnitPlatform() {
-      excludeTags 'ignore'
-    }
+    useJUnitPlatform()
   }
 }

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 public class TestLaunchServer {
 
-  @Test @Tag("ignore")
+  @Test
   public void start() throws Exception {
     String[] args = new String[] {
       "--spring.config.location=src/main/resources/application.yaml",
