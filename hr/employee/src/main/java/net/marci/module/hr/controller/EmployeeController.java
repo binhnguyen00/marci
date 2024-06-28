@@ -17,9 +17,9 @@ public class EmployeeController {
   @Autowired
   private EmployeeService service;
 
-  @PostMapping("/test")
+  @PostMapping("/hello")
   public String test() {
-    log.info("Test EmployeeController: Call Marci Server");
+    log.info("Welcome to Marci Server");
     return "Welcome to Marci Server";
   }
 

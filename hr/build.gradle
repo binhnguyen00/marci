@@ -75,6 +75,37 @@ subprojects {
     sourceSets*.resources.srcDirs*.each { it.mkdirs() }
   }
 
+  test {
+    testlogger {
+      theme 'standard'
+      showExceptions true
+      showStackTraces true
+      showFullStackTraces false
+      showCauses true
+      slowThreshold 2000
+      showSummary true
+      showSimpleNames false
+      showPassed true
+      showSkipped true
+      showFailed true
+      showStandardStreams false
+      showPassedStandardStreams true
+      showSkippedStandardStreams true
+      showFailedStandardStreams true
+      logLevel 'lifecycle'
+    }
+
+    forkEvery = 1
+    ignoreFailures = true
+
+    useJUnitPlatform {
+      // excludeTags "tofix"
+      filter {
+        includeTestsMatching "*UnitTest"
+      }
+    }
+  }
+
   tasks.named('test') {
     useJUnitPlatform()
   }

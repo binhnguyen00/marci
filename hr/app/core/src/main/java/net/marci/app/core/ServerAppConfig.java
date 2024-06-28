@@ -10,13 +10,13 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 
+@Slf4j
 @ComponentScan(
   basePackages = {
     "net.marci.module.config",
   }
 )
 @Configuration
-@Slf4j
 public class ServerAppConfig {
 
   @Bean

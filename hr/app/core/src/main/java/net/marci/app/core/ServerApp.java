@@ -9,7 +9,13 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
+import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 @Slf4j
 @Configuration
@@ -48,21 +54,25 @@ public class ServerApp {
   }
 
   private static void customizeBanner(SpringApplication springApp) {
+    final String fileName = "/signature.txt";
+    URL resource = ServerApp.class.getResource(fileName);
+    StringBuilder sb = new StringBuilder();
+    if (resource == null) {
+      throw new IllegalArgumentException("file not found! " + fileName);
+    } else {
+      try {
+        List<String> lines = Files.readAllLines(Paths.get(resource.toURI()));
+        for (String line : lines) {
+          sb.append(line).append("\n");
+        }
+      } catch (IOException | URISyntaxException e) {
+        e.printStackTrace();
+      }
+    }
     Banner banner = new Banner() {
       @Override
       public void printBanner(Environment environment, Class<?> sourceClass, PrintStream out) {
-        out.println(
-          """
-            888b     d888        d8888 8888888b.   .d8888b. 8888888\s
-            8888b   d8888       d88888 888   Y88b d88P  Y88b  888  \s
-            88888b.d88888      d88P888 888    888 888    888  888  \s
-            888Y88888P888     d88P 888 888   d88P 888         888  \s
-            888 Y888P 888    d88P  888 8888888P"  888         888  \s
-            888  Y8P  888   d88P   888 888 T88b   888    888  888  \s
-            888   "   888  d8888888888 888  T88b  Y88b  d88P  888  \s
-            888       888 d88P     888 888   T88b  "Y8888P" 8888888
-          """
-        );
+        out.println(sb);
       }
     };
     springApp.setBanner(banner);
