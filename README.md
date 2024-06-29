@@ -14,7 +14,7 @@ Host github.com
     User <your_github_user_name>
     IdentityFile ~/.ssh/id_rsa_github
 ```
-4. To Clone
+5. To Clone
 ```
 git clone git@github.com:binhnguyen00/marci.git
 ```
