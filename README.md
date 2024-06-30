@@ -1,5 +1,8 @@
 # Human Resources Management
-- Java Spring, Gradle, PostgreSQL, React Typescript project 
+- Java Spring, Gradle, PostgreSQL, React Typescript project
+#### *Note*
+- Project requires JDK 21
+- Planed using React Typescript in near future
 # Setup
 ### Clone Project
 1. Generate ssh key
