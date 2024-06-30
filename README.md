@@ -19,6 +19,28 @@ Host github.com
 git clone git@github.com:binhnguyen00/marci.git
 ```
 ### Build and Deploy Project
-...
+Go to Project directory. Then follow these steps
+1. Build core 
+```plaintext
+cd /core
+```
+```plaintext
+gradle clean build publishToMavenLocal
+```
+2. Build Hr application
+```plaintext
+cd /hr
+```
+```plaintext
+gradle clean build publishToMavenLocal
+```
+3. Release Hr application
+*currently standing in hr directory*
+```plaintext
+gradle release
+```
 ### Run Project
-...
+```plaintext
+cd /server-build
+./server.sh start
+```
