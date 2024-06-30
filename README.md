@@ -34,13 +34,12 @@ cd /hr
 ```plaintext
 gradle clean build publishToMavenLocal
 ```
-3. Release Hr application
+3. Release Hr application <br/>
 *currently standing in hr directory*
 ```plaintext
 gradle release
 ```
 ### Run Project
 ```plaintext
-cd /server-build
-./server.sh start
+cd /server-build && ./server.sh start
 ```
