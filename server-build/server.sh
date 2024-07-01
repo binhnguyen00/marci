@@ -41,33 +41,35 @@ function get_opt() {
   echo $DEFAULT_VALUE
 }
 
-CURRENT_DIR=`cd "$bin"; pwd`
-PROJECT_DIR="$CURRENT_DIR/.."
+bin=`cd "$bin"; pwd`
+PROJECT_DIR=`cd $bin/..; pwd`
+
+APP_HOME="$PROJECT_DIR/hr/app"
+SERVER_APP_HOME="$APP_HOME/core"
+CONFIG_FILES="file:$APP_HOME/config/application.yaml"
+
 
 JAVACMD="$JAVA_HOME/bin/java"
-APP_HOME="$PROJECT_DIR/hr/app"
-
 LIB="$PROJECT_DIR:$APP_HOME/release/libs/*:$APP_HOME/release/libs/springboot/*:$APP_HOME/release/libs/hibernate/*:$APP_HOME/release/libs/common/*"
 CLASSPATH="${CLASSPATH}:$LIB:$APP_HOME/config"
 
 if $window; then
   JAVA_HOME=`cygpath --absolute --windows "$JAVA_HOME"`
   CLASSPATH=`cygpath --path --windows "$CLASSPATH"`
-  APP_HOME=`cygpath --path --windows "$APP_HOME"`
+  APP_HOME=`cygpath --path --windows "$SERVER_APP_HOME"`
 fi
 
 function start() {
   DATETIME=$(date '+%Y/%m/%d@%H:%M:%S')
   PROFILE=$(get_opt --profile 'console' $@)
 
-  CONFIG_FILES="file:$APP_HOME/config/application.yaml"
 
   JAVA_OPTS="-server -XX:+UseParallelGC -Xshare:auto -Xms128m -Xmx1024m -Dfile.encoding=UTF-8"
-  JAVA_OPTS="$JAVA_OPTS -Duser.dir=$APP_HOME"
+  JAVA_OPTS="$JAVA_OPTS -Duser.dir=$SERVER_APP_HOME"
 
   CLASS="net.marci.app.core.ServerApp"
 
-  ARGS="--app.home=$APP_HOME --app.config.dir=$APP_HOME/config"
+  ARGS="--app.home=$SERVER_APP_HOME --app.config.dir=$APP_HOME/config"
   ARGS="$ARGS --build.version=$DATETIME"
 
   DAEMON_OPT=$(has_opt "-daemon" $@ )
@@ -96,8 +98,8 @@ shift
 
 echo "JAVA_HOME: $JAVA_HOME"
 echo "JAVA_OPTS: $JAVA_OPTS"
-echo "APP_HOME:  $APP_HOME"
-cd $APP_HOME
+echo "APP_HOME:  $SERVER_APP_HOME"
+cd $SERVER_APP_HOME
 
 if [ "$COMMAND" = "start" ] ; then
   start $@

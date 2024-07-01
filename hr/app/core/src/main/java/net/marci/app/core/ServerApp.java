@@ -8,13 +8,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import java.io.IOException;
-import java.io.PrintStream;
-import java.net.URISyntaxException;
+import java.io.*;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 
 /**
  * @author Bình Nguyễn
@@ -46,8 +41,8 @@ public class ServerApp {
     customizeBanner(springApp);
 
     Runtime runtime = Runtime.getRuntime();
-    log.info("Heap size: {}", runtime.totalMemory()/1024/1024);
-    log.info("Maximum size of Heap: {}", runtime.maxMemory()/1024/1024);
+    log.info("Heap size: {}", runtime.totalMemory() / 1024 / 1024);
+    log.info("Maximum size of Heap: {}", runtime.maxMemory() / 1024 / 1024);
     log.info("Available processors: {}", runtime.availableProcessors());
     springApp.run(args);
   }
@@ -63,12 +58,15 @@ public class ServerApp {
     if (resource == null) {
       throw new IllegalArgumentException("File not found! " + fileName);
     } else {
-      try {
-        List<String> lines = Files.readAllLines(Paths.get(resource.toURI()));
-        for (String line : lines) {
+      try (
+        InputStream inputStream = resource.openStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
+      ) {
+        String line;
+        while ((line = reader.readLine()) != null) {
           sb.append(line).append("\n");
         }
-      } catch (IOException | URISyntaxException e) {
+      } catch (IOException e) {
         log.error("Error reading file: ", e);
       }
     }
@@ -80,4 +78,5 @@ public class ServerApp {
     };
     springApp.setBanner(banner);
   }
+
 }

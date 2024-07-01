@@ -1,7 +1,10 @@
 plugins {
-  id 'org.springframework.boot'         version "${springBootVersion}"
-  id 'io.spring.dependency-management'  version "${springDependencyManagementVersion}"
+  id 'org.springframework.boot' version "${springBootVersion}"
+  id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
 }
+
+archivesBaseName = "marci-hr-app-core"
+group = 'net.marci.core'
 
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
@@ -41,33 +44,36 @@ dependencies {
   springJars group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "${springBootVersion}"
 
   // Server Runtime Jars
-  serverAppJars group: 'net.marci.core', name: 'marci-modules-common', version: "${marciCoreVersion}"
   serverAppJars group: 'net.marci.core', name: 'marci-lib-common', version: "${marciCoreVersion}"
+  serverAppJars group: 'net.marci.core', name: 'marci-modules-common', version: "${marciCoreVersion}"
+  serverAppJars group: 'net.marci.core', name: 'marci-hr-app-core', version: "${marciCoreVersion}"
 }
 
 tasks.register('releaseServer') {
   doLast {
     println "\n====================================================";
-    def serverAppDir = "E:/projects/marci/hr/app/release"; // replace with absolute path: ../release
+    // final def serverAppDir = System.getProperty("user.dir") + "/release";
+    final String serverAppDir = new File(System.getProperty("user.dir")).parent + "/release";
     println "Deploying => ${serverAppDir}";
-    println "  Server Jars...";
-    configurations.serverAppJars.each { File file ->
-      copy { from file into "${serverAppDir}/libs" }
-    }
 
-    println "  Common Jars...";
+    println ">> Common Jars...";
     configurations.commonJars.each { File file ->
       copy { from file into "${serverAppDir}/libs/common" }
     }
 
-    println "  Spring Jars...";
+    println ">> Hibernate Jars...";
+    configurations.hibernateJars.each { File file ->
+      copy { from file into "${serverAppDir}/libs/hibernate" }
+    }
+
+    println ">> Spring Jars...";
     configurations.springJars.each { File file ->
       copy { from file into "${serverAppDir}/libs/springboot" }
     }
 
-    println "  Hibernate Jars...";
-    configurations.hibernateJars.each { File file ->
-      copy { from file into "${serverAppDir}/libs/hibernate" }
+    println ">> Server Jars...";
+    configurations.serverAppJars.each { File file ->
+      copy { from file into "${serverAppDir}/libs" }
     }
   }
 }
