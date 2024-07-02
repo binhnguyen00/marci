@@ -17,14 +17,14 @@ public class EmployeeController {
   @Autowired
   private EmployeeService service;
 
-  @PostMapping("/test")
+  @PostMapping("/hello")
   public String test() {
-    log.info("Test EmployeeController: Call Marci Server");
+    log.info("Welcome to Marci Server");
     return "Welcome to Marci Server";
   }
 
   @GetMapping("/{id}")
-  public Employee getById(@PathVariable(value = "id") long id) {
+  public Employee getById(@PathVariable(value = "id") Long id) {
     return service.getById(id);
   }
 

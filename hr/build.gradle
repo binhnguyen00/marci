@@ -1,9 +1,18 @@
+plugins {
+  id 'java'
+  id 'java-library'
+  id 'maven-publish'
+
+  id 'com.adarshr.test-logger'          version "${testLoggerVersion}"
+}
+
 allprojects {}
 
 subprojects {
   apply plugin: 'java'
   apply plugin: 'java-library'
   apply plugin: 'maven-publish'
+  apply plugin: 'com.adarshr.test-logger'
 
   group = 'net.marci.hr'
   version = "${marciHrVersion}"
@@ -47,6 +56,9 @@ subprojects {
     testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: "${junitJupiterVersion}"
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: "${junitJupiterVersion}"
+
     implementation group: 'org.springframework', name: 'spring-core', version: "${springFrameworkVersion}"
     implementation group: 'org.springframework', name: 'spring-context', version: "${springFrameworkVersion}"
     implementation group: 'org.springframework', name: 'spring-webmvc', version: "${springFrameworkVersion}"
@@ -75,7 +87,18 @@ subprojects {
     sourceSets*.resources.srcDirs*.each { it.mkdirs() }
   }
 
-  tasks.named('test') {
-    useJUnitPlatform()
+  test {
+    testlogger {
+      theme 'mocha-parallel' // other options: 'plain', 'standard', 'mocha', 'mocha-parallel'
+      showStandardStreams true
+      showPassed true
+      showSkipped true
+      showFailed true
+    }
+    useJUnitPlatform() {
+      includeEngines 'junit-jupiter'
+      excludeTags 'skip'
+      includeTags 'unit'
+    }
   }
 }

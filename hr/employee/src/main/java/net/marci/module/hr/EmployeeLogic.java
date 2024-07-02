@@ -13,7 +13,7 @@ public class EmployeeLogic {
   @Autowired
   private EmployeeRepository repository;
 
-  public Employee getById(long id) {
+  public Employee getById(Long id) {
     return repository.getReferenceById(id);
   }
 
