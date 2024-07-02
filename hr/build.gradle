@@ -87,7 +87,6 @@ subprojects {
     sourceSets*.resources.srcDirs*.each { it.mkdirs() }
   }
 
-
   test {
     testlogger {
       theme 'mocha-parallel' // other options: 'plain', 'standard', 'mocha', 'mocha-parallel'

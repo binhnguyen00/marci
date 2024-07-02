@@ -23,7 +23,7 @@ import java.util.Arrays;
 )
 @Configuration
 public class ServerAppConfig {
-
+  /*
   @Bean
   public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
     return args -> {
@@ -31,5 +31,5 @@ public class ServerAppConfig {
       Arrays.sort(beanNames);
       log.info("Let's inspect the beans provided by Spring Boot:\n {}", DataSerializer.JSON.toString(beanNames));
     };
-  }
+  } */
 }

@@ -46,7 +46,9 @@ cd /hr
 gradle clean build publishToMavenLocal
 ```
 3. Release Hr application <br/>
-*currently standing in hr directory*
+```plaintext
+cd /hr/app/core
+```
 ```plaintext
 gradle release
 ```
