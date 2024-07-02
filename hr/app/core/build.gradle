@@ -1,7 +1,11 @@
+import java.nio.file.Paths
+
 plugins {
   id 'org.springframework.boot'         version "${springBootVersion}"
   id 'io.spring.dependency-management'  version "${springDependencyManagementVersion}"
 }
+
+archivesBaseName = "marci-hr-app-core"
 
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
@@ -43,31 +47,36 @@ dependencies {
   // Server Runtime Jars
   serverAppJars group: 'net.marci.core', name: 'marci-modules-common', version: "${marciCoreVersion}"
   serverAppJars group: 'net.marci.core', name: 'marci-lib-common', version: "${marciCoreVersion}"
+  serverAppJars group: 'net.marci.hr', name: 'marci-hr-employee', version: "${marciHrVersion}"
+  serverAppJars group: 'net.marci.hr', name: 'marci-hr-app-core', version: "${marciHrVersion}"
 }
 
 tasks.register('releaseServer') {
   doLast {
     println "\n====================================================";
-    def serverAppDir = "E:/projects/marci/hr/app/release"; // replace with absolute path: ../release
+    final String currentDir = System.getProperty("user.dir");
+    final String parentDir = Paths.get(currentDir).getParent().toString();
+    final String serverAppDir = "${parentDir}" + "\\release";
     println "Deploying => ${serverAppDir}";
-    println "  Server Jars...";
-    configurations.serverAppJars.each { File file ->
-      copy { from file into "${serverAppDir}/libs" }
-    }
 
-    println "  Common Jars...";
+    println ">> Common Jars...";
     configurations.commonJars.each { File file ->
       copy { from file into "${serverAppDir}/libs/common" }
     }
 
-    println "  Spring Jars...";
+    println ">> Spring Jars...";
     configurations.springJars.each { File file ->
       copy { from file into "${serverAppDir}/libs/springboot" }
     }
 
-    println "  Hibernate Jars...";
+    println ">> Hibernate Jars...";
     configurations.hibernateJars.each { File file ->
       copy { from file into "${serverAppDir}/libs/hibernate" }
+    }
+
+    println ">> Server Jars...";
+    configurations.serverAppJars.each { File file ->
+      copy { from file into "${serverAppDir}/libs" }
     }
   }
 }

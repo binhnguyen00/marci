@@ -4,17 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
-import java.io.IOException;
-import java.io.PrintStream;
-import java.net.URISyntaxException;
+import java.io.*;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 
 /**
  * @author Bình Nguyễn
@@ -22,10 +16,9 @@ import java.util.List;
  */
 
 @Slf4j
-@Configuration // Remove?
-@EnableConfigurationProperties // Remove?
 @SpringBootApplication
 public class ServerApp {
+  static ConfigurableApplicationContext context;
 
   static public void run(String[] args) {
     StringBuilder b = new StringBuilder();
@@ -49,7 +42,23 @@ public class ServerApp {
     log.info("Heap size: {}", runtime.totalMemory()/1024/1024);
     log.info("Maximum size of Heap: {}", runtime.maxMemory()/1024/1024);
     log.info("Available processors: {}", runtime.availableProcessors());
-    springApp.run(args);
+    context = springApp.run(args);
+    isRunning(30000);
+  }
+
+  static private void isRunning(long waitTime) {
+    boolean running = false;
+    if (waitTime <= 0) waitTime = 1;
+    try {
+      while (!running && waitTime > 0) {
+        if (context == null) running = false;
+        else running = context.isRunning();
+        waitTime -= 100;
+        if (!running && waitTime > 0) Thread.sleep(100);
+      }
+    } catch(Exception ex) {
+      log.error(ex.getMessage());
+    }
   }
 
   public static void main(String[] args) throws Exception {
@@ -63,12 +72,15 @@ public class ServerApp {
     if (resource == null) {
       throw new IllegalArgumentException("File not found! " + fileName);
     } else {
-      try {
-        List<String> lines = Files.readAllLines(Paths.get(resource.toURI()));
-        for (String line : lines) {
+      try (
+        InputStream inputStream = resource.openStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
+      ) {
+        String line;
+        while ((line = reader.readLine()) != null) {
           sb.append(line).append("\n");
         }
-      } catch (IOException | URISyntaxException e) {
+      } catch (IOException e) {
         log.error("Error reading file: ", e);
       }
     }
