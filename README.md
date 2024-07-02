@@ -1,6 +1,17 @@
 # Human Resources Management
 - Java Spring, Gradle, PostgreSQL, React Typescript project 
+- *Note*:
+    - Planning using React Typescript in the near future.
 # Setup
+### Requirements
+1. JDK 21
+- MacOS    : https://www.oracle.com/in/java/technologies/downloads/#jdk21-mac
+- Windows  : https://www.oracle.com/in/java/technologies/downloads/#jdk21-windows
+2. Gradle 8.x
+- https://gradle.org/next-steps/?version=8.8&format=all
+3. PostgresSQL
+- MacOS    : https://sbp.enterprisedb.com/getfile.jsp?fileid=1259021
+- Windows  : https://sbp.enterprisedb.com/getfile.jsp?fileid=1259105
 ### Clone Project
 1. Generate ssh key
 ```
