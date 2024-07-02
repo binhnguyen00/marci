@@ -1,9 +1,16 @@
+plugins {
+  id 'java'
+  id 'java-library'
+  id 'com.adarshr.test-logger'          version "${testLoggerVersion}"
+}
+
 allprojects {}
 
 subprojects {
   apply plugin: 'java'
   apply plugin: 'java-library'
   apply plugin: 'maven-publish'
+  apply plugin: 'com.adarshr.test-logger'
 
   group = 'net.marci.core'
   version = "${marciCoreVersion}"

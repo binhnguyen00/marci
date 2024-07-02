@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 
-window=false
+windowsOS=false
 if [ "$OSTYPE" = "msys" ] ; then
-  window=true;
+  windowsOS=true;
 elif [[ "$OSTYPE" == "cygwin" ]]; then
-  window=true;
+  windowsOS=true;
 elif [[ "$OSTYPE" == "win32" ]]; then
-  window=true;
+  windowsOS=true;
 fi
+
+bin=`cd "$bin"; pwd`
+CURRENT_DIR=`cd $bin; pwd`
 
 function has_opt() {
   OPT_NAME=$1

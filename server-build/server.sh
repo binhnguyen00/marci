@@ -3,11 +3,10 @@ source utils.sh
 PID_FILE="/tmp/server_app.pid"
 LOG_FILE="/tmp/server_app.log"
 
-bin=`cd "$bin"; pwd`
-PROJECT_DIR=`cd $bin/..; pwd`
+PROJECT_DIR=`cd $CURRENT_DIR/..; pwd`
 APP_HOME="$PROJECT_DIR/hr/app"
 
-if $window; then
+if $windowsOS; then
   JAVA_HOME=`cygpath --absolute --windows "$JAVA_HOME"`
   APP_HOME=`cygpath --path --windows "$APP_HOME"`
 fi
@@ -29,7 +28,7 @@ JAVA_OPTS="""
 LIB="$PROJECT_DIR:$APP_RELEASE_HOME/libs/*:$APP_RELEASE_HOME/libs/springboot/*:$APP_RELEASE_HOME/libs/hibernate/*:$APP_RELEASE_HOME/libs/common/*"
 CLASSPATH="${CLASSPATH}:$LIB:$APP_CONFIG_HOME"
 
-if $window; then
+if $windowsOS; then
   CLASSPATH=`cygpath --path --windows "$CLASSPATH"`
 fi
 
