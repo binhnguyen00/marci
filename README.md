@@ -32,7 +32,7 @@ git clone git@github.com:binhnguyen00/marci.git
 ### Build and Deploy Project
 Go to Project all-in-one scripts directory.
 ```plaintext
-cd /server-build && ./project deploy
+cd /server-build && ./project.sh deploy
 ```
 **For a better understanding**, please read scripts in ```/server-build```.
 ### Run Project
