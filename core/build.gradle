@@ -68,6 +68,17 @@ subprojects {
   }
 
   test {
-    useJUnitPlatform()
+    testlogger {
+      theme 'mocha-parallel' // other options: 'plain', 'standard', 'mocha', 'mocha-parallel'
+      showStandardStreams true
+      showPassed true
+      showSkipped true
+      showFailed true
+    }
+    useJUnitPlatform() {
+      includeEngines 'junit-jupiter'
+      excludeTags 'skip'
+      includeTags 'unit'
+    }
   }
 }
