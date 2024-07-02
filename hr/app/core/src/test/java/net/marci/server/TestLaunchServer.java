@@ -11,10 +11,12 @@ import org.junit.jupiter.api.Test;
 
 public class TestLaunchServer {
 
-  @Test @Tag("skip")
+  @Test
+  // @Tag("skip")
+  @Tag("unit")
   public void start() throws Exception {
-    String[] args = new String[] {
-      "--spring.config.location=src/main/resources/application.yaml",
+    String[] args = new String[]{
+      "--spring.config.location=src/test/resources/application.yaml",
       "--app.home=./build/app"
     };
     ServerApp.run(args);

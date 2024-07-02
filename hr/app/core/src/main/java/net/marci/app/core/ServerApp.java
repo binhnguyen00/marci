@@ -39,8 +39,8 @@ public class ServerApp {
     customizeBanner(springApp);
 
     Runtime runtime = Runtime.getRuntime();
-    log.info("Heap size: {}", runtime.totalMemory()/1024/1024);
-    log.info("Maximum size of Heap: {}", runtime.maxMemory()/1024/1024);
+    log.info("Heap size: {}", runtime.totalMemory() / 1024 / 1024);
+    log.info("Maximum size of Heap: {}", runtime.maxMemory() / 1024 / 1024);
     log.info("Available processors: {}", runtime.availableProcessors());
     context = springApp.run(args);
     isRunning(30000);
@@ -92,4 +92,5 @@ public class ServerApp {
     };
     springApp.setBanner(banner);
   }
+
 }
