@@ -48,7 +48,7 @@ function release() {
 function deploy() {
   echo -e "\n>> Deploying Marci..."
   echo -e "--------------------------------\n"
-  
+
   build $@
   release $@
 }
@@ -63,10 +63,15 @@ elif [ "$COMMAND" = "release" ] ; then
 elif [ "$COMMAND" = "deploy" ] ; then
   deploy $@
 elif [ "$COMMAND" = "help" ] ; then
-  echo "Build Project"
-  echo ">> ./project.sh build"
-  echo "Clean Build Project"
-  echo ">> ./project.sh build -clean"
+  echo "1. Deploy Project (Include build + release process)"
+  echo ">> ./project.sh deploy"
+  echo "2. Build Project"
+  echo "  a. Just Build"
+  echo "  >> ./project.sh build"
+  echo "  b. Clean Build"
+  echo "  >> ./project.sh build -clean"
+  echo "3. Release Project"
+  echo ">> ./project.sh release"
 else
   echo "Get help with commands"
   echo ">> ./project.sh help" 
