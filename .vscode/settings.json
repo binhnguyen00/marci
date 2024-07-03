@@ -2,6 +2,9 @@
   "files.exclude": {
     "hr\\build": true,
     "hr\\.idea": true,
-    "hr\\.gradle": true
+    "hr\\.gradle": true,
+    "hr/.gradle": true,
+    "hr/.idea": true,
+    "hr/build": true
   }
 }
