@@ -1,0 +1,7 @@
+{
+  "files.exclude": {
+    "hr\\build": true,
+    "hr\\.idea": true,
+    "hr\\.gradle": true
+  }
+}
