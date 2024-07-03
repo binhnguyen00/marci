@@ -1,17 +1,16 @@
 {
-  "name": "ui",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@marci-ui/hr",
+  "version": "1.0.0",
+  "author": "Binh Nguyen",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives"
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
     "bootstrap": "^5.2.3"
   },
   "devDependencies": {
