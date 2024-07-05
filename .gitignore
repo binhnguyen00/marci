@@ -61,4 +61,4 @@ dist
 dist-ssr
 *.local
 *.tsbuildinfo
-package-lock.jsons
+package-lock.json
