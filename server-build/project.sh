@@ -5,9 +5,10 @@ HR_HOME=`cd $CURRENT_DIR/../hr; pwd`
 REALEASE_HOME=`cd $HR_HOME/app/core; pwd`
 
 function buildProjectCore() {
-  echo -e "\n>> Building Marci Core..."
+  echo ""
+  echo ">> Building Marci Core..."
   echo ">> Project Directory: $CORE_HOME"
-  echo -e "--------------------------------\n"
+  echo "--------------------------------"
 
   cd $CORE_HOME
   if [ $CLEAN_OPT = "true" ] ; then
@@ -18,9 +19,10 @@ function buildProjectCore() {
 }
 
 function buildProjectHr() {
-  echo -e "\n>> Building Marci HR..."
+  echo ""
+  echo ">> Building Marci HR..."
   echo ">> Project Directory: $HR_HOME"
-  echo -e "--------------------------------\n"
+  echo "--------------------------------"
 
   cd $HR_HOME
   if [ $CLEAN_OPT = "true" ] ; then
@@ -37,17 +39,19 @@ function build() {
 }
 
 function release() {
-  echo -e "\n>> Releasing Marci..."
+  echo ""
+  echo ">> Releasing Marci..."
   echo ">> Project Directory: $REALEASE_HOME"
-  echo -e "--------------------------------\n"
+  echo "--------------------------------"
 
   cd $REALEASE_HOME
   gradle release -x test
 }
 
 function deploy() {
-  echo -e "\n>> Deploying Marci..."
-  echo -e "--------------------------------\n"
+  echo "--------------------------------"
+  echo "DEPLOYING MARCI..."
+  echo "--------------------------------"
 
   build $@
   release $@
