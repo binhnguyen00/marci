@@ -8,8 +8,9 @@ spring:
       port: 5432
     url: jdbc:postgresql://${spring.datasource.server.host}:${spring.datasource.server.port}/marcidb
     username: marci
-    password: marci@123
+    password: marci
   jpa:
+    generate-ddl: true
     hibernate:
       ddl-auto: create
     properties:

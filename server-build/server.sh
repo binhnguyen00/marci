@@ -51,6 +51,9 @@ function start() {
     printf '%d' $! > $PID_FILE
   else
     JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=$PROFILE"
+    echo ">> JAVA_HOME: $JAVA_HOME"
+    echo ">> JAVA_OPTS: $JAVA_OPTS"
+    echo ">> APP_HOME:  $APP_HOME"
     exec "$JAVACMD" -cp "$CLASSPATH" $JAVA_OPTS $CLASS $ARGS $@
   fi
 }
@@ -64,10 +67,6 @@ function stop() {
 
 COMMAND=$1;
 shift
-
-echo ">> JAVA_HOME: $JAVA_HOME"
-echo ">> JAVA_OPTS: $JAVA_OPTS"
-echo ">> APP_HOME:  $APP_HOME"
 
 if [ "$COMMAND" = "start" ] ; then
   start $@

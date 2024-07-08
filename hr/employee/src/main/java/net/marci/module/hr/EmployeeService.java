@@ -27,4 +27,8 @@ public class EmployeeService {
   public List<Employee> getAll() {
     return logic.getAll();
   }
+
+  public void helloWorld() {
+    System.out.println("Welcome to Marci Server");
+  }
 }

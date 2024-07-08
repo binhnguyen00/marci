@@ -1,7 +1,5 @@
 # Human Resources Management
 - Java Spring, Gradle, PostgreSQL, React Typescript project 
-- *Note*:
-    - Planning to use React Typescript in the near future.
 # Setup
 ### Requirements
 1. JDK 21
