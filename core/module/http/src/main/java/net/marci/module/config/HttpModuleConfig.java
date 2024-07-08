@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ComponentScan(
   basePackages = {
-    "net.marci.module.model",
     "net.marci.module.http",
   }
 )

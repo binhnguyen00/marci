@@ -2,7 +2,7 @@ package net.marci.module.http;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
-import net.marci.module.model.RPCRequest;
+import net.marci.module.dto.RPCRequest;
 import net.marci.utils.DataSerializer;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +27,10 @@ import java.util.concurrent.Callable;
 /**
  * @author Bình Nguyễn
  * @Email jackjack2000.kahp@gmail.com
- * @RPC stands for Remote Procedure Call
+ * @RPC Stands for Remote Procedure Call. It's a protocol
  * @Usage Use for private api cases
  */
+
 @Slf4j
 @RestController
 @RequestMapping("/rpc")
@@ -49,6 +50,7 @@ public class RPCController extends BaseController {
     return this.execute(component, service, executor);
   }
 
+  // TODO: Re-check "return null"
   private <T> ResponseEntity<Object> execute(String component, String service, Callable<T> executor) {
     try {
       T result = executor.call();
@@ -60,7 +62,6 @@ public class RPCController extends BaseController {
   }
 
   private Object processRequest(RPCRequest request, List<Object> argsHolder) throws IllegalAccessException, InvocationTargetException, IntrospectionException {
-    Map<String, JsonNode> params = request.getParameters();
     Object component = applicationContext.getBean(request.getComponent());
     Assert.notNull(component, "Bean named: " + request.getService() + " is not found");
 
@@ -76,6 +77,7 @@ public class RPCController extends BaseController {
     Assert.notNull(mDescriptor, "No method " + request.getService() + " in class: " + request.getComponent());
     Parameter[] parameters = mDescriptor.getMethod().getParameters();
 
+    final Map<String, JsonNode> params = request.getParameters();
     int argIdx = argsHolder.size();
     for (JsonNode jsonNode : params.values()) {
       Class<?> argType = parameters[argIdx].getType();

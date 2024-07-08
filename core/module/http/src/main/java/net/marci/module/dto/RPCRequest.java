@@ -1,4 +1,4 @@
-package net.marci.module.model;
+package net.marci.module.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -13,9 +13,10 @@ import java.util.List;
 /**
  * @author Bình Nguyễn
  * @Email jackjack2000.kahp@gmail.com
- * @Component should be the name of the class
- * @Service should be one of the class's method
+ * @Component is the name of the class
+ * @Service is be one of the class's method
  */
+
 @NoArgsConstructor
 @Getter
 @Setter
