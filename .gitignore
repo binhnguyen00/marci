@@ -62,3 +62,6 @@ dist-ssr
 *.local
 *.tsbuildinfo
 package-lock.json
+
+# Marci Gradle release folder
+release/
