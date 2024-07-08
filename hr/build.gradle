@@ -3,7 +3,7 @@ plugins {
   id 'java-library'
   id 'maven-publish'
 
-  id 'com.adarshr.test-logger'          version "${testLoggerVersion}"
+  id 'com.adarshr.test-logger' version "${testLoggerVersion}"
 }
 
 allprojects {}
@@ -69,7 +69,7 @@ subprojects {
     implementation group: 'org.postgresql', name: 'postgresql', version: "${postgresVersion}"
 
     // Using Lib from other project
-    api group: 'net.marci.core', name: 'marci-modules-common', version: "${marciCoreVersion}"
+    api group: 'net.marci.core', name: 'marci-module-common', version: "${marciCoreVersion}"
     api group: 'net.marci.core', name: 'marci-lib-common', version: "${marciCoreVersion}"
 
     // Using Lib from this project
