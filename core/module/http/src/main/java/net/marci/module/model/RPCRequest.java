@@ -1,4 +1,4 @@
-package net.marci.http.model;
+package net.marci.module.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;

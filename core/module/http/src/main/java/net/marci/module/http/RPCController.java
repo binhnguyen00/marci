@@ -1,8 +1,8 @@
-package net.marci.http;
+package net.marci.module.http;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
-import net.marci.http.model.RPCRequest;
+import net.marci.module.model.RPCRequest;
 import net.marci.utils.DataSerializer;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class RPCController extends BaseController {
   @Autowired
   private ApplicationContext applicationContext;
 
-  @PostMapping({"/call"})
+  @PostMapping("/call")
   public @ResponseBody ResponseEntity<Object> call(@RequestBody RPCRequest request) {
     Callable<Object> executor = () -> {
       List<Object> argHolder = new ArrayList<>();
