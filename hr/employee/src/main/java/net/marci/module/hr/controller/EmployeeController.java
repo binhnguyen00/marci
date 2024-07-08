@@ -1,6 +1,7 @@
 package net.marci.module.hr.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import net.marci.http.BaseController;
 import net.marci.module.hr.EmployeeService;
 import net.marci.module.hr.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,23 +13,26 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/hr/employee")
-public class EmployeeController {
+public class EmployeeController extends BaseController {
 
   @Autowired
   private EmployeeService service;
 
   @PostMapping("/hello")
-  public String test() {
+  @ResponseBody
+  public String hello() {
     log.info("Welcome to Marci Server");
     return "Welcome to Marci Server";
   }
 
   @GetMapping("/{id}")
+  @ResponseBody
   public Employee getById(@PathVariable(value = "id") Long id) {
     return service.getById(id);
   }
 
   @PutMapping("/save")
+  @ResponseBody
   public Employee save(@RequestBody Employee employee) {
     return service.save(employee);
   }

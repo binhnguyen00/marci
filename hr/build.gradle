@@ -70,6 +70,7 @@ subprojects {
 
     // Using Lib from other project
     api group: 'net.marci.core', name: 'marci-module-common', version: "${marciCoreVersion}"
+    api group: 'net.marci.core', name: 'marci-module-http', version: "${marciCoreVersion}"
     api group: 'net.marci.core', name: 'marci-lib-common', version: "${marciCoreVersion}"
 
     // Using Lib from this project

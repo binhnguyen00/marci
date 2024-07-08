@@ -1,17 +1,29 @@
-export class RESTful {
-  baseURL: string;
-  serverURL: string;
+import { Api } from "./Api";
+import { CallBack, HttpMethod } from "./Interface";
 
-  constructor(baseURL: string) {
-    this.baseURL = baseURL;
-    this.serverURL = baseURL;
+export class RESTful extends Api {
+  
+  get(path: string, pathVariables: Map<string, any>, successCB: CallBack, failCB: CallBack): void {
+    var url: string = this.initialUrl(path, pathVariables);
+    var requestInit: RequestInit= this.initRequest(HttpMethod.GET);
+    this.doFetch(url, requestInit, successCB, failCB);
+  }
+  
+  post(path: string, requestBody: Map<string, any>, successCB: CallBack, failCB: CallBack): void {
+    var url: string = this.initialUrl(path);
+    var requestInit: RequestInit= this.initRequest(HttpMethod.POST, requestBody);
+    this.doFetch(url, requestInit, successCB, failCB);
   }
 
-  post() {
-    return this.doFetch() + " As POST";
+  put(path: string, requestBody: Map<string, any>, successCB: CallBack, failCB: CallBack): void {
+    var url: string = this.initialUrl(path);
+    var requestInit: RequestInit= this.initRequest(HttpMethod.PUT, requestBody);
+    this.doFetch(url, requestInit, successCB, failCB);
   }
 
-  doFetch() {
-    return "DO Fetch";
+  delete(path: string, requestBody: any, successCB: CallBack, failCB: CallBack): void {
+    var url: string = this.initialUrl(path);
+    var requestInit: RequestInit= this.initRequest(HttpMethod.DELETE, requestBody);
+    this.doFetch(url, requestInit, successCB, failCB);
   }
 }
