@@ -14,7 +14,7 @@ import java.util.List;
  * @author Bình Nguyễn
  * @Email jackjack2000.kahp@gmail.com
  * @Component is the name of the class
- * @Service is be one of the class's method
+ * @Service is one of the class's method's name
  */
 
 @NoArgsConstructor

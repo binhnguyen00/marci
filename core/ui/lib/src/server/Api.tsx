@@ -33,16 +33,14 @@ export abstract class Api {
     return requestInit;
   }
 
-
-  doFetch(url: string, requestInit: RequestInit, successCB: CallBack, failCB: CallBack): void {
+  doFetch(url: string, requestInit: RequestInit, successCB: CallBack, failCB?: CallBack): void {
     fetch(url, requestInit)
     .then((response: any /* ResponseEntity from Springboot */) => {
-      if (!response.ok) failCB(response);
       return response;
     }).then((okResponse: any) => {
       successCB(okResponse);
     }).catch((error: any) => {
-      failCB(error);
+      if (failCB) failCB(error);
     });
   }
 }
