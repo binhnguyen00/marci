@@ -1,11 +1,13 @@
 package net.marci.module.hr;
 
+import lombok.extern.slf4j.Slf4j;
 import net.marci.module.hr.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service("EmployeeService")
 public class EmployeeService {
 
@@ -28,7 +30,8 @@ public class EmployeeService {
     return logic.getAll();
   }
 
-  public void helloWorld() {
-    System.out.println("Welcome to Marci Server");
+  public String helloWorld() {
+    log.info("Welcome to Marci Server");
+    return "Welcome to Marci Server";
   }
 }

@@ -54,6 +54,7 @@ public class RPCService {
     }
 
     Assert.notNull(mDescriptor, "No method " + request.getService() + " in class: " + request.getComponent());
+    System.out.println(mDescriptor.getMethod().toString());
     Parameter[] parameters = mDescriptor.getMethod().getParameters();
 
     final Map<String, JsonNode> params = request.getParameters();

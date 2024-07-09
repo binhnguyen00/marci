@@ -4,7 +4,7 @@ import { CallBack, HttpMethod } from "./Interface";
 type RPCRequest = {
   version: string,
   component: string,
-  method: string,
+  service: string,
   parameters: any
 }
 
@@ -15,7 +15,7 @@ export class RPC extends Api {
     const rpcRequest: RPCRequest = {
       version: '1.0',
       component: component,
-      method: service,
+      service: service,
       parameters: params
     };
     const requestInit: RequestInit = this.initRequest(HttpMethod.POST, rpcRequest);

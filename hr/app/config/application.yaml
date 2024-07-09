@@ -1,3 +1,8 @@
+logging:
+  level:
+    root: INFO
+    net.marci: DEBUG
+
 server:
   port: 7080
 

@@ -21,8 +21,7 @@ public class EmployeeController extends BaseController {
   @PostMapping("/hello")
   @ResponseBody
   public String hello() {
-    log.info("Welcome to Marci Server");
-    return "Welcome to Marci Server";
+    return service.helloWorld();
   }
 
   @GetMapping("/{id}")

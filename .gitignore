@@ -62,6 +62,7 @@ dist-ssr
 *.local
 *.tsbuildinfo
 package-lock.json
+pnpm-lock.yaml
 
 # Marci Gradle release folder
 release/
