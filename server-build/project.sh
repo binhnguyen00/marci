@@ -82,7 +82,7 @@ function build() {
 }
 
 function release() {
-  echo ""
+  echo "\\n--------------------------------"
   echo ">> Releasing Marci..."
   echo ">> Project Directory: $REALEASE_HOME"
   echo "--------------------------------"
@@ -95,7 +95,7 @@ function release() {
 }
 
 function deploy() {
-  echo "--------------------------------"
+  echo "\\n--------------------------------"
   echo "DEPLOYING MARCI..."
   echo "--------------------------------"
 
