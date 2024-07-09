@@ -45,6 +45,9 @@ function release() {
   echo "--------------------------------"
 
   cd $REALEASE_HOME
+  if [ -d "./release" ]; then
+    rm -rf ./release
+  fi
   gradle release -x test
 }
 
