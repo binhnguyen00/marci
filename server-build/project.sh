@@ -103,6 +103,28 @@ function deploy() {
   release $@
 }
 
+function showHelp() {
+  echo """
+These are commands used in various situations:
+
+Deploy Project
+    deploy          \t Include build + release process
+
+Build Project
+    build           \t Compile Server & UI
+    build-ui        \t Compile Typescript code
+    build-server    \t Compile Java code
+    [-clean]        \t Remove Server/UI/both packages
+
+Release Project
+    release         \t Release server's jars
+
+Other Commands
+    help            \t Show this help message
+
+"""
+}
+
 COMMAND=$1;
 shift
 
@@ -117,19 +139,7 @@ elif [ "$COMMAND" = "release" ] ; then
 elif [ "$COMMAND" = "deploy" ] ; then
   deploy $@
 elif [ "$COMMAND" = "help" ] ; then
-  echo "\\nThese are commands used in various situations:\n"
-  echo "Deploy Project"
-  echo "    deploy        \\t Include build + release process"
-  echo ""
-  echo "Build Project"
-  echo "    build         \\t Complie Server & UI"
-  echo "    build-ui      \\t Complie Typescript code"
-  echo "    build-server  \\t Compile Java code"
-  echo "    [-clean]      \\t Remove Server/UI/both packages"
-  echo ""
-  echo "Release Project"
-  echo "    release       \\t Release server's jars"
-  echo ""
+  showHelp
 else
   ./project.sh help 
 fi
