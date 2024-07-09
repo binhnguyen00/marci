@@ -20,6 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -50,21 +51,18 @@ public class RPCController extends BaseController {
     return this.execute(component, service, executor);
   }
 
-  // TODO: Re-check "return null"
   private <T> ResponseEntity<Object> execute(String component, String service, Callable<T> executor) {
     try {
       T result = executor.call();
       return new ResponseEntity<>(result, HttpStatus.OK);
-    } catch (Throwable cause) {
-      log.error(cause.getMessage());
+    } catch (Exception ex) {
+      log.error("Error executing {}:{} - {}", component, service, Arrays.toString(ex.getStackTrace()));
+      return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return null;
   }
 
   private Object processRequest(RPCRequest request, List<Object> argsHolder) throws IllegalAccessException, InvocationTargetException, IntrospectionException {
     Object component = applicationContext.getBean(request.getComponent());
-    Assert.notNull(component, "Bean named: " + request.getService() + " is not found");
-
     Class<?> componentType = AopUtils.getTargetClass(component);
     BeanInfo beanInfo = Introspector.getBeanInfo(componentType);
     MethodDescriptor[] methods = beanInfo.getMethodDescriptors();
@@ -74,6 +72,7 @@ public class RPCController extends BaseController {
         mDescriptor = method;
       }
     }
+
     Assert.notNull(mDescriptor, "No method " + request.getService() + " in class: " + request.getComponent());
     Parameter[] parameters = mDescriptor.getMethod().getParameters();
 
