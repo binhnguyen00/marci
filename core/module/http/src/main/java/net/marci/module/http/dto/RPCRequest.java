@@ -1,4 +1,4 @@
-package net.marci.module.dto;
+package net.marci.module.http.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;

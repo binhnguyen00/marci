@@ -1,0 +1,39 @@
+package net.marci.module.http.controller;
+
+import lombok.extern.slf4j.Slf4j;
+import net.marci.module.http.RPCService;
+import net.marci.module.http.dto.RPCRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+
+/**
+ * @author Bình Nguyễn
+ * @Email jackjack2000.kahp@gmail.com
+ * @RPC Stands for Remote Procedure Call. It's a protocol
+ * @Usage Use for private api cases
+ */
+
+@Slf4j
+@RestController
+@RequestMapping("/rpc")
+public class RPCController extends BaseController {
+
+  @Autowired
+  private RPCService service;
+
+  @PostMapping("/call")
+  public @ResponseBody ResponseEntity<Object> call(@RequestBody RPCRequest request) {
+    Callable<Object> executor = () -> {
+      List<Object> argHolder = new ArrayList<>();
+      return service.processRequest(request, argHolder);
+    };
+    final String component = request.getComponent();
+    final String service = request.getService();
+    return this.service.execute(component, service, executor);
+  }
+}

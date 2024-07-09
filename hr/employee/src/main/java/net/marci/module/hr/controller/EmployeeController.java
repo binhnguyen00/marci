@@ -3,7 +3,7 @@ package net.marci.module.hr.controller;
 import lombok.extern.slf4j.Slf4j;
 import net.marci.module.hr.EmployeeService;
 import net.marci.module.hr.entity.Employee;
-import net.marci.module.http.BaseController;
+import net.marci.module.http.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

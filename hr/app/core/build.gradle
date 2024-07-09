@@ -60,25 +60,25 @@ tasks.register('releaseServer') {
     final String serverAppDir = parentDir + "\\release";
     println "Deploying => ${serverAppDir}";
 
-    println ">> Common Jars...";
     configurations.commonJars.each { File file ->
       copy { from file into "${serverAppDir}/libs/common" }
     }
+    println ">> ${configurations.commonJars.size()} Common Jars...";
 
-    println ">> Spring Jars...";
     configurations.springJars.each { File file ->
       copy { from file into "${serverAppDir}/libs/springboot" }
     }
+    println ">> ${configurations.springJars.size()} Spring Jars...";
 
-    println ">> Hibernate Jars...";
     configurations.hibernateJars.each { File file ->
       copy { from file into "${serverAppDir}/libs/hibernate" }
     }
+    println ">> ${configurations.hibernateJars.size()} Hibernate Jars...";
 
-    println ">> Server Jars...";
     configurations.serverAppJars.each { File file ->
       copy { from file into "${serverAppDir}/libs" }
     }
+    println ">> ${configurations.serverAppJars.size()} Server Jars...";
   }
 }
 

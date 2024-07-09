@@ -1,4 +1,4 @@
-package net.marci.module.http;
+package net.marci.module.http.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
