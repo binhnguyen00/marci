@@ -38,19 +38,6 @@ function buildServer() {
   buildProjectHr $CLEAN_OPT
 }
 
-function _buildUI() {
-  cd $TARGET
-  if [ $CLEAN_OPT = "true" ] ; then
-    rm -rf node_modules dist pnpm-lock.yaml
-    pnpm install
-    pnpm run build
-  else 
-    if [ ! -d "./node_modules" ]; then pnpm install; fi
-    rm -rf dist
-    pnpm run build
-  fi
-}
-
 function buildUI() {
   CLEAN_OPT=$(has_opt "-clean" $@)
   
@@ -67,6 +54,19 @@ function buildUI() {
   echo ">> Project Directory: $TARGET"
   echo "--------------------------------\\n"
   _buildUI $TARGET $CLEAN_OPT
+}
+
+function _buildUI() {
+  cd $TARGET
+  if [ $CLEAN_OPT = "true" ] ; then
+    rm -rf node_modules dist pnpm-lock.yaml
+    pnpm install
+    pnpm run build
+  else 
+    if [ ! -d "./node_modules" ]; then pnpm install; fi
+    rm -rf dist
+    pnpm run build
+  fi
 }
 
 function build() {
@@ -99,8 +99,9 @@ function deploy() {
   echo "DEPLOYING MARCI..."
   echo "--------------------------------"
 
-  build $@
-  release $@
+  CLEAN_OPT="true"
+  build $@ $CLEAN_OPT
+  release $@ $CLEAN_OPT
 }
 
 function showHelp() {
@@ -108,19 +109,19 @@ function showHelp() {
 These are commands used in various situations:
 
 Deploy Project
-    deploy          \t Include build + release process
+  deploy            Include build + release process
 
 Build Project
-    build           \t Compile Server & UI
-    build-ui        \t Compile Typescript code
-    build-server    \t Compile Java code
-    [-clean]        \t Remove Server/UI/both packages
+  build             Compile Server & UI
+  build-ui          Compile Typescript code
+  build-server      Compile Java code
+  [-clean]          Remove Server/UI/both packages
 
 Release Project
-    release         \t Release server's jars
+  release           Release server's jars
 
 Other Commands
-    help            \t Show this help message
+  help              Show this help message
 
 """
 }

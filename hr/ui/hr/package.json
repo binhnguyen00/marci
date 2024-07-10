@@ -3,28 +3,31 @@
   "description": "Marci HR UI library",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/@types/index.d.ts",
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build"
+    "build":  "webpack --mode production",
+    "dev":    "webpack --mode development --watch",
+    "server": "webpack serve --mode development --open"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "bootstrap": "^5.3.3"
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "bootstrap": "5.3.3"
   },
   "devDependencies": {
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.13.1",
-    "@typescript-eslint/parser": "^7.13.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.7",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "@types/node": "^20.14.10",
+
+    "webpack": "^5.82.1",
+    "webpack-cli": "^5.1.4",
     "typescript": "^5.2.2",
-    "vite": "^5.3.1",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
     "bootstrap": "^5.3.3",
+    "cross-env": "^7.0.3",
+    
     "@marci-ui/lib": "file:../../../core/ui/lib"
   },
   "peerDependencies": {

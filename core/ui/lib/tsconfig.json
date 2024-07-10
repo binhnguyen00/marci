@@ -2,16 +2,19 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "ES2020",
-    "declaration": true,
     "outDir": "./dist",
+    "declaration": true,
+    "declarationDir": "dist/@types",
+    "sourceMap": true,
     "strict": true,
-    "jsx": "react-jsx",
+    "allowJs": false,
+    "jsx": "react",
     "esModuleInterop": true,
-    "moduleResolution": "Node"
+    "moduleResolution": "Bundler"
   },
   "include": [
     "src/**/*",
-    "public/**/*"
+    "webpack.config.js"
   ],
   "exclude": [
     "node_modules", 
