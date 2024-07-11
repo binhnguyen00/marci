@@ -9,7 +9,10 @@ const configPlugins = [
 
 const config = { 
   context: __dirname,
-  entry: "./src/index.tsx",
+  entry: [
+    "./src/index.tsx",
+    "./src/main.tsx",
+  ],
   output: {
     publicPath: '/',
     filename: 'main.js',
@@ -27,15 +30,18 @@ const config = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     modules: [
-      path.resolve(__dirname, 'src'), 'node_modules'
+      path.resolve(__dirname, 'src'), 'node_modules',
     ],
   },
-  externals: {
-    'react': 'react',
-    'react-dom': 'react-dom',
-    'bootstrap': 'bootstrap',
-  },
-  devtool: 'inline-source-map',
+  /** This reduces the bundle size.
+   * Consiser using this config with CDN in index.html. Else, shall not use. 
+    externals: {
+      'react': 'react',
+      'react-dom': 'react-dom',
+      'bootstrap': 'bootstrap',
+    }, 
+   */
+  devtool: 'source-map',
   devServer: {
     port: 3000
   },

@@ -3,6 +3,7 @@ import React from "react";
 import { server } from "@marci-ui/lib";
 
 export function UIEmployee() {
+  console.log(server);
 
   const successCB: server.CallBack = (response: any) => {
     console.log("Success");
