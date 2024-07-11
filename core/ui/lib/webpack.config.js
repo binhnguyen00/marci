@@ -14,7 +14,7 @@ const config = {
   },
   output: {
     publicPath: '/',
-    filename: 'bundle.js', // Output file name
+    filename: 'main.js', // Output file name
     path: path.resolve(__dirname, 'dist'), // Output directory
   },
   module: {
