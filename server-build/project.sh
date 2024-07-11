@@ -109,7 +109,7 @@ function showHelp() {
 These are commands used in various situations:
 
 Deploy Project
-  deploy            Include build + release process
+  deploy            Include [build], [release] and [-clean] process
 
 Build Project
   build             Compile Server & UI
