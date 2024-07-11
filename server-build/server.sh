@@ -65,6 +65,38 @@ function stop() {
   echo "Stopped processs $PID"
 }
 
+function startUI() {
+  cd $PROJECT_DIR/hr/ui/hr
+  if [ ! -d "dist" ] ; then
+    echo """
+    ----------------------------------
+    No dist folder found !!!
+    Build the UI in order to process. 
+    Use ./project.sh for more details.
+    ----------------------------------
+    """
+  else 
+    pnpm run server
+  fi
+}
+
+function showHelp() {
+  echo """
+Usage: ./server.sh [COMMAND] [-OPTION]
+
+These are common commaneds to run the server
+
+Start the server:
+  start               Run the server as console
+  [-daemon]           Run the server as daemon
+  stop                Stop the server
+
+Start the UI:
+  start-ui            Run the UI
+
+"""
+}
+
 COMMAND=$1;
 shift
 
@@ -72,12 +104,10 @@ if [ "$COMMAND" = "start" ] ; then
   start $@
 elif [ "$COMMAND" = "stop" ] ; then
   stop $@
+elif [ "$COMMAND" = "help" ] ; then
+  showHelp
+elif [ "$COMMAND" = "start-ui" ] ; then
+  startUI $@
 else
-  echo "Usage: "
-  echo "  To run the server as daemon"
-  echo "    ./server.sh -daemon "
-  echo "  To stop the daemon server"
-  echo "    ./server.sh stop "
-  echo "  To run the server as console"
-  echo "    ./server.sh start"
+  ./server.sh help
 fi
