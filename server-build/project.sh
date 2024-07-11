@@ -116,7 +116,7 @@ Build Project
   build-ui          Compile Typescript code
   build-server      Compile Java code
   [-clean]          Remove Server release jars & UI's node_modules, dist. 
-                   In case of update dependencies's version in package.json, You might need to remove pnpm-lock.yaml by hand.
+                    In case of update dependencies's version in package.json, You might need to remove pnpm-lock.yaml by hand.
 
 Release Project
   release           Release server's jars
