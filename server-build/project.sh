@@ -115,8 +115,8 @@ Build Project
   build             Compile Server & UI
   build-ui          Compile Typescript code
   build-server      Compile Java code
-  [-clean]          Remove Server/UI/both packages. 
-                    In case of update/add new dependencies in package.json, You may need remove pnpm-lock.yaml by hand.
+  [-clean]          Remove Server release jars & UI's node_modules, dist. 
+                   In case of update dependencies's version in package.json, You might need to remove pnpm-lock.yaml by hand.
 
 Release Project
   release           Release server's jars
