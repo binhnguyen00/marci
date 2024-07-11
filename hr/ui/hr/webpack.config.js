@@ -10,7 +10,9 @@ const config = {
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
-    modules: [path.resolve(__dirname, 'src'), 'node_modules']
+    modules: [
+      path.resolve(__dirname, 'src'), 'node_modules'
+    ],
   },
   output: {
     publicPath: '/',

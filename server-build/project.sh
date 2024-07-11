@@ -42,7 +42,7 @@ function buildUI() {
   CLEAN_OPT=$(has_opt "-clean" $@)
   
   TARGET=`cd $CORE_HOME/ui/lib; pwd`
-  echo "\\--------------------------------"
+  echo "\\n--------------------------------"
   echo ">> Building UI Marci Core..."
   echo ">> Project Directory: $TARGET"
   echo "--------------------------------\\n"
@@ -59,7 +59,7 @@ function buildUI() {
 function _buildUI() {
   cd $TARGET
   if [ $CLEAN_OPT = "true" ] ; then
-    rm -rf node_modules dist pnpm-lock.yaml
+    rm -rf node_modules dist
     pnpm install
     pnpm run build
   else 
@@ -115,7 +115,8 @@ Build Project
   build             Compile Server & UI
   build-ui          Compile Typescript code
   build-server      Compile Java code
-  [-clean]          Remove Server/UI/both packages
+  [-clean]          Remove Server/UI/both packages. 
+                    In case of update/add new dependencies in package.json, You may need remove pnpm-lock.yaml by hand.
 
 Release Project
   release           Release server's jars

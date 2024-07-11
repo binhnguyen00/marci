@@ -4,6 +4,7 @@
     "module": "ES2020",
     "outDir": "./dist",
     "declaration": true,
+    "declarationMap": true,
     "declarationDir": "dist/@types",
     "sourceMap": true,
     "strict": true,
@@ -14,7 +15,6 @@
   },
   "include": [
     "src/**/*",
-    "webpack.config.js"
   ],
   "exclude": [
     "node_modules", 

@@ -22,3 +22,6 @@ export class RPC extends Api {
     this.doFetch(url, requestInit, successCB, failCB);
   }
 }
+
+const rpc = new RPC("http://localhost:7080");
+export { rpc };

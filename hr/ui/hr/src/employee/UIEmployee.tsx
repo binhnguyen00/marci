@@ -3,9 +3,6 @@ import React from "react";
 import { server } from "@marci-ui/lib";
 
 export function UIEmployee() {
-  const serverUrl = "http://localhost:7080";
-  const rest = new server.RESTful(serverUrl);
-  const rpc = new server.RPC(serverUrl);
 
   const successCB: server.CallBack = (response: any) => {
     console.log("Success");
@@ -18,11 +15,11 @@ export function UIEmployee() {
   }
 
   const restCall = () => {
-    rest.post("hr/employee/hello", null, successCB, failCB);
+    server.restful.post("hr/employee/hello", null, successCB, failCB);
   }
 
   const rpcCall = () => {
-    rpc.call("rpc/call", "EmployeeService", "helloWorld", {}, successCB, failCB);
+    server.rpc.call("rpc/call", "EmployeeService", "helloWorld", {}, successCB, failCB);
   }
 
   return (

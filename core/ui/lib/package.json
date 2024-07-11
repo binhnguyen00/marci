@@ -2,9 +2,8 @@
   "name": "@marci-ui/lib",
   "description": "Marci Core UI library",
   "version": "1.0.0",
-  "private": true,
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "main": "dist/bundle.js",
+  "module": "dist/bunndle.js",
   "types": "dist/@types/index.d.ts",
   "scripts": {
     "build":  "webpack --mode production",

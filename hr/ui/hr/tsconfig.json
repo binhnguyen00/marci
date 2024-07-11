@@ -4,17 +4,17 @@
     "module": "ES2020",
     "outDir": "./dist",
     "declaration": true,
+    "declarationMap": true,
     "declarationDir": "dist/@types",
     "sourceMap": true,
     "strict": true,
     "allowJs": false,
     "jsx": "react",
     "esModuleInterop": true,
-    "moduleResolution": "Bundler"
+    "moduleResolution": "Bundler",
   },
   "include": [
     "src/**/*",
-    "webpack.config.js"
   ],
   "exclude": [
     "node_modules", 

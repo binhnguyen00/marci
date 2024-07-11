@@ -27,3 +27,6 @@ export class RESTful extends Api {
     this.doFetch(url, requestInit, successCB, failCB);
   }
 }
+
+const restful = new RESTful("http://localhost:7080");
+export { restful };
