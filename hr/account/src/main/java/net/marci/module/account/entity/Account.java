@@ -1,6 +1,7 @@
 package net.marci.module.account.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
@@ -9,11 +10,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.marci.common.BaseEntity;
 
+@Entity
 @Table(
-  name = "account",
+  name = Account.TABLE_NAME,
   uniqueConstraints = {
     @UniqueConstraint(
-      name = "user_name_email",
+      name = "account_user_name_email",
       columnNames = {
         "user_name", "email"
       }
@@ -24,6 +26,8 @@ import net.marci.common.BaseEntity;
 @Setter
 @NoArgsConstructor
 public class Account extends BaseEntity {
+
+  public static final String TABLE_NAME = "account";
 
   @NotNull
   @Column(name = "user_name", updatable = false)
