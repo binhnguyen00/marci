@@ -33,7 +33,7 @@ public class Account extends BaseEntity {
   @Column(name = "user_name", updatable = false)
   private String userName;
 
-  @Column(nullable = false)
+  @NotNull
   private String password;
 
   private String email;
