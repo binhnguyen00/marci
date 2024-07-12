@@ -22,7 +22,7 @@
 ```plaintext
 cd /server-build && ./project.sh deploy
 ```
-**For a better understanding**, please read scripts in ```/server-build```. Starting with ```project.sh```.
+💡 **For a better understanding**, please read scripts in ```/server-build```. Starting with ```project.sh```.
 ### Run Project
 - Start Server
   ```plaintext
@@ -36,4 +36,4 @@ cd /server-build && ./project.sh deploy
   ```plaintext
   cd /server-build && ./server.sh
   ```
-**For a better understanding**, please read scripts in ```/server-build```. Starting with ```server.sh```.
+💡 **For a better understanding**, please read scripts in ```/server-build```. Starting with ```server.sh```.
