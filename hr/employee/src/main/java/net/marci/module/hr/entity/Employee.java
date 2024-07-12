@@ -2,6 +2,7 @@ package net.marci.module.hr.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,8 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "employee")
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class Employee extends BaseEntity {
 
@@ -25,6 +27,6 @@ public class Employee extends BaseEntity {
   @Column(name = "date_of_birth")
   private LocalDate dateOfBirth;
 
-  @Column(name = "account_id")
+  @JoinColumn(name = "account_id", table = "account", referencedColumnName = "id")
   private Long accountId;
 }

@@ -3,5 +3,8 @@ rootProject.name = 'marci-hr'
 include 'marci-hr-app-core'
 project(':marci-hr-app-core').projectDir = new File('app/core')
 
+include 'marci-hr-account'
+project(':marci-hr-account').projectDir = new File('account')
+
 include 'marci-hr-employee'
 project(':marci-hr-employee').projectDir = new File('employee')

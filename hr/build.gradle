@@ -63,6 +63,7 @@ subprojects {
     implementation group: 'org.springframework', name: 'spring-context', version: "${springFrameworkVersion}"
     implementation group: 'org.springframework', name: 'spring-webmvc', version: "${springFrameworkVersion}"
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "${springBootVersion}"
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: "${springBootVersion}"
 
     implementation group: 'org.slf4j', name: 'slf4j-api', version: "${slf4jVersion}"
     implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: "${jakartaPersistenceApiVersion}"
