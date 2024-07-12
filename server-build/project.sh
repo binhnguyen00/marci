@@ -9,8 +9,7 @@ function buildProjectCore() {
 --------------------------------
 Building Marci Core...
 Project Directory: $CORE_HOME
--------------------------------- 
-  """
+-------------------------------- """
 
   cd $CORE_HOME
   if [ $CLEAN_OPT = "true" ] ; then
@@ -25,8 +24,7 @@ function buildProjectHr() {
 --------------------------------
 Building Marci HR...
 Project Directory: $HR_HOME
---------------------------------
-  """
+-------------------------------- """
 
   cd $HR_HOME
   if [ $CLEAN_OPT = "true" ] ; then
@@ -50,8 +48,7 @@ function buildUI() {
 --------------------------------
 Building UI Marci Core...
 Project Directory: $TARGET
---------------------------------
-  """
+-------------------------------- """
   _buildUI $TARGET $CLEAN_OPT
 
   TARGET=`cd $HR_HOME/ui/hr; pwd`
@@ -59,8 +56,7 @@ Project Directory: $TARGET
 --------------------------------
 Building UI Marci HR...
 Project Directory: $TARGET
---------------------------------
-  """
+-------------------------------- """
   _buildUI $TARGET $CLEAN_OPT
 }
 
@@ -94,8 +90,7 @@ function release() {
 --------------------------------
 Releasing Marci...
 Project Directory: $REALEASE_HOME
---------------------------------
-  """
+-------------------------------- """
 
   cd $REALEASE_HOME
   if [ -d "./release" ]; then
@@ -108,8 +103,7 @@ function deploy() {
   echo """
 --------------------------------
 DEPLOYING MARCI...
---------------------------------
-  """
+-------------------------------- """
 
   CLEAN_OPT="true"
   build $@ $CLEAN_OPT
