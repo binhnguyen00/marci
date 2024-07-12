@@ -23,28 +23,4 @@ public class EmployeeController extends BaseController {
   public String hello() {
     return service.helloWorld();
   }
-
-  @GetMapping("/{id}")
-  @ResponseBody
-  public Employee getById(@PathVariable(value = "id") Long id) {
-    return service.getById(id);
-  }
-
-  @PostMapping("/save")
-  @ResponseBody
-  public Employee save(@RequestBody Employee employee) {
-    return service.save(employee);
-  }
-
-  @DeleteMapping("/delete/{id}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void deleteById(@PathVariable(value = "id") long id) {
-    service.deleteById(id);
-  }
-
-  @GetMapping("/all")
-  @ResponseBody
-  public List<Employee> findAll() {
-    return service.findAll();
-  }
 }
