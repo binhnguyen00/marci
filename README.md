@@ -20,11 +20,11 @@
   ```
 ### Build and Deploy Project
 ```plaintext
-cd /server-build && ./project deploy -clean
+cd /server-build && ./project deploy
 ```
 **For a better understanding**, please read scripts in ```/server-build```. Starting with ```project.sh```.
 ### Run Project
 ```plaintext
-cd /server-build && ./server.sh start
+cd /server-build && ./server start
 ```
 **For a better understanding**, please read scripts in ```/server-build```. Starting with ```server.sh```.
