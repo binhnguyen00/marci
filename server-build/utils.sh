@@ -39,3 +39,12 @@ function get_opt() {
   done
   echo $DEFAULT_VALUE
 }
+
+function checkDependency() {
+  DEPENDENCY=$1 
+  if command -v $DEPENDENCY &> /dev/null; then 
+    return true
+  else  
+    return false
+  fi
+}

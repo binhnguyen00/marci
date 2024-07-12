@@ -5,10 +5,12 @@ HR_HOME=`cd $CURRENT_DIR/../hr; pwd`
 REALEASE_HOME=`cd $HR_HOME/app/core; pwd`
 
 function buildProjectCore() {
-  echo "\\n--------------------------------"
-  echo ">> Building Marci Core..."
-  echo ">> Project Directory: $CORE_HOME"
-  echo "--------------------------------\\n"
+  echo """
+--------------------------------
+Building Marci Core...
+Project Directory: $CORE_HOME
+-------------------------------- 
+  """
 
   cd $CORE_HOME
   if [ $CLEAN_OPT = "true" ] ; then
@@ -19,10 +21,12 @@ function buildProjectCore() {
 }
 
 function buildProjectHr() {
-  echo "\\n--------------------------------"
-  echo ">> Building Marci HR..."
-  echo ">> Project Directory: $HR_HOME"
-  echo "--------------------------------"
+  echo """
+--------------------------------
+Building Marci HR...
+Project Directory: $HR_HOME
+--------------------------------
+  """
 
   cd $HR_HOME
   if [ $CLEAN_OPT = "true" ] ; then
@@ -42,17 +46,21 @@ function buildUI() {
   CLEAN_OPT=$(has_opt "-clean" $@)
   
   TARGET=`cd $CORE_HOME/ui/lib; pwd`
-  echo "\\n--------------------------------"
-  echo ">> Building UI Marci Core..."
-  echo ">> Project Directory: $TARGET"
-  echo "--------------------------------\\n"
+  echo """
+--------------------------------
+Building UI Marci Core...
+Project Directory: $TARGET
+--------------------------------
+  """
   _buildUI $TARGET $CLEAN_OPT
 
   TARGET=`cd $HR_HOME/ui/hr; pwd`
-  echo "\\n--------------------------------"
-  echo ">> Building UI Marci HR..."
-  echo ">> Project Directory: $TARGET"
-  echo "--------------------------------\\n"
+  echo """
+--------------------------------
+Building UI Marci HR...
+Project Directory: $TARGET
+--------------------------------
+  """
   _buildUI $TARGET $CLEAN_OPT
 }
 
@@ -82,10 +90,12 @@ function build() {
 }
 
 function release() {
-  echo "\\n--------------------------------"
-  echo ">> Releasing Marci..."
-  echo ">> Project Directory: $REALEASE_HOME"
-  echo "--------------------------------"
+  echo """
+--------------------------------
+Releasing Marci...
+Project Directory: $REALEASE_HOME
+--------------------------------
+  """
 
   cd $REALEASE_HOME
   if [ -d "./release" ]; then
@@ -95,9 +105,11 @@ function release() {
 }
 
 function deploy() {
-  echo "\\n--------------------------------"
-  echo "DEPLOYING MARCI..."
-  echo "--------------------------------"
+  echo """
+--------------------------------
+DEPLOYING MARCI...
+--------------------------------
+  """
 
   CLEAN_OPT="true"
   build $@ $CLEAN_OPT
@@ -106,6 +118,10 @@ function deploy() {
 
 function showHelp() {
   echo """
+IMPORTANT: You need to install pnpm before using this script.
+
+Usage: ./project [COMMAND] [-OPTION]
+
 These are commands used in various situations:
 
 Deploy Project
