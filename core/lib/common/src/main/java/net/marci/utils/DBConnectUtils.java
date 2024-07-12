@@ -39,7 +39,7 @@ public class DBConnectUtils {
     try {
       connection.commit();
     } catch (SQLException e) {
-      log.error("Error", e);
+      log.error("Can't Commit", e);
       throw new RuntimeException(e.getMessage());
     }
   }
@@ -48,7 +48,7 @@ public class DBConnectUtils {
     try {
       connection.rollback();
     } catch (SQLException e) {
-      log.error("Error", e);
+      log.error("Can't Rollback", e);
       throw new RuntimeException(e.getMessage());
     }
   }
@@ -57,7 +57,7 @@ public class DBConnectUtils {
     try {
       connection.close();
     } catch (SQLException e) {
-      log.error("Error", e);
+      log.error("Can't Close connection", e);
       throw new RuntimeException(e.getMessage());
     }
   }
@@ -67,7 +67,7 @@ public class DBConnectUtils {
       Statement statement = connection.createStatement();
       statement.execute(sql);
     } catch (SQLException e) {
-      log.error("Error", e);
+      log.error("Can't Execute Query", e);
       throw new RuntimeException(e.getMessage());
     }
   }
@@ -82,25 +82,25 @@ public class DBConnectUtils {
       Statement statement = connection.createStatement();
       return statement.executeUpdate(sql);
     } catch (SQLException e) {
-      log.error("Error", e);
+      log.error("Can't Execute Update Query", e);
       throw new RuntimeException(e.getMessage());
     }
   }
 
-  private String assignSqlHolderWithValue(String query, Map<String, Object> params) {
-    for(Map.Entry<String, Object> entry : params.entrySet()) {
+  private String assignSqlHolderWithValue(String QUERY, Map<String, Object> keyValues) {
+    for (Map.Entry<String, Object> entry : keyValues.entrySet()) {
       String key = entry.getKey();
       Object value = entry.getValue();
       String formatValue ;
-      if(value instanceof Collection) {
+      if (value instanceof Collection) {
         formatValue = StringUtils.collectionToCommaDelimitedString((Collection<?>) value);
       } else if(value instanceof Object[]) {
         formatValue = StringUtils.arrayToCommaDelimitedString((Object[]) value);
       } else {
         formatValue = value.toString();
       }
-      query = query.replace(":" + key, formatValue);
+      QUERY = QUERY.replace(":" + key, formatValue);
     }
-    return query;
+    return QUERY;
   }
 }
