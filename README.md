@@ -13,7 +13,7 @@
 ### Build and Deploy Project
 Go to Project all-in-one scripts directory.
 ```plaintext
-cd /server-build && ./project deploy
+cd /server-build && ./project deploy -clean
 ```
 **For a better understanding**, please read scripts in ```/server-build```.
 ### Run Project
