@@ -44,7 +44,7 @@ public class EmployeeController extends BaseController {
 
   @GetMapping("/all")
   @ResponseBody
-  public List<Employee> getAll() {
-    return service.getAll();
+  public List<Employee> findAll() {
+    return service.findAll();
   }
 }

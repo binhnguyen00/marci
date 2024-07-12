@@ -16,19 +16,23 @@ public class AccountLogic {
   @Autowired
   private AccountRepository repository;
 
-  public Account create(Account account) {
-    Account accountInDb = repository.getByUserName(account.getUserName());
+  public Account create(Account target) {
+    Account accountInDb = repository.getByUserName(target.getUserName());
     if (Objects.nonNull(accountInDb)) {
-      log.error("User {} already exists", account.getUserName());
+      log.error("User {} already exists", target.getUserName());
       throw new RuntimeException("User already exists");
     }
-    account = repository.save(account);
-    return account;
+    target.setUserInteract();
+    target = repository.save(target);
+    return target;
   }
 
   public Account save(Account target) {
     if (target.isNew()) return create(target);
-    return repository.save(target);
+    else {
+      target.setUserInteract();
+      return repository.save(target);
+    }
   }
 
   public Account getById(Long id) {

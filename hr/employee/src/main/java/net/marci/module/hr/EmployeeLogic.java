@@ -48,6 +48,7 @@ public class EmployeeLogic {
   }
 
   public Employee save(Employee employee) {
+    employee.setUserInteract();
     return repository.save(employee);
   }
 
@@ -55,7 +56,7 @@ public class EmployeeLogic {
     repository.deleteById(id);
   }
 
-  public List<Employee> getAll() {
+  public List<Employee> findAll() {
     return repository.findAll();
   }
 }

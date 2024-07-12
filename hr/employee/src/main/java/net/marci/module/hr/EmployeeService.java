@@ -46,8 +46,8 @@ public class EmployeeService {
   }
 
   @Transactional
-  public List<Employee> getAll() {
-    return logic.getAll();
+  public List<Employee> findAll() {
+    return logic.findAll();
   }
 
   public String helloWorld() {
