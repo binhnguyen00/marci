@@ -1,6 +1,7 @@
 package net.marci.common;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,8 @@ abstract public class BaseEntity extends Persistable<Long> {
   public enum StorageState {
     ACTIVE, ARCHIVED
   }
+
+  public static final String TABLE_NAME = "";
 
   @Column(name = "creator")
   protected String creator;
@@ -35,6 +38,10 @@ abstract public class BaseEntity extends Persistable<Long> {
   @Override
   public String toString() {
     return String.format("Entity of type %s with id: %s", this.getClass().getName(), getId());
+  }
+
+  public String getTableName() {
+    return TABLE_NAME;
   }
 
   /**
