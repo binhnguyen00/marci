@@ -35,7 +35,7 @@ public class DBConnectUtils {
     this.connection = connection;
   }
 
-  public void commit()  {
+  public void commit() {
     try {
       connection.commit();
     } catch (SQLException e) {
@@ -44,7 +44,7 @@ public class DBConnectUtils {
     }
   }
 
-  public void rollback()  {
+  public void rollback() {
     try {
       connection.rollback();
     } catch (SQLException e) {
@@ -53,7 +53,7 @@ public class DBConnectUtils {
     }
   }
 
-  public void close()  {
+  public void close() {
     try {
       connection.close();
     } catch (SQLException e) {
@@ -87,14 +87,14 @@ public class DBConnectUtils {
     }
   }
 
-  private String assignSqlHolderWithValue(String QUERY, Map<String, Object> keyValues) {
+  public String assignSqlHolderWithValue(String QUERY, Map<String, Object> keyValues) {
     for (Map.Entry<String, Object> entry : keyValues.entrySet()) {
       String key = entry.getKey();
       Object value = entry.getValue();
-      String formatValue ;
+      String formatValue;
       if (value instanceof Collection) {
         formatValue = StringUtils.collectionToCommaDelimitedString((Collection<?>) value);
-      } else if(value instanceof Object[]) {
+      } else if (value instanceof Object[]) {
         formatValue = StringUtils.arrayToCommaDelimitedString((Object[]) value);
       } else {
         formatValue = value.toString();

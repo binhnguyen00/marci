@@ -47,9 +47,10 @@ dependencies {
   springJars group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: "${springBootVersion}"
 
   // Server Runtime Jars
+  serverAppJars group: 'net.marci.core', name: 'marci-lib-common', version: "${marciCoreVersion}"
   serverAppJars group: 'net.marci.core', name: 'marci-module-common', version: "${marciCoreVersion}"
   serverAppJars group: 'net.marci.core', name: 'marci-module-http', version: "${marciCoreVersion}"
-  serverAppJars group: 'net.marci.core', name: 'marci-lib-common', version: "${marciCoreVersion}"
+  serverAppJars group: 'net.marci.core', name: 'marci-module-deletegraph', version: "${marciCoreVersion}"
   serverAppJars group: 'net.marci.hr', name: 'marci-hr-account', version: "${marciHrVersion}"
   serverAppJars group: 'net.marci.hr', name: 'marci-hr-employee', version: "${marciHrVersion}"
   serverAppJars group: 'net.marci.hr', name: 'marci-hr-app-core', version: "${marciHrVersion}"

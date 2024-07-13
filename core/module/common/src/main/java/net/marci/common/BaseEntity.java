@@ -1,6 +1,8 @@
 package net.marci.common;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,14 +12,10 @@ import java.util.Date;
 import java.util.Objects;
 
 @MappedSuperclass
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 abstract public class BaseEntity extends Persistable<Long> {
-
-  public enum StorageState {
-    ACTIVE, ARCHIVED
-  }
-
-  public static final String TABLE_NAME = "";
 
   @Column(name = "creator")
   protected String creator;
@@ -40,10 +38,6 @@ abstract public class BaseEntity extends Persistable<Long> {
     return String.format("Entity of type %s with id: %s", this.getClass().getName(), getId());
   }
 
-  public String getTableName() {
-    return TABLE_NAME;
-  }
-
   /**
    * Update modifier, modified time.
    * If the record is new, set creator, created time.
@@ -54,9 +48,11 @@ abstract public class BaseEntity extends Persistable<Long> {
   }
 
   public void setMilestone(Date time) {
-    if (this.isNew()) {
-      if (Objects.isNull(createdTime)) setCreatedTime(time);
-    }
+    if (this.isNew() && Objects.isNull(createdTime)) setCreatedTime(time);
     setModifiedTime(time);
+  }
+
+  public enum StorageState {
+    ACTIVE, ARCHIVED
   }
 }
