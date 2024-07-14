@@ -113,25 +113,32 @@ DEPLOYING MARCI...
 function showHelp() {
   echo """
 IMPORTANT: You need to install pnpm before using this script.
+  >> npm install -g pnpm
 
 Usage: ./project [COMMAND] [-OPTION]
 
 These are commands used in various situations:
 
 Deploy Project
+  [COMMAND]
   deploy            Include [build], [release] and [-clean] process
 
 Build Project
-  build             Compile Server & UI
+  [COMMAND]
+  build             Compile Java & Typescript code
   build-ui          Compile Typescript code
   build-server      Compile Java code
-  [-clean]          Remove Server release jars & UI's node_modules, dist. 
-                    In case of updating dependencies's version in package.json, You might need to remove pnpm-lock.yaml by hand.
+
+  [-OPTION]
+  -clean            Remove Server release jars & UI's node_modules, dist. 
+                    In case of updating dependencies' versions in package.json, You might need to remove pnpm-lock.yaml by hand.
 
 Release Project
+  [COMMAND]
   release           Release server's jars
 
 Other Commands
+  [COMMAND]
   help              Show this help message
 
 """
