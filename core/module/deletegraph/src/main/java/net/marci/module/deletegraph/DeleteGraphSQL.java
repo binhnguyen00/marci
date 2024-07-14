@@ -19,19 +19,22 @@ import java.util.Objects;
 @Getter
 @Setter
 public class DeleteGraphSQL {
-  private String deleteQuery;
+
+  private String deleteSQL;
+
   /**
    * In a Query, there are variables highlighted by `:`. e.g :key1, :key2.
-   *
-   * @see DBConnectUtils#assignSqlHolderWithValue(String, Map)  How to replace those variables with actual values?
-   */
+   * @see DBConnectUtils#assignSqlHolderWithValue(String, Map)  How to replace those variables with actual values? */
   private Map<String, Object> sqlKeyValueMap;
 
+  /** A list of Joined Tables / Child Tables */
   private List<DeleteGraphSQL> preDeleteChildren;
+
+  /** A list of Target Tables / Parent Tables */
   private List<DeleteGraphSQL> postDeleteChildren;
 
-  public DeleteGraphSQL(String delQuery, Map<String, Object> sqlKeyValueMap) {
-    this.deleteQuery = delQuery;
+  public DeleteGraphSQL(String deleteSQL, Map<String, Object> sqlKeyValueMap) {
+    this.deleteSQL = deleteSQL;
     this.sqlKeyValueMap = sqlKeyValueMap;
   }
 
@@ -52,8 +55,8 @@ public class DeleteGraphSQL {
       }
     }
 
-    int count = connUtils.executeUpdate(deleteQuery, sqlKeyValueMap);
-    log.info("DELETE GRAPH QUERY:\n  {} => {}", deleteQuery, count);
+    int count = connUtils.executeUpdate(this.deleteSQL, sqlKeyValueMap);
+    log.info("EXECUTE DELETE SQL:\n  {}\n\t Removed {} Records", this.deleteSQL, count);
     connUtils.commit();
 
     if (Objects.nonNull(postDeleteChildren)) {
@@ -70,7 +73,8 @@ public class DeleteGraphSQL {
         if (Objects.nonNull(child)) child.dumpSql();
       }
     }
-    System.out.println(deleteQuery);
+
+    System.out.println(deleteSQL);
 
     if (Objects.nonNull(postDeleteChildren)) {
       for (DeleteGraphSQL child : postDeleteChildren) {

@@ -66,6 +66,8 @@ subprojects {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonVersion}"
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksonVersion}"
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: "${jacksonVersion}"
+
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: "${springBootVersion}"
   }
 
   configurations {

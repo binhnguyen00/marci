@@ -69,6 +69,8 @@ subprojects {
     implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: "${jakartaPersistenceApiVersion}"
     implementation group: 'org.postgresql', name: 'postgresql', version: "${postgresVersion}"
 
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: "${springBootVersion}"
+
     // Using Lib from other project
     api group: 'net.marci.core', name: 'marci-lib-common', version: "${marciCoreVersion}"
     api group: 'net.marci.core', name: 'marci-module-common', version: "${marciCoreVersion}"

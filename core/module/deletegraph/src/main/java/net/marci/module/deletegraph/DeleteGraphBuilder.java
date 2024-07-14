@@ -17,37 +17,39 @@ import java.util.*;
 @Getter
 @Setter
 public class DeleteGraphBuilder {
-  private DBConnectUtils           dbConnectUtils;
-  private Class<?>                 entity;
-  private String                   table;
-  private DeleteGraphJoinType      joinType;
-  private String                   joinField;
-  private Long                     companyId;
-  private List<Long> ids;
-  private List<DeleteGraphBuilder> childGraphs = new ArrayList<>();
+  private DBConnectUtils            dbConnectUtils;
+  private Class<?>                  entity;
+  private String                    table;
+  private DeleteGraphJoinType       joinType;
+  private String                    joinField;
+  private List<Long> targetIds;
+  private List<DeleteGraphBuilder>  childGraphs = new ArrayList<>();
 
 
-  public DeleteGraphBuilder(DBConnectUtils dbConnectUtils, Long companyId, Class<?> entity, List<Long> candidateIds) {
+  public DeleteGraphBuilder(DBConnectUtils dbConnectUtils, Class<?> entity, List<Long> candidateIds) {
     this.dbConnectUtils  = dbConnectUtils;
     this.entity          = entity;
-    this.companyId       = companyId;
-    this.ids             = candidateIds;
+    this.targetIds       = candidateIds;
 
     Table ann = entity.getAnnotation(Table.class);
     if (ann != null) table = ann.name();
     buildChildGraph();
   }
 
-  public int runDelete() {
+  public int doDelete() {
     DeleteGraphSQL graph = buildDeleteGraphSQL();
     if (graph == null) return 0;
     return graph.executeDelete(dbConnectUtils);
   }
 
-  DeleteGraphSQL buildDeleteGraphSQL() {
-    if (ids.isEmpty()) return null;
+  public void dumpSql() {
+    buildDeleteGraphSQL().dumpSql();
+  }
+
+  private DeleteGraphSQL buildDeleteGraphSQL() {
+    if (targetIds.isEmpty()) return null;
     Map<String, Object> params = new HashMap<>();
-    params.put("ids", ids);
+    params.put("ids", targetIds);
     String delQuery = "DELETE FROM " + table + " WHERE id IN (:ids)";
     if (DeleteGraphJoinType.ManyToMany.equals(this.joinType)) {
       delQuery = "DELETE FROM " + table + " WHERE " + this.joinField + " IN (:ids)";
@@ -66,10 +68,6 @@ public class DeleteGraphBuilder {
     return graph;
   }
 
-  public void dumpSql() {
-    buildDeleteGraphSQL().dumpSql();
-  }
-
   private void buildChildGraph() {
     DeleteGraphs graphs = entity.getAnnotation(DeleteGraphs.class);
     if (Objects.nonNull(graphs)) {
@@ -80,9 +78,9 @@ public class DeleteGraphBuilder {
         if (Objects.isNull(tableAnn)) {
           targetCascadeTable = deleteGraph.table();
         } else targetCascadeTable = tableAnn.name();
-        if (!this.ids.isEmpty()) {
+        if (!this.targetIds.isEmpty()) {
           Map<String, Object> keyValues = new HashMap<>();
-          keyValues.put("candidateIds", this.ids);
+          keyValues.put("candidateIds", this.targetIds);
           String SQL_QUERY = buildFindCandidateIdsQuery(deleteGraph, targetCascadeTable);
           List<Map<String, Object>> results = dbConnectUtils.execute(SQL_QUERY, keyValues);
           List<Long> foundIds;
@@ -92,8 +90,7 @@ public class DeleteGraphBuilder {
 
           log.info("Execute SQL:\n {}: total {}", SQL_QUERY, foundIds.size());
 
-          DeleteGraphBuilder child = new DeleteGraphBuilder(
-            dbConnectUtils, companyId, targetCascadeEntity, foundIds);
+          DeleteGraphBuilder child = new DeleteGraphBuilder(dbConnectUtils, targetCascadeEntity, foundIds);
           if (Objects.isNull(tableAnn)) {
             child.setTable(deleteGraph.table());
             child.setJoinField(deleteGraph.joinField());

@@ -2,6 +2,8 @@ server:
   port: 7080
 
 spring:
+  main:
+    banner-mode: false
   datasource:
     server:
       host: localhost
