@@ -6,12 +6,16 @@ import net.marci.module.account.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Objects;
 
 @Slf4j
 @Component
 public class AccountLogic {
+
+  @Autowired
+  private DataSource dataSource;
 
   @Autowired
   private AccountRepository repository;
@@ -49,5 +53,12 @@ public class AccountLogic {
 
   public List<Account> findAll() {
     return repository.findAll();
+  }
+
+  public int delete(Long accountId) {
+    final Account account = getById(accountId);
+
+    repository.delete(account);
+    return 1;
   }
 }

@@ -5,11 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Collection;
-import java.util.Map;
+import java.sql.*;
+import java.util.*;
 
 /**
  * @author Bình Nguyễn
@@ -62,16 +59,6 @@ public class DBConnectUtils {
     }
   }
 
-  public void execute(String sql) {
-    try {
-      Statement statement = connection.createStatement();
-      statement.execute(sql);
-    } catch (SQLException e) {
-      log.error("Can't Execute Query", e);
-      throw new RuntimeException(e.getMessage());
-    }
-  }
-
   public int executeUpdate(String sql, Map<String, Object> keyValues) {
     sql = assignSqlHolderWithValue(sql, keyValues);
     return executeUpdate(sql);
@@ -87,7 +74,48 @@ public class DBConnectUtils {
     }
   }
 
-  public String assignSqlHolderWithValue(String QUERY, Map<String, Object> keyValues) {
+  public void execute(String SQL_QUERY) {
+    try {
+      Statement statement = connection.createStatement();
+      statement.execute(SQL_QUERY);
+    } catch (SQLException e) {
+      log.error("Can't Execute Query", e);
+      throw new RuntimeException(e.getMessage());
+    }
+  }
+
+  public List<Map<String, Object>> execute(String SQL_QUERY_TEMPLATE, Map<String, Object> keyValues) {
+    final String SQL_QUERY = assignSqlHolderWithValue(SQL_QUERY_TEMPLATE, keyValues);
+    List<Map<String, Object>> results;
+    try {
+      Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+      ResultSet resultSet = stmt.executeQuery(SQL_QUERY);
+      results = extractResults(resultSet);
+    } catch(SQLException e) {
+      log.error("Can't Execute Query", e);
+      throw new RuntimeException(e.getMessage());
+    }
+    return results;
+  }
+
+  private List<Map<String, Object>> extractResults(ResultSet resultSet) throws SQLException {
+    List<Map<String, Object>> objects = new ArrayList<>();
+    ResultSetMetaData metaData = resultSet.getMetaData();
+    int columnCount = metaData.getColumnCount();
+
+    while (resultSet.next()) {
+      Map<String, Object> row = new HashMap<>();
+      for (int i = 1; i <= columnCount; i++) {
+        String columnName = metaData.getColumnName(i);
+        Object columnValue = resultSet.getObject(i);
+        row.put(columnName, columnValue);
+      }
+      objects.add(row);
+    }
+    return objects;
+  }
+
+  public String assignSqlHolderWithValue(String SQL_QUERY, Map<String, Object> keyValues) {
     for (Map.Entry<String, Object> entry : keyValues.entrySet()) {
       String key = entry.getKey();
       Object value = entry.getValue();
@@ -99,8 +127,8 @@ public class DBConnectUtils {
       } else {
         formatValue = value.toString();
       }
-      QUERY = QUERY.replace(":" + key, formatValue);
+      SQL_QUERY = SQL_QUERY.replace(":" + key, formatValue);
     }
-    return QUERY;
+    return SQL_QUERY;
   }
 }

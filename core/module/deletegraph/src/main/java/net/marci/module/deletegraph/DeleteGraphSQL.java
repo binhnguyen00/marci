@@ -18,7 +18,7 @@ public class DeleteGraphSQL {
   /**
    * In a Query, there are variables highlighted by `:`. e.g :key1, :key2.
    *
-   * @see DBConnectUtils#assignSqlHolderWithValue(String, Map) How to replace those variables with actual values?
+   * @see DBConnectUtils#assignSqlHolderWithValue(String, Map)  How to replace those variables with actual values?
    */
   private Map<String, Object> sqlKeyValueMap;
 

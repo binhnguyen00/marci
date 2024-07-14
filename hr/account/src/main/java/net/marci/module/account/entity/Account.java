@@ -9,6 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.marci.common.BaseEntity;
+import net.marci.module.deletegraph.DeleteGraph;
+import net.marci.module.deletegraph.DeleteGraphJoinType;
+import net.marci.module.deletegraph.DeleteGraphs;
 
 @Entity
 @Table(
@@ -25,6 +28,9 @@ import net.marci.common.BaseEntity;
 @Getter
 @Setter
 @NoArgsConstructor
+@DeleteGraphs({
+  @DeleteGraph(table = "employee", joinField = "account_id", joinType = DeleteGraphJoinType.OneToOne)
+})
 public class Account extends BaseEntity {
 
   public static final String TABLE_NAME = "account";
