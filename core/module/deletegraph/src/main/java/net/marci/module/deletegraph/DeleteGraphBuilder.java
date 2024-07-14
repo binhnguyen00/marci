@@ -11,8 +11,9 @@ import java.util.*;
 /**
  * @author Bình Nguyễn
  * @Email jackjack2000.kahp@gmail.com
- */
-
+ * @Usage Work like a Binary tree. Each node is a delete query of the target table. <br/>
+ *        1. Case OneToOne/OneToMany: Delete from child to parent. <br/>
+ *        2. Case ManyToMany: Delete relation table, then delete from child to parent. */
 @Slf4j
 @Getter
 @Setter
@@ -22,7 +23,7 @@ public class DeleteGraphBuilder {
   private String                    table;
   private DeleteGraphJoinType       joinType;
   private String                    joinField;
-  private List<Long> targetIds;
+  private List<Long>                targetIds;
   private List<DeleteGraphBuilder>  childGraphs = new ArrayList<>();
 
 
@@ -32,18 +33,23 @@ public class DeleteGraphBuilder {
     this.targetIds       = candidateIds;
 
     Table ann = entity.getAnnotation(Table.class);
-    if (ann != null) table = ann.name();
+    if (Objects.nonNull(ann)) table = ann.name();
     buildChildGraph();
   }
 
   public int doDelete() {
     DeleteGraphSQL graph = buildDeleteGraphSQL();
-    if (graph == null) return 0;
+    if (Objects.isNull(graph)) return 0;
     return graph.executeDelete(dbConnectUtils);
   }
 
   public void dumpSql() {
-    buildDeleteGraphSQL().dumpSql();
+    DeleteGraphSQL graph = buildDeleteGraphSQL();
+    if (Objects.isNull(graph)) {
+      log.error("Can't find Target table with ids: {}", this.targetIds);
+      return;
+    }
+    graph.dumpSql();
   }
 
   private DeleteGraphSQL buildDeleteGraphSQL() {
@@ -58,7 +64,7 @@ public class DeleteGraphBuilder {
 
     for (DeleteGraphBuilder child : childGraphs) {
       DeleteGraphSQL childGraph = child.buildDeleteGraphSQL();
-      if (child.getJoinType() == DeleteGraphJoinType.OneToOne) {
+      if (DeleteGraphJoinType.OneToOne.equals(child.getJoinType())) {
         graph.addPostDelete(childGraph);
       } else {
         graph.addPreDelete(childGraph);
@@ -116,8 +122,8 @@ public class DeleteGraphBuilder {
 
   private List<Long> extractIds(List<Map<String, Object>> results) {
     List<Long> holder = new ArrayList<>(results.size());
-    for (Map<String, Object> sel : results) {
-      Object target = sel.get("id");
+    for (Map<String, Object> result : results) {
+      Object target = result.get("id");
       if (target instanceof Long) {
         holder.add((Long) target);
       }
@@ -127,8 +133,8 @@ public class DeleteGraphBuilder {
 
   private List<Long> extractIdsWithJoinField(List<Map<String, Object>> results, String joinField) {
     List<Long> holder = new ArrayList<>(results.size());
-    for (Map<String, Object> sel : results) {
-      Object idObject = sel.get(joinField);
+    for (Map<String, Object> result : results) {
+      Object idObject = result.get(joinField);
       if (idObject instanceof Long) {
         holder.add((Long) idObject);
       }
