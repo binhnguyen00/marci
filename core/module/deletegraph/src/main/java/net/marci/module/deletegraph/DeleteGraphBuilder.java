@@ -11,6 +11,7 @@ import java.util.*;
 /**
  * @author Bình Nguyễn
  * @Email jackjack2000.kahp@gmail.com
+ * @Usage A replacement for JPA's delete action
  */
 
 @Slf4j
