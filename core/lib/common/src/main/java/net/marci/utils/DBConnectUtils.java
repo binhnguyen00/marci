@@ -115,6 +115,11 @@ public class DBConnectUtils {
     return objects;
   }
 
+  /**
+   * @param SQL_QUERY Template SQL with keys that defined as `:keyName`
+   * @param keyValues A Map of `:keyName` and its value
+   * @return A fully SQL with actual values
+   */
   public String assignSqlHolderWithValue(String SQL_QUERY, Map<String, Object> keyValues) {
     for (Map.Entry<String, Object> entry : keyValues.entrySet()) {
       String key = entry.getKey();

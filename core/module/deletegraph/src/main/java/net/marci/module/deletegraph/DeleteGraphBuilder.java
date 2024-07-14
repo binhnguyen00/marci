@@ -8,6 +8,11 @@ import net.marci.utils.DBConnectUtils;
 
 import java.util.*;
 
+/**
+ * @author Bình Nguyễn
+ * @Email jackjack2000.kahp@gmail.com
+ */
+
 @Slf4j
 @Getter
 @Setter
@@ -49,9 +54,9 @@ public class DeleteGraphBuilder {
     }
     DeleteGraphSQL graph = new DeleteGraphSQL(delQuery, params);
 
-    for(DeleteGraphBuilder child : childGraphs) {
+    for (DeleteGraphBuilder child : childGraphs) {
       DeleteGraphSQL childGraph = child.buildDeleteGraphSQL();
-      if(child.getJoinType() == DeleteGraphJoinType.OneToOne) {
+      if (child.getJoinType() == DeleteGraphJoinType.OneToOne) {
         graph.addPostDelete(childGraph);
       } else {
         graph.addPreDelete(childGraph);
@@ -61,7 +66,7 @@ public class DeleteGraphBuilder {
     return graph;
   }
 
-  public void dumpQuery() {
+  public void dumpSql() {
     buildDeleteGraphSQL().dumpSql();
   }
 
@@ -72,7 +77,7 @@ public class DeleteGraphBuilder {
         Class<?> targetCascadeEntity = deleteGraph.target();
         Table tableAnn = targetCascadeEntity.getAnnotation(Table.class);
         String targetCascadeTable;
-        if (tableAnn == null) {
+        if (Objects.isNull(tableAnn)) {
           targetCascadeTable = deleteGraph.table();
         } else targetCascadeTable = tableAnn.name();
         if (!this.ids.isEmpty()) {
@@ -87,9 +92,9 @@ public class DeleteGraphBuilder {
 
           log.info("Execute SQL:\n {}: total {}", SQL_QUERY, foundIds.size());
 
-          DeleteGraphBuilder child =
-            new DeleteGraphBuilder(dbConnectUtils, companyId, targetCascadeEntity, foundIds);
-          if (tableAnn == null) {
+          DeleteGraphBuilder child = new DeleteGraphBuilder(
+            dbConnectUtils, companyId, targetCascadeEntity, foundIds);
+          if (Objects.isNull(tableAnn)) {
             child.setTable(deleteGraph.table());
             child.setJoinField(deleteGraph.joinField());
           }
@@ -101,23 +106,23 @@ public class DeleteGraphBuilder {
   }
 
   private String buildFindCandidateIdsQuery(DeleteGraph deleteGraph, String targetCascadeTable) {
-    String query;
-    if(deleteGraph.joinType() ==  DeleteGraphJoinType.OneToOne) {
-      query = "SELECT " + deleteGraph.joinField() + " FROM " + this.table + " WHERE id IN (:candidateIds)";
-    } else if(deleteGraph.joinType() ==  DeleteGraphJoinType.ManyToMany) {
-      query = "SELECT " + deleteGraph.joinField() + " FROM " + targetCascadeTable + " WHERE " + deleteGraph.joinField() + " IN (:candidateIds)" ;
+    String SQl_QUERY;
+    if (DeleteGraphJoinType.OneToOne.equals(deleteGraph.joinType())) {
+      SQl_QUERY = "SELECT " + deleteGraph.joinField() + " FROM " + this.table + " WHERE id IN (:candidateIds)";
+    } else if(DeleteGraphJoinType.ManyToMany.equals(deleteGraph.joinType())) {
+      SQl_QUERY = "SELECT " + deleteGraph.joinField() + " FROM " + targetCascadeTable + " WHERE " + deleteGraph.joinField() + " IN (:candidateIds)" ;
     } else {
-      query = "SELECT id FROM " + targetCascadeTable + " WHERE " + deleteGraph.joinField() + " IN (:candidateIds)" ;
+      SQl_QUERY = "SELECT id FROM " + targetCascadeTable + " WHERE " + deleteGraph.joinField() + " IN (:candidateIds)" ;
     }
-    return query;
+    return SQl_QUERY;
   }
 
   private List<Long> extractIds(List<Map<String, Object>> results) {
     List<Long> holder = new ArrayList<>(results.size());
     for (Map<String, Object> sel : results) {
-      Object idObject = sel.get("id");
-      if (idObject instanceof Long) {
-        holder.add((Long) idObject);
+      Object target = sel.get("id");
+      if (target instanceof Long) {
+        holder.add((Long) target);
       }
     }
     return holder;
