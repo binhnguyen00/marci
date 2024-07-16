@@ -25,31 +25,30 @@ export abstract class Api {
   initRequest(method: HttpMethod, requestBody?: any): RequestInit {;
     let body = null;
     if (requestBody) body = JSON.stringify(requestBody);
-    let requestInit: any = {
+    let requestInit: RequestInit = {
       method: method,
       headers: {
-        'Content-Type': "application/json",
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': "*"
       },
-      mode: 'no-cors', // Should be 'cors
+      mode: 'cors',
       cache: 'no-cache',
-      credentials: 'include',
+      // credentials: 'include',
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
       body: body
     }
-    console.log(requestInit);
     return requestInit;
   }
 
-  // TODO: Fix error handling
   doFetch(url: string, requestInit: RequestInit, successCB: CallBack, failCB?: CallBack): void {
     fetch(url, requestInit)
     .then((response: any /* ResponseEntity from Springboot */) => {
       if (!response.ok) {
         if (failCB) failCB(response);
-      } else return response;
-    }).then((okResponse: any) => {
-      successCB(okResponse);
+      } else {
+        successCB(response);
+      };
     }).catch((error: any) => {
       if (failCB) failCB(error);
     });

@@ -19,6 +19,8 @@ export class RPC extends Api {
       parameters: params
     };
     const requestInit: RequestInit = this.initRequest(HttpMethod.POST, rpcRequest);
+    console.log(requestInit);
+    
     this.doFetch(url, requestInit, successCB, failCB);
   }
 }
