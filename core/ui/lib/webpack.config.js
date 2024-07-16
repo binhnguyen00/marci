@@ -9,11 +9,18 @@ const configPlugins = [
 
 const config = { 
   context: __dirname,
-  entry: "./src/index.tsx",
+  entry: [
+    "./src/index.tsx"
+  ],
   output: {
     publicPath: '/',
     filename: 'main.js', // Output file name
-    path: path.resolve(__dirname, 'dist'), // Output directory
+    chunkFilename: 'main.js',
+    library: {
+      name: 'marci_ui_lib',
+      type: 'umd2',
+      umdNamedDefine: true
+    },
   },
   module: {
     rules: [

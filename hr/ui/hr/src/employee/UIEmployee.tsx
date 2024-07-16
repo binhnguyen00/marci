@@ -24,7 +24,7 @@ export function UIEmployee() {
   }
 
   return (
-    <div className="d-flex">
+    <div className="d-flex flex-column">
       <h1>Employee</h1>
       <button onClick={restCall}> RESTful Call </button>
       <button onClick={rpcCall}> RPC Call </button>

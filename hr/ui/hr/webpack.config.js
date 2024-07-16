@@ -16,7 +16,12 @@ const config = {
   output: {
     publicPath: '/',
     filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    chunkFilename: 'main.js',
+    library: {
+      name: 'marci_ui_lib',
+      type: 'umd2',
+      umdNamedDefine: true
+    },
   },
   module: {
     rules: [
@@ -29,9 +34,7 @@ const config = {
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
-    modules: [
-      path.resolve(__dirname, 'src'), 'node_modules',
-    ],
+    modules: [ path.resolve(__dirname, 'src'), 'node_modules' ],
   },
   /** This reduces the bundle size.
    * Consiser using this config with CDN in index.html. Else, shall not use. 
