@@ -16,7 +16,7 @@ const config = {
     publicPath: '/',
     filename: 'main.js', // Output file name
     chunkFilename: 'main.js',
-    library: {
+    library: { // Required for exporting custom library
       name: 'marci_ui_lib',
       type: 'umd2',
       umdNamedDefine: true
