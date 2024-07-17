@@ -1,5 +1,4 @@
-import React from 'react';
 import * as server from "./server";
-import "./scss/stylesheet.scss";
+import "./scss/stylesheet.scss"; // Exported itself
 
-export { React, server };
+export { server };

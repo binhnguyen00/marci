@@ -1,5 +1,4 @@
 import React from "react";
-
 import { server } from "@marci-ui/lib";
 
 export function UIEmployee() {
@@ -24,7 +23,7 @@ export function UIEmployee() {
   }
 
   return (
-    <div className="flex-vbox">
+    <div className="flex-vbo">
       <h1>Employee</h1>
       <div>
         <button className="btn btn-primary" onClick={restCall}> RESTful Call </button>
