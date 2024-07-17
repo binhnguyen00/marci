@@ -10,8 +10,8 @@ type RPCRequest = {
 
 export class RPC extends Api { 
 
-  call(path: string, component: string, service: string, params: any, successCB: CallBack, failCB?: CallBack): void {
-    const url: string = this.initialUrl(path);
+  call(component: string, service: string, params: any, successCB: CallBack, failCB?: CallBack): void {
+    const url: string = this.initialUrl("rpc/call");
     const rpcRequest: RPCRequest = {
       version: '1.0',
       component: component,
@@ -19,8 +19,6 @@ export class RPC extends Api {
       parameters: params
     };
     const requestInit: RequestInit = this.initRequest(HttpMethod.POST, rpcRequest);
-    console.log(requestInit);
-    
     this.doFetch(url, requestInit, successCB, failCB);
   }
 }

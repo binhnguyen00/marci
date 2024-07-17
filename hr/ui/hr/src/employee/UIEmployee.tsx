@@ -20,7 +20,7 @@ export function UIEmployee() {
   }
 
   const rpcCall = () => {
-    server.rpc.call("rpc/call", "EmployeeService", "helloWorld", {}, successCB, failCB);
+    server.rpc.call("EmployeeService", "helloWorld", {}, successCB, failCB);
   }
 
   return (
