@@ -69,11 +69,11 @@ function startUI() {
   cd $PROJECT_DIR/hr/ui/hr
   if [ ! -d "dist" ] ; then
     echo """
-    ----------------------------------
-    No dist folder found !!!
-    Build the UI in order to process. 
-    Use ./project.sh for more details.
-    ----------------------------------
+----------------------------------
+No dist folder found !!!
+Build the UI in order to process. 
+Use ./project.sh for more details.
+----------------------------------
     """
   else 
     pnpm run server
@@ -82,6 +82,9 @@ function startUI() {
 
 function showHelp() {
   echo """
+IMPORTANT: You need to install pnpm before using this script.
+  >> npm install -g pnpm
+  
 Usage: ./server.sh [COMMAND] [-OPTION]
 
 These are common commaneds to run the server

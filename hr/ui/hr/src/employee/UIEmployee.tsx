@@ -23,12 +23,10 @@ export function UIEmployee() {
   }
 
   return (
-    <div className="flex-vbo">
-      <h1>Employee</h1>
-      <div>
+    <div className="flex-vbox">
+      <div className="h1">Employee</div>
+      <div className="">
         <button className="btn btn-primary" onClick={restCall}> RESTful Call </button>
-      </div>
-      <div>
         <button className="btn btn-primary" onClick={rpcCall}> RPC Call </button>
       </div>
     </div>

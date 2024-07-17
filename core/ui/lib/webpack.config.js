@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const configPlugins = [
   new HtmlWebpackPlugin({ // This helps create index.html in dist.
@@ -9,13 +11,13 @@ const configPlugins = [
 
 const config = { 
   context: __dirname,
-  entry: [
-    "./src/index.tsx"
-  ],
+  entry: {
+    main: "./src/index.tsx"
+  },
   output: {
     publicPath: '/',
-    filename: 'main.js', // Output file name
-    chunkFilename: 'main.js',
+    filename: '[name].js', // Output file name. The name is depended on entry.
+    chunkFilename: '[name].js',
     library: { // Required for exporting custom library
       name: 'marci_ui_lib',
       type: 'umd2',
@@ -43,6 +45,10 @@ const config = {
     extensions: ['.ts', '.tsx', '.js'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
+  watchOptions: {
+    aggregateTimeout: 200,
+    ignored: new RegExp('.*^((?!(/src|marci/)).)*$'),
+  },
   /** This reduces the bundle size.
    * Consiser using this config with CDN in index.html. Else, shall not use. 
     externals: {
@@ -52,7 +58,14 @@ const config = {
     }, 
    */
   devtool: 'source-map',
-  plugins: configPlugins
+  plugins: configPlugins,
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin(),
+      new CssMinimizerPlugin(),
+    ],
+  },
 } 
 
 module.exports = config;

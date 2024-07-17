@@ -20,6 +20,7 @@ export class RPC extends Api {
     };
     const requestInit: RequestInit = this.initRequest(HttpMethod.POST, rpcRequest);
     this.doFetch(url, requestInit, successCB, failCB);
+    console.log("Test RPC call");
   }
 }
 

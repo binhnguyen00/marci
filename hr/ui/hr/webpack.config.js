@@ -10,13 +10,13 @@ const configPlugins = [
 const config = { 
   context: __dirname,
   entry: [
-    "./src/index.tsx",
-    "./src/main.tsx",
+    "./src/index.tsx", 
+    "./src/main.tsx"
   ],
   output: {
     publicPath: '/',
-    filename: 'main.js',
-    chunkFilename: 'main.js',
+    filename: '[name].js',
+    chunkFilename: '[name].js',
     library: { // Required for exporting custom library
       name: 'marci_ui_lib',
       type: 'umd2',
@@ -34,7 +34,11 @@ const config = {
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
-    modules: [ path.resolve(__dirname, 'src'), 'node_modules' ],
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+  },
+  watchOptions: {
+    aggregateTimeout: 200,
+    ignored: /node_modules/,
   },
   /** This reduces the bundle size.
    * Consiser using this config with CDN in index.html. Else, shall not use. 
