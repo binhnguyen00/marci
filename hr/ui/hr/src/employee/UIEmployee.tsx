@@ -24,10 +24,14 @@ export function UIEmployee() {
   }
 
   return (
-    <div className="d-flex flex-column">
+    <div className="flex-vbox">
       <h1>Employee</h1>
-      <button onClick={restCall}> RESTful Call </button>
-      <button onClick={rpcCall}> RPC Call </button>
+      <div>
+        <button className="btn btn-primary" onClick={restCall}> RESTful Call </button>
+      </div>
+      <div>
+        <button className="btn btn-primary" onClick={rpcCall}> RPC Call </button>
+      </div>
     </div>
   );
 }

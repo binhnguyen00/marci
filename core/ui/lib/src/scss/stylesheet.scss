@@ -1,0 +1,15 @@
+.flex-vbox {
+  display: flex;
+  flex-direction: column !important;
+  flex-grow: 1;
+}
+
+.flex-hbox {
+  display: flex;
+  flex-direction: row !important;
+  flex-grow: 1;
+}
+
+// more classes...
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
