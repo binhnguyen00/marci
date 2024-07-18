@@ -10,14 +10,15 @@
     "dev":    "webpack --mode development --watch",
     "server": "webpack serve --mode development --open"
   },
-  "dependencies": {
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+  "peerDependencies": {
+    "@marci-ui/lib": "file:../../../core/ui/lib"
   },
   "devDependencies": {
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
     "@types/node": "^20.14.10",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "webpack": "^5.82.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4",
@@ -27,9 +28,6 @@
     "ts-node": "^10.9.2",
     "cross-env": "^7.0.3",
     
-    "@marci-ui/lib": "file:../../../core/ui/lib"
-  },
-  "peerDependencies": {
     "@marci-ui/lib": "file:../../../core/ui/lib"
   },
   "files": [

@@ -1,5 +1,6 @@
 package net.marci.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -12,9 +13,8 @@ import java.util.Date;
 import java.util.Objects;
 
 @MappedSuperclass
-@Getter
-@Setter
-@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor @Getter @Setter
 abstract public class BaseEntity extends Persistable<Long> {
 
   @Column(name = "creator")

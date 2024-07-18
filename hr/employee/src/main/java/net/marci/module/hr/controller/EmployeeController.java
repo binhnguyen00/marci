@@ -23,4 +23,10 @@ public class EmployeeController extends BaseController {
   public String hello() {
     return service.helloWorld();
   }
+
+  @PostMapping("/save")
+  @ResponseStatus(HttpStatus.OK)
+  public Employee save(@RequestBody Employee employee) {
+    return service.save(employee);
+  }
 }

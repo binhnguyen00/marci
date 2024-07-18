@@ -36,7 +36,7 @@ public class RPCService {
       T result = executor.call();
       return new ResponseEntity<>(result, HttpStatus.OK);
     } catch (Exception ex) {
-      log.error("Error executing {}:{} - {}", component, service, Arrays.toString(ex.getStackTrace()));
+      log.error("Error executing {}:{} \n{}", component, service, Arrays.toString(ex.getStackTrace()));
       return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -54,7 +54,6 @@ public class RPCService {
     }
 
     Assert.notNull(mDescriptor, "No method " + request.getService() + " in class: " + request.getComponent());
-    System.out.println(mDescriptor.getMethod().toString());
     Parameter[] parameters = mDescriptor.getMethod().getParameters();
 
     final Map<String, JsonNode> params = request.getParameters();

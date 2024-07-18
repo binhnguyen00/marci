@@ -3,8 +3,8 @@ export interface FieldProps {
   field: string;
   label?: string;
   placeholder?: string;
-  disable?: boolean;
+  disabled?: boolean;
   required?: boolean;
   className?: string;
-  onChange?: (newValue: any, rollbackValue: any) => void;
+  onChange?: (field: string, newValue: any, rollbackValue: any) => void;
 } 

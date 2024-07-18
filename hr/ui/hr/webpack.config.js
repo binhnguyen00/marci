@@ -9,10 +9,12 @@ const configPlugins = [
 
 const config = { 
   context: __dirname,
+
   entry: [
     "./src/index.tsx", 
     "./src/main.tsx"
   ],
+
   output: {
     publicPath: '/',
     filename: '[name].js',
@@ -23,6 +25,7 @@ const config = {
       umdNamedDefine: true
     },
   },
+
   module: {
     rules: [
       {
@@ -32,26 +35,29 @@ const config = {
       }
     ]
   },
+
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
   },
+
   watchOptions: {
     aggregateTimeout: 200,
-    ignored: /node_modules/,
   },
+
   /** This reduces the bundle size.
    * Consiser using this config with CDN in index.html. Else, shall not use. 
     externals: {
-      'react': 'react',
-      'react-dom': 'react-dom',
       'bootstrap': 'bootstrap',
     }, 
    */
+
   devtool: 'source-map',
+
   devServer: {
     port: 3000
   },
+  
   plugins: configPlugins
 } 
 

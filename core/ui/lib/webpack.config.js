@@ -1,7 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const configPlugins = [
   new HtmlWebpackPlugin({ // This helps create index.html in dist.
@@ -11,9 +9,11 @@ const configPlugins = [
 
 const config = { 
   context: __dirname,
+
   entry: {
     main: "./src/index.tsx"
   },
+
   output: {
     publicPath: '/',
     filename: '[name].js', // Output file name. The name is depended on entry.
@@ -24,6 +24,7 @@ const config = {
       umdNamedDefine: true
     },
   },
+
   module: {
     rules: [
       {
@@ -41,31 +42,26 @@ const config = {
       }
     ]
   },
+
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
+
   watchOptions: {
     aggregateTimeout: 200,
-    ignored: new RegExp('.*^((?!(/src|marci/)).)*$'),
   },
-  /** This reduces the bundle size.
-   * Consiser using this config with CDN in index.html. Else, shall not use. 
-    externals: {
-      'react': 'react',
-      'react-dom': 'react-dom',
-      'bootstrap': 'bootstrap',
-    }, 
-   */
+
+  // Gotta external these, or else there will be 2 instant of React running
+  externals: { 
+    'react': 'react',
+    'react-dom': 'react-dom',
+    'bootstrap': 'bootstrap',
+  }, 
+
   devtool: 'source-map',
+
   plugins: configPlugins,
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin(),
-      new CssMinimizerPlugin(),
-    ],
-  },
 } 
 
 module.exports = config;

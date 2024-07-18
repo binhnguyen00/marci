@@ -38,6 +38,7 @@ function buildServer() {
   CLEAN_OPT=$(has_opt "-clean" $@)
   buildProjectCore $CLEAN_OPT
   buildProjectHr $CLEAN_OPT
+  release $CLEAN_OPT
 }
 
 function buildUI() {

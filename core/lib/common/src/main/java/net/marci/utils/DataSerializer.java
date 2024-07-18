@@ -2,6 +2,7 @@ package net.marci.utils;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -13,8 +14,10 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,8 +31,8 @@ public class DataSerializer {
   final static public DateFormat COMPACT_DATE_TIME = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss 'GMT'Z");
   final static public DataSerializer JSON = new DataSerializer(new MappingJsonFactory());
 
-  final private ObjectMapper mapper;
-  final private ObjectMapper compactMapper;
+  private ObjectMapper mapper;
+  private ObjectMapper compactMapper;
 
   public DataSerializer(JsonFactory factory) {
     this.mapper = new ObjectMapper(factory);
@@ -95,7 +98,7 @@ public class DataSerializer {
   public <T> T treeToObject(JsonNode node, Class<T> type) {
     try {
       return mapper.treeToValue(node, type);
-    } catch (IOException e) {
+    } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }
   }
@@ -110,7 +113,7 @@ public class DataSerializer {
       }
       return list;
 
-    } catch (IOException e) {
+    } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }
   }

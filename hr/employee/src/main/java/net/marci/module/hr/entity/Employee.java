@@ -1,9 +1,7 @@
 package net.marci.module.hr.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import net.marci.common.BaseEntity;
 import net.marci.module.account.entity.Account;
 
@@ -21,9 +19,7 @@ import java.time.LocalDate;
     )
   }
 )
-@Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor @Getter @Setter
 public class Employee extends BaseEntity {
 
   public static final String TABLE_NAME = "employee";
