@@ -1,5 +1,5 @@
 import React from "react";
-import { server } from "@marci-ui/lib";
+import { server, input } from "@marci-ui/lib";
 
 export function UIEmployee() {
   console.log(server);
@@ -25,7 +25,9 @@ export function UIEmployee() {
   return (
     <div className="flex-vbox">
       <div className="h1">Employee</div>
-      <div className="">
+      <div className="form-group">
+        <input.FieldString 
+          bean={{}} field="name" label="Name" disable={false} />
         <button className="btn btn-primary" onClick={restCall}> RESTful Call </button>
         <button className="btn btn-primary" onClick={rpcCall}> RPC Call </button>
       </div>
