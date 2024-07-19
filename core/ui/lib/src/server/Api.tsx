@@ -45,10 +45,12 @@ export abstract class Api {
     fetch(url, requestInit)
     .then((response: any /* ResponseEntity from Springboot */) => {
       if (!response.ok) {
-        if (failCB) failCB(response);
-      } else {
-        successCB(response);
-      };
+        if (failCB) failCB(response.json());
+        return;
+      } 
+      return response.json();
+    }).then((jsonResponse: any) => {
+      if (successCB) successCB(jsonResponse);
     }).catch((error: any) => {
       if (failCB) failCB(error);
     });

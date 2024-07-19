@@ -50,6 +50,7 @@ const config = {
 
   watchOptions: {
     aggregateTimeout: 200,
+    ignored: /node_modules/,
   },
 
   // Gotta external these, or else there will be 2 instant of React running

@@ -56,6 +56,13 @@ export function UIEmployee() {
           bean={employee} field="nickName" label="Nick Name" onChange={handleInputChange}/>
         <input.FieldString 
           bean={employee} field="dateOfBirth" label="Birthday" onChange={handleInputChange}/>
+        <input.FieldNumber
+          bean={employee} field="numberField" label="Number Field" onChange={handleInputChange}/>
+        <input.FieldText
+          bean={employee} field="textField" label="Text Field" onChange={handleInputChange}/>
+        <input.FieldDate
+          bean={employee} field="dateField" label="Date Field" onChange={handleInputChange}/>
+
         <button className="btn btn-primary m-1" onClick={createEmployee}> Create </button>
       </div>
     </div>

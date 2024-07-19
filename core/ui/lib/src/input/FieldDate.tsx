@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { FieldProps } from "./Field";
 
-interface FieldStringProps extends FieldProps {
+interface FieldDateProps extends FieldProps {
+  format?: string;
+  hasTime?: boolean;
 }
 
-export const FieldString = (props: FieldStringProps) => {
+export const FieldDate = (props: FieldDateProps) => {
   let { bean, field, placeholder, label, className, onChange, disabled } = props;
   let [ beanState, setBeanState ] = useState(bean);
 
@@ -12,7 +14,7 @@ export const FieldString = (props: FieldStringProps) => {
     setBeanState(bean);
   }, [bean]);
 
-  if (!placeholder) placeholder = `Enter text...`;
+  if (!placeholder) placeholder = `Enter date...`;
   if (!label) label = field;
   if (!disabled) disabled = false;
 
@@ -31,7 +33,7 @@ export const FieldString = (props: FieldStringProps) => {
       <div className="text-capitalize font-weight-bold"> {label} </div>
       <input 
         className={`form-control ${className || ""}`}
-        type="text"
+        type="date"
         value={beanState[field]}
         onChange={onInputChange}
         placeholder={placeholder}
