@@ -19,7 +19,7 @@ import java.beans.MethodDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
-import java.util.Arrays;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -36,8 +36,9 @@ public class RPCService {
       T result = executor.call();
       return new ResponseEntity<>(result, HttpStatus.OK);
     } catch (Exception ex) {
-      log.error("Error executing {}:{} \n{}", component, service, Arrays.toString(ex.getStackTrace()));
-      return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      log.error("Error executing {}:{}", component, service, ex);
+      final String message = MessageFormat.format("Error executing {0}:{1}", component, service);
+      return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -63,11 +64,11 @@ public class RPCService {
       if (List.class.isAssignableFrom(argType)) {
         ParameterizedType pType = (ParameterizedType) parameters[argIdx].getParameterizedType();
         Class<?> actualType = (Class<?>) pType.getActualTypeArguments()[0];
-        List<?> values = DataSerializer.JSON.treeToListObject(jsonNode, actualType);
+        List<?> values = DataSerializer.JSON.convertTreeToListObject(jsonNode, actualType);
         argsHolder.add(values);
       } else {
-        Object argVal = DataSerializer.JSON.treeToObject(jsonNode, argType);
-        argsHolder.add(argVal);
+        Object value = DataSerializer.JSON.convertTreeToObject(jsonNode, argType);
+        argsHolder.add(value);
       }
 
       argIdx++;

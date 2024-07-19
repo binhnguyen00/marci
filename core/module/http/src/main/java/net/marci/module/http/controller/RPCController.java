@@ -1,6 +1,5 @@
 package net.marci.module.http.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import net.marci.module.http.RPCService;
 import net.marci.module.http.dto.RPCRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import java.util.concurrent.Callable;
  * @Usage Use for private api cases
  */
 
-@Slf4j
 @RestController
 @RequestMapping("/rpc")
 public class RPCController extends BaseController {

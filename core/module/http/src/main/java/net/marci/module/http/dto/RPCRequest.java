@@ -31,7 +31,7 @@ public class RPCRequest {
     if (parameters == null) return null;
     JsonNode node = parameters.get(name);
     if (node == null) return null;
-    T val = DataSerializer.JSON.treeToObject(node, type);
+    T val = DataSerializer.JSON.convertTreeToObject(node, type);
     return val;
   }
 
@@ -40,6 +40,6 @@ public class RPCRequest {
     if (parameters == null) return null;
     JsonNode node = parameters.get(name);
     if (node == null) return null;
-    return DataSerializer.JSON.treeToListObject(node, type);
+    return DataSerializer.JSON.convertTreeToListObject(node, type);
   }
 }

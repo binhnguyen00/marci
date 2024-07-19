@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -14,10 +15,8 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
-import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,9 +24,11 @@ import java.util.List;
  * @Email jackjack2000.kahp@gmail.com
  */
 
+@Slf4j
 public class DataSerializer {
 
   final static public Charset UTF8 = StandardCharsets.UTF_8;
+  final static public DateFormat COMPACT_DATE = new SimpleDateFormat("dd/MM/yyyy");
   final static public DateFormat COMPACT_DATE_TIME = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss 'GMT'Z");
   final static public DataSerializer JSON = new DataSerializer(new MappingJsonFactory());
 
@@ -72,16 +73,17 @@ public class DataSerializer {
   }
 
   public <T> T clone(T obj) {
-    return clone((Class<T>) obj.getClass(), obj);
+    @SuppressWarnings("unchecked") T result = clone((Class<T>) obj.getClass(), obj);
+    return result;
   }
 
-  public <T> T clone(Class<T> type, T obj) {
+  public <T> T clone(Class<T> clazz, T obj) {
     try {
       Writer writer = new StringWriter();
       ObjectWriter owriter = mapper.writerWithDefaultPrettyPrinter();
       owriter.writeValue(writer, obj);
       String json = writer.toString();
-      return fromString(json, type);
+      return fromString(json, clazz);
     } catch (IOException ex) {
       throw new RuntimeException(ex);
     }
@@ -95,24 +97,23 @@ public class DataSerializer {
     return holder;
   }
 
-  public <T> T treeToObject(JsonNode node, Class<T> type) {
+  public <T> T convertTreeToObject(JsonNode node, Class<T> clazz) {
     try {
-      return mapper.treeToValue(node, type);
+      return mapper.treeToValue(node, clazz);
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public <T> List<T> treeToListObject(JsonNode node, Class<T> type) {
+  public <T> List<T> convertTreeToListObject(JsonNode node, Class<T> clazz) {
     try {
       ArrayNode arrayNode = (ArrayNode) node;
       List<T> list = new ArrayList<T>();
       for (JsonNode sel : arrayNode) {
-        T object = mapper.treeToValue(sel, type);
+        T object = mapper.treeToValue(sel, clazz);
         list.add(object);
       }
       return list;
-
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }
