@@ -1,7 +1,7 @@
 logging:
   level:
     root: INFO
-    net.marci: DEBUG
+    net.marci: INFO
 
 server:
   port: 7080
@@ -20,3 +20,5 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  ansi:
+    enabled: DETECT

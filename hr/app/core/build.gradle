@@ -27,9 +27,12 @@ dependencies {
   commonJars group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonVersion}"
   commonJars group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksonVersion}"
   commonJars group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: "${jacksonVersion}"
-  commonJars group: 'org.slf4j', name: 'slf4j-api', version: "${slf4jVersion}"
   commonJars group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: "${junitJupiterVersion}"
   commonJars group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: "${junitJupiterVersion}"
+  commonJars group: 'org.slf4j', name: 'slf4j-api', version: "${slf4jVersion}"
+  commonJars group: 'org.slf4j', name: 'jul-to-slf4j', version: "${slf4jVersion}"
+  commonJars group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: "${apacheLoggingLog4jVersion}"
+  commonJars group: 'ch.qos.logback', name: 'logback-classic', version: "${logbackVersion}"
 
   // Hibernate Runtime Jars
   hibernateJars group: 'org.postgresql', name: 'postgresql', version: "${postgresVersion}"

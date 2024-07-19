@@ -56,9 +56,6 @@ subprojects {
     testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: "${junitJupiterVersion}"
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: "${junitJupiterVersion}"
-
     implementation group: 'org.springframework', name: 'spring-core', version: "${springFrameworkVersion}"
     implementation group: 'org.springframework', name: 'spring-context', version: "${springFrameworkVersion}"
     implementation group: 'org.springframework', name: 'spring-webmvc', version: "${springFrameworkVersion}"
@@ -66,9 +63,14 @@ subprojects {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: "${springBootVersion}"
 
     implementation group: 'org.slf4j', name: 'slf4j-api', version: "${slf4jVersion}"
+    implementation group: 'org.slf4j', name: 'jul-to-slf4j', version: "${slf4jVersion}"
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: "${apacheLoggingLog4jVersion}"
     implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: "${jakartaPersistenceApiVersion}"
     implementation group: 'org.postgresql', name: 'postgresql', version: "${postgresVersion}"
 
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: "${junitJupiterVersion}"
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: "${junitJupiterVersion}"
+    testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: "${logbackVersion}"
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: "${springBootVersion}"
 
     // Using Lib from other project

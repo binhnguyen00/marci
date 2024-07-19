@@ -34,6 +34,7 @@ public class RPCService {
   public <T> ResponseEntity<Object> execute(String component, String service, Callable<T> executor) {
     try {
       T result = executor.call();
+      log.info("Execute {}:{} successfully", component, service);
       return new ResponseEntity<>(result, HttpStatus.OK);
     } catch (Exception ex) {
       log.error("Error executing {}:{}", component, service, ex);
