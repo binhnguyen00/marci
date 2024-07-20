@@ -35,6 +35,7 @@ public class RPCService {
     ServerResponse response = new ServerResponse(component, service);
     try {
       T result = executor.call();
+      response.setFinishTimestamp(System.currentTimeMillis());
       log.info("Execute {}:{} successfully", component, service);
       response.setStatus(Status.OK);
       response.setMessage(MessageFormat.format("Execute {0}:{1} successfully", component, service));
@@ -44,44 +45,49 @@ public class RPCService {
       log.error("Error executing {}:{}", component, service, ex);
       response.setStatus(Status.ERROR);
       response.setMessage(MessageFormat.format("Error executing {0}:{1}", component, service));
-      response.setBody(ex.getCause());
+      response.setBody(ex.getMessage());
+      response.setFinishTimestamp(System.currentTimeMillis());
       return response;
     }
   }
 
-  public Object processRequest(RPCRequest request, List<Object> argsHolder) throws IllegalAccessException, InvocationTargetException, IntrospectionException {
-    Object component = applicationContext.getBean(request.getComponent());
-    Class<?> componentType = AopUtils.getTargetClass(component);
-    BeanInfo beanInfo = Introspector.getBeanInfo(componentType);
+  public Object processRequest(RPCRequest request, List<Object> argumentsHolder) throws IllegalAccessException, InvocationTargetException, IntrospectionException {
+    final String service = request.getService();
+    final String component = request.getComponent();
+
+    Object springComponent = applicationContext.getBean(request.getComponent());
+    Class<?> springComponentType = AopUtils.getTargetClass(springComponent);
+    BeanInfo beanInfo = Introspector.getBeanInfo(springComponentType);
     MethodDescriptor[] methods = beanInfo.getMethodDescriptors();
-    MethodDescriptor mDescriptor = null;
+    MethodDescriptor methodDescriptor = null;
     for (MethodDescriptor method : methods) {
       if (method.getMethod().getName().equals(request.getService())) {
-        mDescriptor = method;
+        methodDescriptor = method;
       }
     }
 
-    Assert.notNull(mDescriptor, "No method " + request.getService() + " in class: " + request.getComponent());
-    Parameter[] parameters = mDescriptor.getMethod().getParameters();
+    final String nullMethodDescriptorMessage = MessageFormat.format("No method `{0}` in class {1}", service, component);
+    Assert.notNull(methodDescriptor, nullMethodDescriptorMessage);
+    Parameter[] methodArguments = methodDescriptor.getMethod().getParameters();
 
     final Map<String, JsonNode> params = request.getParameters();
-    int argIdx = argsHolder.size();
+    int argumentIdx = argumentsHolder.size();
     for (JsonNode jsonNode : params.values()) {
-      Class<?> argType = parameters[argIdx].getType();
+      Class<?> argType = methodArguments[argumentIdx].getType();
       if (List.class.isAssignableFrom(argType)) {
-        ParameterizedType pType = (ParameterizedType) parameters[argIdx].getParameterizedType();
+        ParameterizedType pType = (ParameterizedType) methodArguments[argumentIdx].getParameterizedType();
         Class<?> actualType = (Class<?>) pType.getActualTypeArguments()[0];
         List<?> values = DataSerializer.JSON.convertTreeToListObject(jsonNode, actualType);
-        argsHolder.add(values);
+        argumentsHolder.add(values);
       } else {
         Object value = DataSerializer.JSON.convertTreeToObject(jsonNode, argType);
-        argsHolder.add(value);
+        argumentsHolder.add(value);
       }
 
-      argIdx++;
+      argumentIdx++;
     }
 
-    Object[] args = argsHolder.toArray();
-    return mDescriptor.getMethod().invoke(component, args);
+    Object[] args = argumentsHolder.toArray();
+    return methodDescriptor.getMethod().invoke(springComponent, args);
   }
 }

@@ -13,10 +13,10 @@ import java.util.List;
 /**
  * @author Bình Nguyễn
  * @Email jackjack2000.kahp@gmail.com
- * @Component is the name of the class
- * @Service is one of the class's method's name
+ * @Defination
+ * {@link #component}: @Service name (Service classes) <br/>
+ * {@link #service}: @Component name (Logic classes)
  */
-
 @NoArgsConstructor
 @Getter
 @Setter
