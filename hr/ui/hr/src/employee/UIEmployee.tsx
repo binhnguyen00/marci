@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { server, input } from "@marci-ui/lib";
+import { server, input, widget } from "@marci-ui/lib";
 
 export function UIEmployee() {
   const [employee, setEmployee] = useState({});
@@ -65,6 +65,7 @@ export function UIEmployee() {
 
         <button className="btn btn-primary m-1" onClick={createEmployee}> Create </button>
       </div>
+      <widget.UIPopup />
     </div>
   );
 }
