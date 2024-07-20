@@ -11,8 +11,8 @@ export enum ResponseStatus {
 }
 
 export type ServerResponse = {
-  component: string,
-  service: string,
+  component: string | "unknown",
+  service: string | "unknown",
   status: ResponseStatus,
   message?: string,
   body?: any,

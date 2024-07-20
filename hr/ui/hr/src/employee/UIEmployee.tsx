@@ -4,18 +4,18 @@ import { server, input } from "@marci-ui/lib";
 export function UIEmployee() {
   const [employee, setEmployee] = useState({});
 
-  const successCB: server.CallBack = (response: any) => {
+  const successCB: server.CallBack = (response: server.ServerResponse) => {
     console.log("Success");
     console.log(response);
   }
 
-  const failCB: server.CallBack = (response: any) => {
+  const failCB: server.CallBack = (response: server.ServerResponse) => {
     console.log("Fail");
     console.log(response);
   }
 
   const restCall = () => {
-    server.restful.post("hr/employee/hello", null, successCB, failCB);
+    server.restful.post("/dummy/hello", null, successCB, failCB);
   }
 
   const rpcCall = () => {
@@ -23,15 +23,15 @@ export function UIEmployee() {
   }
 
   const createEmployee = () => {
-    const successCB: server.CallBack = (response: any) => {
+    const successCB: server.CallBack = (response: server.ServerResponse) => {
       console.log("Success");
       console.log(response);
     }
-    const failCB: server.CallBack = (response: any) => {
+    const failCB: server.CallBack = (response: server.ServerResponse) => {
       console.log("Fail");
       console.log(response);
     }
-    server.rpc.call("EmployeeService", "saved", { employee: employee }, successCB, failCB);
+    server.rpc.call("EmployeeService", "save", { employee: employee }, successCB, failCB);
   }
 
   const handleInputChange = (field: string, newValue: any, rollbackValue: any) => {
@@ -48,7 +48,7 @@ export function UIEmployee() {
         <button className="btn btn-primary m-1" onClick={restCall}> RESTful Call </button>
         <button className="btn btn-primary m-1" onClick={rpcCall}> RPC Call </button>
       </div>
-      <div className="form-group">
+      <div className="form-group ">
         <div className="h3">Create Employee</div>
         <input.FieldString 
           bean={employee} field="fullName" label="Full Name" onChange={handleInputChange}/>
