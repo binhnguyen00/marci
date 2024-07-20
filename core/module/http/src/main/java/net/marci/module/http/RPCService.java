@@ -3,12 +3,12 @@ package net.marci.module.http;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import net.marci.module.http.dto.RPCRequest;
+import net.marci.module.http.dto.ServerResponse;
+import net.marci.module.http.dto.ServerResponse.Status;
 import net.marci.utils.DataSerializer;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -31,15 +31,21 @@ public class RPCService {
   @Autowired
   private ApplicationContext applicationContext;
 
-  public <T> ResponseEntity<Object> execute(String component, String service, Callable<T> executor) {
+  public <T> ServerResponse execute(String component, String service, Callable<T> executor) {
+    ServerResponse response = new ServerResponse(component, service);
     try {
       T result = executor.call();
       log.info("Execute {}:{} successfully", component, service);
-      return new ResponseEntity<>(result, HttpStatus.OK);
+      response.setStatus(Status.OK);
+      response.setMessage(MessageFormat.format("Execute {0}:{1} successfully", component, service));
+      response.setBody(result);
+      return response;
     } catch (Exception ex) {
       log.error("Error executing {}:{}", component, service, ex);
-      final String message = MessageFormat.format("Error executing {0}:{1}", component, service);
-      return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+      response.setStatus(Status.ERROR);
+      response.setMessage(MessageFormat.format("Error executing {0}:{1}", component, service));
+      response.setBody(ex.getCause());
+      return response;
     }
   }
 

@@ -97,6 +97,10 @@ public class DataSerializer {
     return holder;
   }
 
+  public <T> JsonNode convertObjectToTree(T obj) {
+    return mapper.valueToTree(obj);
+  }
+
   public <T> T convertTreeToObject(JsonNode node, Class<T> clazz) {
     try {
       return mapper.treeToValue(node, clazz);

@@ -2,6 +2,7 @@ package net.marci.module.http.controller;
 
 import net.marci.module.http.RPCService;
 import net.marci.module.http.dto.RPCRequest;
+import net.marci.module.http.dto.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class RPCController extends BaseController {
   private RPCService service;
 
   @PostMapping("/call")
-  public @ResponseBody ResponseEntity<Object> call(@RequestBody RPCRequest request) {
+  public @ResponseBody ServerResponse call(@RequestBody RPCRequest request) {
     Callable<Object> executor = () -> {
       List<Object> argHolder = new ArrayList<>();
       return service.processRequest(request, argHolder);
