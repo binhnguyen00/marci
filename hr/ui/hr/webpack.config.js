@@ -20,7 +20,7 @@ const config = {
     filename: '[name].js',
     chunkFilename: '[name].js',
     library: { // Required for exporting custom library
-      name: 'marci_ui_lib',
+      name: 'marci-ui/lib',
       type: 'umd2',
       umdNamedDefine: true
     },
