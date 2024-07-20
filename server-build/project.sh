@@ -113,9 +113,6 @@ DEPLOYING MARCI...
 
 function showHelp() {
   echo """
-IMPORTANT: You need to install pnpm before using this script.
-  >> npm install -g pnpm
-
 Usage: ./project [COMMAND] [-OPTION]
 
 These are commands used in various situations:

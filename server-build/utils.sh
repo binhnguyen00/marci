@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+if ! command -v pnpm > /dev/null 2>&1; then
+  echo """
+IMPORTANT: You need to install 'pnpm' before using this script.
+>> npm install -g pnpm
+  """
+  exit 1
+fi
+
 windowsOS=false
 if [ "$OSTYPE" = "msys" ] ; then
   windowsOS=true;

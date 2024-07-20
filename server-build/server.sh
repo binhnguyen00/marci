@@ -82,9 +82,6 @@ Use ./project.sh for more details.
 
 function showHelp() {
   echo """
-IMPORTANT: You need to install pnpm before using this script.
-  >> npm install -g pnpm
-  
 Usage: ./server.sh [COMMAND] [-OPTION]
 
 These are common commaneds to run the server
