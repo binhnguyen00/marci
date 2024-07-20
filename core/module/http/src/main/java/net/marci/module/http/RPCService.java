@@ -31,26 +31,6 @@ public class RPCService {
   @Autowired
   private ApplicationContext applicationContext;
 
-  public <T> ServerResponse execute(String component, String service, Callable<T> executor) {
-    ServerResponse response = new ServerResponse(component, service);
-    try {
-      T result = executor.call();
-      response.setFinishTimestamp(System.currentTimeMillis());
-      log.info("Execute {}:{} successfully", component, service);
-      response.setStatus(Status.OK);
-      response.setMessage(MessageFormat.format("Execute {0}:{1} successfully", component, service));
-      response.setBody(result);
-      return response;
-    } catch (Exception ex) {
-      log.error("Error executing {}:{}", component, service, ex);
-      response.setStatus(Status.ERROR);
-      response.setMessage(MessageFormat.format("Error executing {0}:{1}", component, service));
-      response.setBody(ex.getMessage());
-      response.setFinishTimestamp(System.currentTimeMillis());
-      return response;
-    }
-  }
-
   public Object processRequest(RPCRequest request, List<Object> argumentsHolder) throws IllegalAccessException, InvocationTargetException, IntrospectionException {
     final String service = request.getService();
     final String component = request.getComponent();

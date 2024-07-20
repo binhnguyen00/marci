@@ -33,6 +33,6 @@ public class RPCController extends BaseController {
     };
     final String component = request.getComponent();
     final String service = request.getService();
-    return this.service.execute(component, service, executor);
+    return execute(component, service, executor);
   }
 }
