@@ -4,13 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import net.marci.module.hr.EmployeeService;
 import net.marci.module.hr.entity.Employee;
 import net.marci.module.http.controller.BaseController;
+import net.marci.module.http.dto.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
-@Slf4j
 @RestController
 @RequestMapping("/hr/employee")
 public class EmployeeController extends BaseController {
@@ -19,14 +20,15 @@ public class EmployeeController extends BaseController {
   private EmployeeService service;
 
   @PostMapping("/hello")
-  @ResponseBody
-  public String hello() {
-    return service.helloWorld();
+  public @ResponseBody ServerResponse hello() {
+    Callable<List<Employee>> executor = () -> service.findAll();
+    return this.execute("hr", "employee", executor);
   }
 
   @PostMapping("/save")
   @ResponseStatus(HttpStatus.OK)
-  public Employee save(@RequestBody Employee employee) {
-    return service.save(employee);
+  public @ResponseBody ServerResponse save(@RequestBody Employee employee) {
+    Callable<Employee> executor = () -> service.save(employee);
+    return this.execute("EmployeeService", "save", executor);
   }
 }

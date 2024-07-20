@@ -37,8 +37,10 @@ public class ServerResponse {
   private JsonNode body;
 
   public ServerResponse(String component, String service) {
-    this.component = component;
-    this.service = service;
+    if (component.isEmpty()) this.component = "unknown";
+    else this.component = component;
+    if (service.isEmpty()) this.service = "unknown";
+    else this.service = service;
     this.startTimestamp = System.currentTimeMillis();
   }
 
