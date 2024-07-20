@@ -19,10 +19,10 @@ public class EmployeeController extends BaseController {
   @Autowired
   private EmployeeService service;
 
-  @PostMapping("/hello")
+  @PostMapping("/find-all")
   public @ResponseBody ServerResponse hello() {
     Callable<List<Employee>> executor = () -> service.findAll();
-    return this.execute("hr", "employee", executor);
+    return this.execute("EmployeeService", "findAll", executor);
   }
 
   @PostMapping("/save")
