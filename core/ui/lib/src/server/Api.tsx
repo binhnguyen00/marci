@@ -1,4 +1,4 @@
-import { CallBack, HttpMethod } from "./Interface";
+import { CallBack, HttpMethod, ResponseStatus, ServerResponse } from "./Interface";
 
 export abstract class Api {
   serverUrl: string;
@@ -43,16 +43,14 @@ export abstract class Api {
 
   doFetch(url: string, requestInit: RequestInit, successCB: CallBack, failCB?: CallBack): void {
     fetch(url, requestInit)
-    .then((response: any /* ResponseEntity from Springboot */) => {
-      if (!response.ok) {
-        if (failCB) failCB(response.json());
-        return;
-      } 
+    .then((response: Response) => {
       return response.json();
-    }).then((jsonResponse: any) => {
-      if (successCB) successCB(jsonResponse);
-    }).catch((error: any) => {
-      if (failCB) failCB(error);
-    });
+    }).then((serverResponse: ServerResponse) => {
+      if (serverResponse.status === ResponseStatus.OK) {
+        successCB(serverResponse);
+      } else {
+        if (failCB) failCB(serverResponse);
+      }
+    })
   }
 }

@@ -31,7 +31,7 @@ export function UIEmployee() {
       console.log("Fail");
       console.log(response);
     }
-    server.rpc.call("EmployeeService", "save", { employee: employee }, successCB, failCB);
+    server.rpc.call("EmployeeService", "saved", { employee: employee }, successCB, failCB);
   }
 
   const handleInputChange = (field: string, newValue: any, rollbackValue: any) => {
