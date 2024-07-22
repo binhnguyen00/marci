@@ -1,0 +1,45 @@
+import React from "react";
+import * as icon from "react-icons/bs";
+import { server, widget } from "@marci-ui/lib";
+
+export function UIDemo() {
+
+  const successCB: server.CallBack = (response: server.ServerResponse) => {
+    console.log("Success");
+    console.log(response);
+  }
+
+  const failCB: server.CallBack = (response: server.ServerResponse) => {
+    console.log("Fail");
+    console.log(response);
+  }
+
+  const uiErrorCB: server.UIErrorCallBack = (response: Error) => {
+    return (
+      <widget.Popup 
+        position={"center center"} popupAsPage popupItem={<div className="border">{response.message}</div>}/>
+    )
+  }
+
+  const restCall = () => {
+    server.restful.post("/dummy/hello", null, successCB, failCB, uiErrorCB);
+  }
+
+  const rpcCall = () => {
+    server.rpc.call("DummyService", "helloWorld", {}, successCB, failCB, uiErrorCB);
+  }
+
+  return (
+    <div className="flex-vbox">
+      <div className="h3">Demo</div>
+      <div className="flex-hbox">
+        <widget.Popup 
+          position={"center center"} popupAsPage popupItem={<div className="border h1 p-5">Introducing Demo</div>}/>
+        <widget.Button className="m-1"
+          icon={<icon.BsSend />} label="RESTful Call" type="primary" onClick={rpcCall}/>
+        <widget.Button className="m-1"
+          icon={<icon.BsSend />} label="RPC Call" type="primary" onClick={restCall}/>
+      </div>
+    </div>
+  );
+}
