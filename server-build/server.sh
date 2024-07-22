@@ -1,4 +1,4 @@
-source utils.sh
+source ./utils.sh
 
 PID_FILE="/tmp/server_app.pid"
 LOG_FILE="/tmp/server_app.log"

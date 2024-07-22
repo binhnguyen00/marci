@@ -1,4 +1,4 @@
-source utils.sh
+source ./utils.sh
 
 CORE_HOME=`cd $CURRENT_DIR/../core; pwd`
 HR_HOME=`cd $CURRENT_DIR/../hr; pwd`
