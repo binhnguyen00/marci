@@ -16,8 +16,8 @@ export function UIHome() {
       <div className="flex-hbox justify-content-between border-bottom align-items-center">
         <div className="h1">Home</div>
         <div className="flex-hbox">
-          <widget.Button label="Employee" type="link" onClick={() => renderUIEmployeePage(<UIEmployee/>)}/>
-          <widget.Button label="Demo" type="link" onClick={() => renderUIEmployeePage(<UIDemo/>)}/>
+          <widget.Button title="Employee" type="link" onClick={() => renderUIEmployeePage(<UIEmployee/>)}/>
+          <widget.Button title="Demo" type="link" onClick={() => renderUIEmployeePage(<UIDemo/>)}/>
           {/* more pages */}
         </div>
       </div>

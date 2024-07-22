@@ -14,19 +14,12 @@ export function UIDemo() {
     console.log(response);
   }
 
-  const uiErrorCB: server.UIErrorCallBack = (response: Error) => {
-    return (
-      <widget.Popup 
-        position={"center center"} popupAsPage popupItem={<div className="border">{response.message}</div>}/>
-    )
-  }
-
   const restCall = () => {
-    server.restful.post("/dummy/hello", null, successCB, failCB, uiErrorCB);
+    server.restful.post("/dummy/hello", null, successCB, failCB);
   }
 
   const rpcCall = () => {
-    server.rpc.call("DummyService", "helloWorld", {}, successCB, failCB, uiErrorCB);
+    server.rpc.call("DummyService", "helloWorld", {}, successCB, failCB);
   }
 
   return (
@@ -36,9 +29,9 @@ export function UIDemo() {
         <widget.Popup 
           position={"center center"} popupAsPage popupItem={<div className="border h1 p-5">Introducing Demo</div>}/>
         <widget.Button className="m-1"
-          icon={<icon.BsSend />} label="RESTful Call" type="primary" onClick={rpcCall}/>
+          icon={<icon.BsSend />} title="RESTful Call" type="primary" onClick={rpcCall}/>
         <widget.Button className="m-1"
-          icon={<icon.BsSend />} label="RPC Call" type="primary" onClick={restCall}/>
+          icon={<icon.BsSend />} title="RPC Call" type="primary" onClick={restCall}/>
       </div>
     </div>
   );

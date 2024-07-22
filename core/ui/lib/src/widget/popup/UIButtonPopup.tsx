@@ -3,13 +3,6 @@ import { Popup as ReactPopup } from "reactjs-popup";
 import { PopupPosition } from "reactjs-popup/dist/types";
 import { ButtonType } from "../Interface"; 
 
-// declare type PopupPosition = 
-//   'top left' | 'top center' | 'top right' | 
-//   'right top' | 'right center' | 'right bottom' | 
-//   'bottom left' | 'bottom center' | 'bottom right' | 
-//   'left top' | 'left center' | 'left bottom' | 
-//   'center center';
-
 declare interface ButonPopupProps {
   position: PopupPosition | PopupPosition[];
   popupAsPage?: boolean; // Modal

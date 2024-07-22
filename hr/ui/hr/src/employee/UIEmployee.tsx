@@ -36,7 +36,7 @@ export function UIEmployeeForm() {
 
       <widget.Button 
         icon={<icon.BsPlus />}
-        label="Create" type="primary" onClick={createEmployee}/>
+        title="Create" type="primary" onClick={createEmployee}/>
     </div>
   )
 }
