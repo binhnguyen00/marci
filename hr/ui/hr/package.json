@@ -27,6 +27,7 @@
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
     "cross-env": "^7.0.3",
+    "react-icons": "^5.2.1",
     
     "@marci-ui/lib": "file:../../../core/ui/lib"
   },
