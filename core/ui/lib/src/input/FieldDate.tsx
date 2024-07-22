@@ -29,7 +29,7 @@ export const FieldDate = (props: FieldDateProps) => {
   }
 
   return (
-    <div className="flex-vbox">
+    <div className="flex-v">
       <div className="text-capitalize font-weight-bold"> {label} </div>
       <input 
         className={`form-control ${className || ""}`}

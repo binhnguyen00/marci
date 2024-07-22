@@ -12,7 +12,7 @@ function renderUIEmployeePage(renderingTarget: React.ReactNode) {
 
 export function UIHome() {
   return (
-    <div className="flex-vbox">
+    <div className="flex-v">
       <div className="flex-hbox justify-content-between border-bottom align-items-center">
         <div className="h1">Home</div>
         <div className="flex-hbox">

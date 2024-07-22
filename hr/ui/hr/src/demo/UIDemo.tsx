@@ -23,7 +23,7 @@ export function UIDemo() {
   }
 
   return (
-    <div className="flex-vbox">
+    <div className="flex-v">
       <div className="h3">Demo</div>
       <div className="flex-hbox">
         <widget.Popup 

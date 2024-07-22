@@ -43,7 +43,7 @@ export function UIEmployeeForm() {
 
 export function UIEmployee() {
   return (
-    <div className="flex-vbox justify-content-between">
+    <div className="flex-v justify-content-between">
       <div className="h3">Employee</div>
       <widget.ButtonPopup className="m-1"
         title="Create Employee" position={"center center"} popupAsPage popupItem={UIEmployeeForm()}/>
