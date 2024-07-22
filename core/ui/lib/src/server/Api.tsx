@@ -51,6 +51,9 @@ export abstract class Api {
       } else {
         if (failCB) failCB(serverResponse);
       }
-    })
+    }).catch((error: Error) => {
+      console.log(`Marci UI Lib Error: \n${error}`);
+      alert("Ops! Something wrong with your request :)");
+    });
   }
 }
