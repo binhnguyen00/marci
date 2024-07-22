@@ -10,7 +10,7 @@ export enum ResponseStatus {
   OK = "OK", ERROR = "ERROR", UNAUTHORIZED = "UNAUTHORIZED"
 }
 
-export type ServerResponse = {
+export declare type ServerResponse = {
   component: string | "unknown",
   service: string | "unknown",
   status: ResponseStatus,
@@ -22,4 +22,4 @@ export type ServerResponse = {
   executionTimestamp: number,
 }
 
-export type CallBack = (response: ServerResponse) => void;
+export declare type CallBack = (response: ServerResponse) => void;

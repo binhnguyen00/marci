@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { UIEmployee } from "./employee";
+import { UIHome } from "home/UIHome";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <UIEmployee />
+    <UIHome />
   </React.StrictMode>
 )
