@@ -25,7 +25,7 @@ export function UIDemo() {
   return (
     <div className="flex-v">
       <div className="h3">Demo</div>
-      <div className="flex-hbox">
+      <div className="flex-h">
         <widget.Popup 
           position={"center center"} popupAsPage popupItem={<div className="border h1 p-5">Introducing Demo</div>}/>
         <widget.Button className="m-1"
