@@ -50,6 +50,11 @@ function start() {
     nohup "$JAVACMD" -cp "$CLASSPATH" $JAVA_OPTS $CLASS $ARGS $@ > $LOG_FILE 2>&1 < /dev/null &
     printf '%d' $! > $PID_FILE
   else
+    echo """
+--------------------------------
+STARTING SERVER...
+--------------------------------
+    """
     JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=$PROFILE"
     echo ">> JAVA_HOME: $JAVA_HOME"
     echo ">> JAVA_OPTS: $JAVA_OPTS"
