@@ -34,7 +34,6 @@
     "style-loader": "^4.0.0",
     "bootstrap": "^5.3.3",
     "cross-env": "^7.0.3",
-    "reactjs-popup": "^2.0.6",
     "react-icons": "^5.2.1"
   },
   "files": [

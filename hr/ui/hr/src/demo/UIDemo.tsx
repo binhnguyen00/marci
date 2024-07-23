@@ -27,7 +27,7 @@ export function UIDemo() {
       <div className="h3">Demo</div>
       <div className="flex-h">
         <widget.Popup 
-          position={"center center"} popupAsPage popupItem={<div className="border h1 p-5">Introducing Demo</div>}/>
+          popupAsPage popupItem={<div className="border h1 p-5"> {"Introducing Demo"} </div>}/>
         <widget.Button className="m-1"
           icon={<icon.BsSend />} title="RESTful Call" type="primary" onClick={rpcCall}/>
         <widget.Button className="m-1"

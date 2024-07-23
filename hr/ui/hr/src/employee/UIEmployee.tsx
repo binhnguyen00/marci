@@ -46,7 +46,7 @@ export function UIEmployee() {
     <div className="flex-v justify-content-between">
       <div className="h3">Employee</div>
       <widget.ButtonPopup className="m-1"
-        title="Create Employee" position={"center center"} popupAsPage popupItem={UIEmployeeForm()}/>
+        title="Create Employee" popupAsPage popupItem={UIEmployeeForm()}/>
     </div>
   );
 }
