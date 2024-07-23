@@ -37,7 +37,7 @@ export function UIDemo() {
 
   const failCB: server.CallBack = (response: server.ServerResponse) => {
     const item = (<div> {response.message} </div>);
-    widget.createPopup("Success", item);
+    widget.createPopup("Fail", item);
   }
 
   const rpcCall = () => {

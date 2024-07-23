@@ -16,7 +16,7 @@ export function Popup(props: PopupProps) {
   const popupRef = React.useRef<HTMLDialogElement | null>(null);
 
   React.useEffect(() => {
-    if (open) {
+    if (open === false) {
       let popup = document.getElementById(POPUP_MODAL_ID);
       document.body.removeChild(popup!);
     } else {
@@ -57,7 +57,9 @@ export function createPopup(header?: React.ReactElement<any> | string, body?: Re
   }
 
   const root = createRoot(popup);
-  root.render(<Popup header={header} body={body}/>);
+  root.render(
+    <Popup header={header} body={body}/>
+  );
 }
 
 export function closePopup(): void {
