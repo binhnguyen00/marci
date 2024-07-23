@@ -26,7 +26,6 @@ export function UIEmployeeForm() {
 
   return (
     <div className="form-group p-1 border">
-      <div className="h3">Create Employee</div>
       <input.FieldString 
         bean={employee} field="fullName" label="Full Name" onChange={handleInputChange}/>
       <input.FieldString 
@@ -47,7 +46,7 @@ export function UIEmployee() {
     <div className="flex-v justify-content-between">
       <div className="h3">Employee</div>
       <widget.ButtonPopup
-        className="m-1" title="Create Employee" popupItem={UIEmployeeForm()}/>
+        className="m-1" title="Create" header="Create Employee" body={UIEmployeeForm()}/>
     </div>
   );
 }

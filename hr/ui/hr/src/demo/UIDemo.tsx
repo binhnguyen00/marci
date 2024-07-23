@@ -26,22 +26,25 @@ function UIPopupDemo(props: UIPopupDemoProps) {
 export function UIDemo() {
   const popupRef = React.useRef<any>();
 
-  const successCB: server.CallBack = (response: server.ServerResponse) => {
+  const closePopupCallback: server.CallBack = (response: server.ServerResponse) => {
     popupRef.current.close();
-    const item = (<div>{response.body}</div>);
-    return <widget.Popup popupItem={item}/>
+  }
+
+  const successCB: server.CallBack = (response: server.ServerResponse) => {
+    const item = (<div> {response.body} </div>);
+    widget.createPopup("Success", item);
   }
 
   const failCB: server.CallBack = (response: server.ServerResponse) => {
-    popupRef.current.close();
-    const item = (<div>{response.message}</div>);
-    return <widget.Popup popupItem={item}/>
+    const item = (<div> {response.message} </div>);
+    widget.createPopup("Success", item);
   }
 
   const rpcCall = () => {
     server.rpc.call("DummyService", "helloWorld", {}, successCB, failCB);
   }
 
+  const popupBody = (<UIPopupDemo successCB={closePopupCallback} failCB={closePopupCallback}/>);
   return (
     <div className="flex-v">
       <div className="h3">Demo</div>
@@ -50,7 +53,7 @@ export function UIDemo() {
           icon={<icon.BsSend />} title="RPC Call" type="primary" onClick={rpcCall}/>
         <widget.ButtonPopup
           ref={popupRef}
-          className="m-1" title="Popup" popupItem={<UIPopupDemo successCB={successCB} failCB={failCB}/>}/>
+          className="m-1" title="Popup" header="Popup" body={popupBody}/>
       </div>
     </div>
   );
