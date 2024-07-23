@@ -42,11 +42,12 @@ export function UIEmployeeForm() {
 }
 
 export function UIEmployee() {
+
   return (
     <div className="flex-v justify-content-between">
       <div className="h3">Employee</div>
-      <widget.ButtonPopup className="m-1"
-        title="Create Employee" popupAsPage popupItem={UIEmployeeForm()}/>
+      <widget.ButtonPopup
+        className="m-1" title="Create Employee" popupItem={UIEmployeeForm()}/>
     </div>
   );
 }

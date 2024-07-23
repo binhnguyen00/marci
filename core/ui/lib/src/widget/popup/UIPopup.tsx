@@ -1,16 +1,31 @@
 import React from "react";
+import * as icon from "react-icons/bs"; 
 
 declare interface PopupProps {
-  popupAsPage?: boolean; // Modal
-  popupItem?: React.ReactNode;
+  popupItem?: React.ReactElement;
   className?: string;
 }
 
 export function Popup(props: PopupProps) {
-  let { className = "", popupAsPage = false, popupItem } = props;
-
+  let { className = "", popupItem } = props;
+  
+  console.log(popupItem);
+  
   return (
-    <div className={className}> 
-    </div>
+    <> 
+      <dialog className="p-0" open>
+        <div className="flex-v">
+          <div className="flex-h justify-content-end btn p-0">
+            <icon.BsXCircleFill size={"1em"} onClick={close}/>
+          </div>
+          { 
+          popupItem ? 
+          <div className={className}>
+            {popupItem}
+          </div> : null
+          }
+        </div>
+      </dialog>
+    </>
   )
 }

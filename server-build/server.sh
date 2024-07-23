@@ -4,7 +4,9 @@ PID_FILE="/tmp/server_app.pid"
 LOG_FILE="/tmp/server_app.log"
 
 PROJECT_DIR=`cd $CURRENT_DIR/..; pwd`
+echo "PROJECT_DIR: $PROJECT_DIR"
 APP_HOME="$PROJECT_DIR/hr/app"
+echo "APP_HOME: $APP_HOME"
 
 if $windowsOS; then
   JAVA_HOME=`cygpath --absolute --windows "$JAVA_HOME"`

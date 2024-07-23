@@ -7,11 +7,12 @@ declare interface ButtonProps {
   className?: string;
   onClick?: () => void;
   icon?: JSX.Element;
+  disabled?: boolean;
 }
 
 export function Button(props: ButtonProps) {
 
-  let { title: label = "untitled", type = "primary", className = "", onClick, icon } = props;
+  let { title: label = "untitled", type = "primary", className = "", onClick, icon, disabled = false } = props;
 
   if (!onClick) onClick = () => {
     alert("Ops! Developers are working on it :)");
@@ -22,7 +23,7 @@ export function Button(props: ButtonProps) {
 
   return (
     <div>
-      <button type="button" className={`btn btn-${type} ${className}`} onClick={onClick}> 
+      <button type="button" className={`btn btn-${type} ${className}`} onClick={onClick} disabled={disabled}> 
         {iconUI}
         {label}
       </button>
