@@ -1,3 +1,3 @@
 export * from "./popup/UIButtonPopup"
-export * from "./popup/UIPopup"
 export * from "./button/UIButton"
+export { createPopup, closePopup } from "./popup/UIPopup"

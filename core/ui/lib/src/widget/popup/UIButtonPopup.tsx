@@ -4,17 +4,18 @@ import { ButtonType } from "../Interface";
 import { Button } from "../button/UIButton";
 
 declare interface ButonPopupProps {
-  popupItem?: React.ReactElement;
+  header?: React.ReactElement | string;  
+  body?: React.ReactElement;
   className?: string;
   
-  title: string;
+  title?: string;
   type?: ButtonType;
   icon?: JSX.Element;
   disabled?: boolean;
 }
 
 export const ButtonPopup = React.forwardRef((props: ButonPopupProps, ref) => {
-  let { popupItem, icon, className = "", disabled = false, title = "untitled", type = "primary" } = props;
+  let { header, body, icon, className = "", disabled = false, title = "untitled", type = "primary" } = props;
   const popupRef = React.useRef<HTMLDialogElement | null>(null);
 
   React.useImperativeHandle(ref, () => ({
@@ -27,23 +28,26 @@ export const ButtonPopup = React.forwardRef((props: ButonPopupProps, ref) => {
     if (popupRef.current) popupRef.current.showModal();
   };
 
-  const close = () => {
+  const handleClose = () => {
     if (popupRef.current) popupRef.current.close();
   };
 
+  if (header && typeof header === "string") {
+    header = (<div className="h5 p-1"> {header} </div>)
+  }
   return (
     <>
       <dialog ref={popupRef} className="p-0">
-        <div className="flex-v">
-          <div className="flex-h justify-content-end btn p-0">
-            <bsIcon.BsXCircleFill size={"1em"} onClick={close}/>
+        <div className="flex-v px-1">
+          <div className="flex-h justify-content-between">
+            {header ? header : null}
+            <div className="flex-h justify-content-end py-0">
+              <div className="btn p-0">
+                <bsIcon.BsXCircleFill size={"1em"} onClick={handleClose}/>
+              </div>
+            </div>
           </div>
-          { 
-          popupItem ? 
-          <div className={className}>
-            {popupItem}
-          </div> : null
-          }
+          {body ? <div className={className}> {body} </div> : null}
         </div>
       </dialog>
       <Button 
