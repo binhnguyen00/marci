@@ -4,9 +4,13 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import net.marci.utils.DBConnectUtils;
+import net.marci.lib.common.Record;
+import net.marci.lib.utils.DBConnectUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Bình Nguyễn
@@ -54,8 +58,7 @@ public class DeleteGraphBuilder {
 
   private DeleteGraphSQL buildDeleteGraphSQL() {
     if (targetIds.isEmpty()) return null;
-    Map<String, Object> params = new HashMap<>();
-    params.put("ids", targetIds);
+    Record params = new Record("ids", targetIds);
     String delQuery = "DELETE FROM " + table + " WHERE id IN (:ids)";
     if (DeleteGraphJoinType.ManyToMany.equals(this.joinType)) {
       delQuery = "DELETE FROM " + table + " WHERE " + this.joinField + " IN (:ids)";
@@ -85,10 +88,9 @@ public class DeleteGraphBuilder {
           targetCascadeTable = deleteGraph.table();
         } else targetCascadeTable = tableAnn.name();
         if (!this.targetIds.isEmpty()) {
-          Map<String, Object> keyValues = new HashMap<>();
-          keyValues.put("candidateIds", this.targetIds);
+          Record keyValues = new Record("candidateIds", this.targetIds);
           String SQL_QUERY = buildFindCandidateIdsQuery(deleteGraph, targetCascadeTable);
-          List<Map<String, Object>> results = dbConnectUtils.execute(SQL_QUERY, keyValues);
+          List<Record> results = dbConnectUtils.execute(SQL_QUERY, keyValues);
           List<Long> foundIds;
           if (Arrays.asList(DeleteGraphJoinType.OneToOne, DeleteGraphJoinType.ManyToMany).contains(deleteGraph.joinType())) {
             foundIds = extractIdsWithJoinField(results, deleteGraph.joinField());
@@ -120,9 +122,9 @@ public class DeleteGraphBuilder {
     return SQl_QUERY;
   }
 
-  private List<Long> extractIds(List<Map<String, Object>> results) {
+  private List<Long> extractIds(List<Record> results) {
     List<Long> holder = new ArrayList<>(results.size());
-    for (Map<String, Object> result : results) {
+    for (Record result : results) {
       Object target = result.get("id");
       if (target instanceof Long) {
         holder.add((Long) target);
@@ -131,9 +133,9 @@ public class DeleteGraphBuilder {
     return holder;
   }
 
-  private List<Long> extractIdsWithJoinField(List<Map<String, Object>> results, String joinField) {
+  private List<Long> extractIdsWithJoinField(List<Record> results, String joinField) {
     List<Long> holder = new ArrayList<>(results.size());
-    for (Map<String, Object> result : results) {
+    for (Record result : results) {
       Object idObject = result.get(joinField);
       if (idObject instanceof Long) {
         holder.add((Long) idObject);

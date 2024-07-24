@@ -3,11 +3,11 @@ package net.marci.module.deletegraph;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import net.marci.utils.DBConnectUtils;
+import net.marci.lib.common.Record;
+import net.marci.lib.utils.DBConnectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -24,8 +24,8 @@ public class DeleteGraphSQL {
 
   /**
    * In a Query, there are variables highlighted by `:`. e.g :key1, :key2.
-   * @see DBConnectUtils#assignSqlHolderWithValue(String, Map)  How to replace those variables with actual values? */
-  private Map<String, Object> sqlKeyValueMap;
+   * @see DBConnectUtils#assignSqlHolderWithValue(String, Record) How to replace those variables with actual values? */
+  private Record sqlKeyValueMap;
 
   /** A list of Joined Tables / Child Tables */
   private List<DeleteGraphSQL> preDeleteChildren;
@@ -33,7 +33,7 @@ public class DeleteGraphSQL {
   /** A list of Target Tables / Parent Tables */
   private List<DeleteGraphSQL> postDeleteChildren;
 
-  public DeleteGraphSQL(String deleteSQL, Map<String, Object> sqlKeyValueMap) {
+  public DeleteGraphSQL(String deleteSQL, Record sqlKeyValueMap) {
     this.deleteSQL = deleteSQL;
     this.sqlKeyValueMap = sqlKeyValueMap;
   }

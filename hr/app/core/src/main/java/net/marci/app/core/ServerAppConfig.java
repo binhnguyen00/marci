@@ -1,14 +1,8 @@
 package net.marci.app.core;
 
 import lombok.extern.slf4j.Slf4j;
-import net.marci.utils.DataSerializer;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Arrays;
 
 /*
  * @author Bình Nguyễn
