@@ -7,22 +7,26 @@ interface DataTableProps extends DataGridProps {
 
 export function DataTable(props: DataTableProps) {
   let { config } = props
-  let { columnConfig, rows, height = 400 } = config
+  let { columnConfig, rows, height = 400, title = "untitled" } = config
 
   return (
-    <div style={{ height: height, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columnConfig}
-        autoPageSize
-        checkboxSelection
-      />
+    <div className="flex-v">
+      <div className="h5"> {title} </div>
+      <div style={{ height: height, width: '100%' }}>
+        <DataGrid 
+          rows={rows}
+          columns={columnConfig}
+          autoPageSize
+          checkboxSelection
+        />
+      </div>
     </div>
   )
 }
 
 export interface DataTableConfig {
-  columnConfig: GridColDef<any>[],    // configs for the column
-  rows: Array<any>                    // actual data
-  height?: number                     // as pixels
+  title: String;
+  columnConfig: GridColDef<any>[];    // configs for the column
+  rows: Array<any>;                   // actual data
+  height?: number;                    // as pixels
 }

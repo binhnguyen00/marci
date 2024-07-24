@@ -53,7 +53,7 @@ const config = {
   },
 
   watchOptions: {
-    aggregateTimeout: 200,
+    // aggregateTimeout: 200,
     ignored: new RegExp('.*^((?!(/src/)).)*$'), // To exclude all files and directories except those in /src.
   },
 

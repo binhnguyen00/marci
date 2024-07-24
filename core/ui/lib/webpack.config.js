@@ -64,7 +64,7 @@ const config = {
   },
 
   watchOptions: {
-    aggregateTimeout: 200,
+    // aggregateTimeout: 200,
     ignored: /node_modules/,
   },
 

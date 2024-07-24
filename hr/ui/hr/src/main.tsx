@@ -23,3 +23,5 @@ function renderRoot() {
 }
 
 renderRoot();
+
+export default root;
