@@ -34,7 +34,7 @@ export function Popup(props: PopupProps) {
       <div className="flex-v px-1">
         <div className="flex-h justify-content-between">
           {header ? header : null}
-          <div className="flex-h justify-content-end btn py-0 px-0">
+          <div className="flex-h justify-content-end py-0 px-0">
             <div className="btn p-0">
               <icon.BsXCircleFill size={"1em"} onClick={handleClose}/>
             </div>
