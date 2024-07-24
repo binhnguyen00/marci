@@ -1,6 +1,7 @@
 package net.marci.module.hr;
 
 import lombok.extern.slf4j.Slf4j;
+import net.marci.lib.common.Record;
 import net.marci.module.account.AccountLogic;
 import net.marci.module.account.entity.Account;
 import net.marci.module.hr.entity.Employee;
@@ -58,5 +59,10 @@ public class EmployeeLogic {
 
   public List<Employee> findAll() {
     return repository.findAll();
+  }
+
+  public List<Employee> search(Record params) {
+    final String fullName = params.getAsString("fullName");
+    return repository.search(fullName);
   }
 }
