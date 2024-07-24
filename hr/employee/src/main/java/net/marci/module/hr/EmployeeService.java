@@ -1,6 +1,7 @@
 package net.marci.module.hr;
 
 import lombok.extern.slf4j.Slf4j;
+import net.marci.lib.common.Record;
 import net.marci.module.hr.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,11 @@ public class EmployeeService {
   @Transactional
   public List<Employee> findAll() {
     return logic.findAll();
+  }
+
+  @Transactional
+  public List<Employee> search(Record params) {
+    return logic.search(params);
   }
 
   public String helloWorld() {
