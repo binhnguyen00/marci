@@ -16,12 +16,12 @@ export function UIEmployeeForm() {
 
     const successCB: server.CallBack = (response: server.ServerResponse) => {
       const html = (<div> {JSON.stringify(response.body, null, 2)} </div>)
-      widget.closePopup();  
+      widget.closeCurrentPopup();  
       widget.createPopup("Success", html);
     }
     const failCB: server.CallBack = (response: server.ServerResponse) => {
       const html = (<div> {JSON.stringify(response.message, null, 2)} </div>)
-      widget.closePopup();
+      widget.closeCurrentPopup();
       widget.createPopup("Fail", html);
     }
 
@@ -55,6 +55,7 @@ export function UIEmployee() {
       <div className="h4">Employee</div>
       <widget.Button
         className="m-1" title="Create" onClick={showEmployeeForm}/>
+      
     </div>
   );
 }

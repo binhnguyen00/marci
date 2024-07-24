@@ -62,7 +62,7 @@ export function createPopup(header?: React.ReactElement<any> | string, body?: Re
   );
 }
 
-export function closePopup(): void {
+export function closeCurrentPopup(): void {
   const popup = document.getElementById(POPUP_MODAL_ID);
   if (popup) {
     const root = ReactDomClient.createRoot(popup);

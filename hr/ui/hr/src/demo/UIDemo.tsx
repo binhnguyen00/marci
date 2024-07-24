@@ -1,5 +1,5 @@
 import React from "react";
-
+import { widget } from "@marci-ui/lib";
 import { UIDemoApiCall } from "./UIDemoApiCall";
 import { UIDemoPopup } from "./UIDemoPopup";
 
@@ -11,6 +11,10 @@ export function UIDemo() {
       </div>
       <div className="border-bottom">
         <UIDemoPopup/>
+      </div>
+      <div className="border-bottom">
+        <h4>Basic Table</h4>
+        <widget.BasicTable />
       </div>
     </div>
   );
