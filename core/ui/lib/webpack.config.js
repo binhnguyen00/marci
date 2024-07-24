@@ -1,11 +1,22 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const configPlugins = [
+const developing = process.argv[process.argv.indexOf('--mode') + 1] === 'development';
+const watching = process.argv[process.argv.indexOf('--watch')];
+
+// Development
+let devtool = false;
+if (developing) devtool = 'source-map'
+
+// Plugins
+let configPlugins = [
   new HtmlWebpackPlugin({ // This helps create index.html in dist.
     template: './public/index.html'
   })
 ];
+
+if (watching) {
+}
 
 const config = { 
   context: __dirname,
@@ -25,6 +36,10 @@ const config = {
     },
   },
 
+  optimization: {
+    minimize: !developing,
+  },
+
   module: {
     rules: [
       {
@@ -35,9 +50,9 @@ const config = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'sass-loader', options: { sourceMap: developing } }
         ],
       }
     ]
@@ -60,7 +75,7 @@ const config = {
     'bootstrap': 'bootstrap',
   }, 
 
-  devtool: 'source-map',
+  devtool: devtool,
 
   plugins: configPlugins,
 } 

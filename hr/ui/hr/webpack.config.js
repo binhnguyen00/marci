@@ -1,11 +1,22 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const configPlugins = [
+const developing = process.argv[process.argv.indexOf('--mode') + 1] === 'development';
+const watching = process.argv[process.argv.indexOf('--watch')];
+
+// Development
+let devtool = false;
+if (developing) devtool = 'source-map'
+
+// Plugins
+let configPlugins = [
   new HtmlWebpackPlugin({ // This helps create index.html in dist.
     template: './public/index.html'
   })
 ];
+
+if (watching) {
+}
 
 const config = { 
   context: __dirname,
@@ -43,7 +54,7 @@ const config = {
 
   watchOptions: {
     aggregateTimeout: 200,
-    ignored: /node_modules/,
+    ignored: new RegExp('.*^((?!(/src/)).)*$'), // To exclude all files and directories except those in /src.
   },
 
   /** This reduces the bundle size.
@@ -53,7 +64,7 @@ const config = {
     }, 
    */
 
-  devtool: 'source-map',
+  devtool: devtool,
 
   devServer: {
     port: 3000
