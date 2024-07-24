@@ -38,13 +38,14 @@ export function UIEmployeeForm() {
         bean={employee} field="dateOfBirth" label="Birthday" onChange={handleInputChange}/>
 
       <widget.Button 
-        icon={<icon.BsPlus />}
-        title="Create" type="primary" onClick={createEmployee}/>
+        icon={<icon.BsSaveFill />}
+        title="Save" type="primary" onClick={createEmployee}/>
     </div>
   )
 }
 
 export function UIEmployee() {
+  const [ employeeData, setEmployeeData ] = React.useState<Array<any>>([]);
   const config: widget.DataTableConfig = {
     title: "Employees",
     columnConfig: [
@@ -52,13 +53,8 @@ export function UIEmployee() {
       { field: "nickName", headerName: "Nick Name", width: 200 },
       { field: "dateOfBirth", headerName: "Birthday", width: 200 },
     ],
-    rows: [],
+    rows: employeeData,
   }
-  const [ data, setData ] = React.useState<Array<any>>([]);
-
-  // React.useEffect(() => {
-  //   config.rows = data;
-  // }, [data]);
 
   const showEmployeeForm = () => {
     widget.createPopup("Create Employee", <UIEmployeeForm />);
@@ -66,17 +62,18 @@ export function UIEmployee() {
 
   const successCB: server.CallBack = (response: server.ServerResponse) => {
     const employees = response.body as any[];
-    // setData(employees);
+    setEmployeeData(employees);
   }
 
-  const searchParams = {} as any;
-  // server.rpc.call("EmployeeService", "search", { params: searchParams }, successCB);
-  console.log("Render UIEmployee");
+  React.useEffect(() => {
+    const searchParams = {} as any;
+    server.rpc.call("EmployeeService", "search", { params: searchParams }, successCB);
+  }, [])
   
   return (
     <div className="flex-v">
       <widget.DataTable config={config}/>
-      <widget.Button
+      <widget.Button icon={<icon.BsPlus />}
         className="m-1" title="Create" onClick={showEmployeeForm}/>
     </div>
   );
