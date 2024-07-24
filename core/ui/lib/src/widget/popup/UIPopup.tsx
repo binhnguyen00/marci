@@ -1,5 +1,5 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
+import ReactDomClient from "react-dom/client";
 import * as icon from "react-icons/bs"; 
 
 const POPUP_MODAL_ID = "popup-modal";
@@ -56,16 +56,16 @@ export function createPopup(header?: React.ReactElement<any> | string, body?: Re
     popup.innerHTML = "";
   }
 
-  const root = createRoot(popup);
+  const root = ReactDomClient.createRoot(popup);
   root.render(
     <Popup header={header} body={body}/>
   );
 }
 
 export function closePopup(): void {
-  const popup = document.querySelector("#top-layer");
+  const popup = document.getElementById(POPUP_MODAL_ID);
   if (popup) {
-    const root = createRoot(popup);
+    const root = ReactDomClient.createRoot(popup);
     root.unmount();
     document.body.removeChild(popup);
   } else {
