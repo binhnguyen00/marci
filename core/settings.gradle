@@ -1,5 +1,8 @@
 rootProject.name = 'marci-core'
 
+include 'marci-lib-common'
+project(':marci-lib-common').projectDir = new File('lib/common')
+
 include 'marci-module-common'
 project(':marci-module-common').projectDir = new File('module/common')
 
@@ -8,6 +11,3 @@ project(':marci-module-http').projectDir = new File('module/http')
 
 include 'marci-module-deletegraph'
 project(':marci-module-deletegraph').projectDir = new File('module/deletegraph')
-
-include 'marci-lib-common'
-project(':marci-lib-common').projectDir = new File('lib/common')
