@@ -1,12 +1,16 @@
-package net.marci.utils;
+package net.marci.lib.utils;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import net.marci.lib.common.Record;
 import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Bình Nguyễn
@@ -59,7 +63,7 @@ public class DBConnectUtils {
     }
   }
 
-  public int executeUpdate(String sql, Map<String, Object> keyValues) {
+  public int executeUpdate(String sql, Record keyValues) {
     sql = assignSqlHolderWithValue(sql, keyValues);
     return executeUpdate(sql);
   }
@@ -84,9 +88,9 @@ public class DBConnectUtils {
     }
   }
 
-  public List<Map<String, Object>> execute(String SQL_QUERY_TEMPLATE, Map<String, Object> keyValues) {
+  public List<Record> execute(String SQL_QUERY_TEMPLATE, Record keyValues) {
     final String SQL_QUERY = assignSqlHolderWithValue(SQL_QUERY_TEMPLATE, keyValues);
-    List<Map<String, Object>> results;
+    List<Record> results;
     try {
       Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
       ResultSet resultSet = stmt.executeQuery(SQL_QUERY);
@@ -98,13 +102,13 @@ public class DBConnectUtils {
     return results;
   }
 
-  private List<Map<String, Object>> extractResults(ResultSet resultSet) throws SQLException {
-    List<Map<String, Object>> objects = new ArrayList<>();
+  private List<Record> extractResults(ResultSet resultSet) throws SQLException {
+    List<Record> objects = new ArrayList<>();
     ResultSetMetaData metaData = resultSet.getMetaData();
     int columnCount = metaData.getColumnCount();
 
     while (resultSet.next()) {
-      Map<String, Object> row = new HashMap<>();
+      Record row = new Record();
       for (int i = 1; i <= columnCount; i++) {
         String columnName = metaData.getColumnName(i);
         Object columnValue = resultSet.getObject(i);
@@ -118,9 +122,9 @@ public class DBConnectUtils {
   /**
    * @param SQL_QUERY Template SQL with keys that defined as `:keyName`
    * @param keyValues A Map of `:keyName` and its value
-   * @return A fully SQL with actual values
+   * @return A full SQL with actual values
    */
-  public String assignSqlHolderWithValue(String SQL_QUERY, Map<String, Object> keyValues) {
+  public String assignSqlHolderWithValue(String SQL_QUERY, Record keyValues) {
     for (Map.Entry<String, Object> entry : keyValues.entrySet()) {
       String key = entry.getKey();
       Object value = entry.getValue();
