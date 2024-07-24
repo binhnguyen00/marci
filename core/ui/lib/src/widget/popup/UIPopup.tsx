@@ -63,10 +63,12 @@ export function createPopup(header?: React.ReactElement<any> | string, body?: Re
 }
 
 export function closePopup(): void {
-  var popup = document.getElementById(POPUP_MODAL_ID);
+  const popup = document.querySelector("#top-layer");
   if (popup) {
     const root = createRoot(popup);
     root.unmount();
     document.body.removeChild(popup);
+  } else {
+    console.log("No Popup found");
   }
 }

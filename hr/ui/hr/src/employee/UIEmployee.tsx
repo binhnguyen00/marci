@@ -13,14 +13,18 @@ export function UIEmployeeForm() {
   };
 
   const createEmployee = () => {
+
     const successCB: server.CallBack = (response: server.ServerResponse) => {
-      console.log("Success");
-      console.log(response);
+      const html = (<div> {JSON.stringify(response.body, null, 2)} </div>)
+      widget.closePopup();  
+      widget.createPopup("Success", html);
     }
     const failCB: server.CallBack = (response: server.ServerResponse) => {
-      console.log("Fail");
-      console.log(response);
+      const html = (<div> {JSON.stringify(response.message, null, 2)} </div>)
+      widget.closePopup();
+      widget.createPopup("Fail", html);
     }
+
     server.rpc.call("EmployeeService", "save", { employee: employee }, successCB, failCB);
   }
 
@@ -42,11 +46,15 @@ export function UIEmployeeForm() {
 
 export function UIEmployee() {
 
+  const showEmployeeForm = () => {
+    widget.createPopup("Create Employee", <UIEmployeeForm />);
+  }
+
   return (
     <div className="flex-v justify-content-between">
-      <div className="h3">Employee</div>
-      <widget.ButtonPopup
-        className="m-1" title="Create" header="Create Employee" body={UIEmployeeForm()}/>
+      <div className="h4">Employee</div>
+      <widget.Button
+        className="m-1" title="Create" onClick={showEmployeeForm}/>
     </div>
   );
 }

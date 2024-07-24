@@ -12,13 +12,15 @@ function UI() {
 }
 
 export function UIDemoPopup() { 
-  const popupRef = React.useRef<HTMLDialogElement | null>(null);
+
+  const showPopupUI = () => {
+    widget.createPopup("Popup", <UI />);
+  }
 
   return (
     <div className="flex-v">
       <h4>Popup</h4>
-      <widget.ButtonPopup className="m-1" 
-        ref={popupRef} title="Click me" header={"Popup header"} body={<UI />}/>
+      <widget.Button className="m-1" title="Click me" onClick={showPopupUI}/>
     </div>
   )
 }
