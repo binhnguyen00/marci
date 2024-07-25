@@ -3,35 +3,24 @@ import { widget } from "@marci-ui/lib";
 import { UIDemoApiCall } from "./UIDemoApiCall";
 import { UIDemoPopup } from "./UIDemoPopup";
 
+const columns: widget.DataTableColumn[] = [
+  { field: "id", label: "ID" },
+  { field: "name", label: "Name" },
+  { field: "position", label: "Position" },
+  { field: "office", label: "Office" },
+  { field: "age", label: "Age" }, 
+]
+
+const rows: any[] = [
+  { id: 1, name: "Tiger Nixon", position: "System Architect", office: "Edinburgh", age: 61, date: "2011-04-25" },
+  { id: 2, name: "Garrett Winters", position: "Accountant", office: "Tokyo", age: 63, date: "2011-07-25" },
+  { id: 3, name: "Ashton Cox", position: "Junior Technical Author", office: "San Francisco", age: 66, date: "2009-01-12" },
+  { id: 4, name: "Cedric Kelly", position: "Senior Javascript Developer", office: "Edinburgh", age: 22, date: "2012-03-29" },
+  { id: 5, name: "Airi Satou", position: "Accountant", office: "Tokyo", age: 33, date: "2008-11-28" },
+] 
+
 export function UIDemo() {
 
-  const createData = (
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
-  ) => {
-    return { name, calories, fat, carbs, protein };
-  }
-  
-  const basicTableConfig: widget.DataTableConfig = {
-    title: "Basic Table",
-    columnConfig: [
-      { field: "name", headerName: "Dessert (100g serving)", width: 200 },
-      { field: "calories", headerName: "Calories", width: 200 },
-      { field: "fat", headerName: "Fat (g)", width: 200 },
-      { field: "carbs", headerName: "Carbs (g)", width: 200 },
-      { field: "protein", headerName: "Protein (g)", width: 200 },
-    ],
-    rows: [
-      createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-      createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-      createData('Eclair', 262, 16.0, 24, 6.0),
-      createData('Cupcake', 305, 3.7, 67, 4.3),
-      createData('Gingerbread', 356, 16.0, 49, 3.9),
-    ],
-  }
   return (
     <div className="flex-v">
       <div className="border-bottom py-2">
@@ -41,7 +30,7 @@ export function UIDemo() {
         <UIDemoPopup/>
       </div>
       <div className="border-bottom py-2">
-        <widget.BasicTable config={basicTableConfig}/>
+        <widget.DataTable height={200} title="Data Table" columns={columns} rows={rows}/>
       </div>
     </div>
   );

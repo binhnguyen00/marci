@@ -2,7 +2,11 @@ import React from "react";
 import * as icon from "react-icons/bs";
 import { server, input, widget } from "@marci-ui/lib";
 
-export function UIEmployeeForm() {
+interface UIEmployeeFormProps {
+  reloadTable: (newEmployee: any) => void;
+}
+export function UIEmployeeForm(props: UIEmployeeFormProps) {
+  let { reloadTable } = props;
   const [employee, setEmployee] = React.useState({});
 
   const handleInputChange = (field: string, newValue: any, rollbackValue: any) => {
@@ -15,10 +19,13 @@ export function UIEmployeeForm() {
   const createEmployee = () => {
 
     const successCB: server.CallBack = (response: server.ServerResponse) => {
-      const html = (<div> {JSON.stringify(response.body, null, 2)} </div>)
+      const employee = response.body as any;
+      const html = (<div> {JSON.stringify(employee, null, 2)} </div>)
       widget.closeCurrentPopup();  
       widget.createPopup("Success", html);
+      reloadTable(employee);
     }
+    
     const failCB: server.CallBack = (response: server.ServerResponse) => {
       const html = (<div> {JSON.stringify(response.message, null, 2)} </div>)
       widget.closeCurrentPopup();
@@ -46,18 +53,14 @@ export function UIEmployeeForm() {
 
 export function UIEmployee() {
   const [ employeeData, setEmployeeData ] = React.useState<Array<any>>([]);
-  const config: widget.DataTableConfig = {
-    title: "Employees",
-    columnConfig: [
-      { field: "fullName", headerName: "Full Name", width: 200 },
-      { field: "nickName", headerName: "Nick Name", width: 200 },
-      { field: "dateOfBirth", headerName: "Birthday", width: 200 },
-    ],
-    rows: employeeData,
-  }
+
+  const reloadTable = (newEmployee: any) => {
+    let employees = [...employeeData, newEmployee];
+    setEmployeeData(employees);
+  };
 
   const showEmployeeForm = () => {
-    widget.createPopup("Create Employee", <UIEmployeeForm />);
+    widget.createPopup("Create Employee", <UIEmployeeForm reloadTable={reloadTable}/>);
   }
 
   const successCB: server.CallBack = (response: server.ServerResponse) => {
@@ -72,7 +75,6 @@ export function UIEmployee() {
   
   return (
     <div className="flex-v">
-      <widget.DataTable config={config}/>
       <widget.Button icon={<icon.BsPlus />}
         className="m-1" title="Create" onClick={showEmployeeForm}/>
     </div>
