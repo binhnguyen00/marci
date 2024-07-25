@@ -54,6 +54,23 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
 export function UIEmployee() {
   const [ employeeData, setEmployeeData ] = React.useState<Array<any>>([]);
 
+  const columns: widget.DataTableColumn[] = [ 
+    { field: "fullName", label: "Full Name" },
+    { field: "nickName", label: "Nick Name" },
+    { field: "dateOfBirth", label: "Birthday" },
+    { field: "dateOfBirth", label: "Birthday" },
+    { field: "dateOfBirth", label: "Birthday" },
+    { field: "dateOfBirth", label: "Birthday" },
+    { field: "dateOfBirth", label: "Birthday" },
+    { field: "dateOfBirth", label: "Birthday" },
+    { field: "dateOfBirth", label: "Birthday" },
+    { field: "dateOfBirth", label: "Birthday" },
+    { field: "dateOfBirth", label: "Birthday" },
+    { field: "dateOfBirth", label: "Birthday" },
+    { field: "dateOfBirth", label: "Birthday" },
+    { field: "dateOfBirth", label: "Birthday" },
+  ]
+
   const reloadTable = (newEmployee: any) => {
     let employees = [...employeeData, newEmployee];
     setEmployeeData(employees);
@@ -77,6 +94,8 @@ export function UIEmployee() {
     <div className="flex-v">
       <widget.Button icon={<icon.BsPlus />}
         className="m-1" title="Create" onClick={showEmployeeForm}/>
+      <widget.DataTable 
+        title="Employees" columns={columns} rows={employeeData}/>
     </div>
   );
 }

@@ -36,7 +36,7 @@ export function DataTable(props: DataTableProps) {
     <div className={`flex-v ${className}`} style={{ height: height ? height : "auto" }}>
       {title ? <div className="h5"> {title} </div> : null}
       <CompactTable 
-        data={data} columns={columnConfigs} theme={theme}
+        data={data} columns={columnConfigs} theme={theme} layout={{horizontalSroll: true}}
       />
     </div>
   )
@@ -50,7 +50,6 @@ function createColumnConfigs(columns: DataTableColumn[]): Column<TableNode>[] | 
         renderCell: (node: any) => node[column.field]
       } as Column<TableNode>;
     })
-    console.log(columnConfigs);
     return columnConfigs;
   } catch (error) {
     console.error(error);
