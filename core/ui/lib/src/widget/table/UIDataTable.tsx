@@ -1,6 +1,13 @@
 import React from "react";
 import { DataGrid, DataGridProps, GridColDef } from "@mui/x-data-grid";
 
+export interface DataTableConfig {
+  title: string;
+  columnConfig: GridColDef<any>[];    // configs for the column
+  rows: Array<any>;                   // actual data
+  height?: number;                    // as pixels
+}
+
 interface DataTableProps extends DataGridProps {
   config: DataTableConfig;
 }
@@ -22,11 +29,4 @@ export function DataTable(props: DataTableProps) {
       </div>
     </div>
   )
-}
-
-export interface DataTableConfig {
-  title: String;
-  columnConfig: GridColDef<any>[];    // configs for the column
-  rows: Array<any>;                   // actual data
-  height?: number;                    // as pixels
 }

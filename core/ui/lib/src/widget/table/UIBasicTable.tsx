@@ -14,10 +14,10 @@ interface BasicTableProps {
 
 export function BasicTable(props: BasicTableProps) {
   let { config } = props
-  let { rows } = config
+  let { rows, title } = config
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} title={title!}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>

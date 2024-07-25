@@ -41,7 +41,6 @@ export function UIDemo() {
         <UIDemoPopup/>
       </div>
       <div className="border-bottom py-2">
-        <h4>Basic Table</h4>
         <widget.BasicTable config={basicTableConfig}/>
       </div>
     </div>
