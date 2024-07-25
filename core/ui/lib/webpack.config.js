@@ -48,7 +48,7 @@ const config = {
         exclude: /node_modules/,
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.(css|s[ac]ss)$/i,
         use: [
           { loader: 'style-loader' },
           { loader: 'css-loader' },

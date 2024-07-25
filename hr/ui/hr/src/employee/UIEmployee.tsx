@@ -54,22 +54,13 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
 export function UIEmployee() {
   const [ employeeData, setEmployeeData ] = React.useState<Array<any>>([]);
 
-  const columns: widget.DataTableColumn[] = [ 
-    { field: "fullName", label: "Full Name" },
-    { field: "nickName", label: "Nick Name" },
-    { field: "dateOfBirth", label: "Birthday" },
-    { field: "dateOfBirth", label: "Birthday" },
-    { field: "dateOfBirth", label: "Birthday" },
-    { field: "dateOfBirth", label: "Birthday" },
-    { field: "dateOfBirth", label: "Birthday" },
-    { field: "dateOfBirth", label: "Birthday" },
-    { field: "dateOfBirth", label: "Birthday" },
-    { field: "dateOfBirth", label: "Birthday" },
-    { field: "dateOfBirth", label: "Birthday" },
-    { field: "dateOfBirth", label: "Birthday" },
-    { field: "dateOfBirth", label: "Birthday" },
-    { field: "dateOfBirth", label: "Birthday" },
-  ]
+  const columns: any[] = React.useMemo(() => [ 
+    { field: "id", header: "ID" },
+    { field: "fullName", header: "Full Name" },
+    { field: "nickName", header: "Nick Name" },
+    { field: "dateOfBirth", header: "Birthday" },
+    { field: "accountId", header: "Account ID" },
+  ], []);
 
   const reloadTable = (newEmployee: any) => {
     let employees = [...employeeData, newEmployee];
@@ -77,7 +68,7 @@ export function UIEmployee() {
   };
 
   const showEmployeeForm = () => {
-    widget.createPopup("Create Employee", <UIEmployeeForm reloadTable={reloadTable}/>);
+    widget.createPopup("Create Employee ", <UIEmployeeForm reloadTable={reloadTable}/>);
   }
 
   const successCB: server.CallBack = (response: server.ServerResponse) => {
@@ -95,7 +86,7 @@ export function UIEmployee() {
       <widget.Button icon={<icon.BsPlus />}
         className="m-1" title="Create" onClick={showEmployeeForm}/>
       <widget.DataTable 
-        title="Employees" columns={columns} rows={employeeData}/>
+        title="Employees" columns={columns} records={employeeData}/>
     </div>
   );
 }
