@@ -23,21 +23,6 @@ export interface DataTableProps {
 }
 
 export function DataTable(props: DataTableProps) {
-  type Person = {
-    firstName: string
-    lastName: string
-    age: number
-    visits: number
-    status: string
-    progress: number
-  }
-
-  const columnHelper = createColumnHelper<Person>()
-  columnHelper.display({
-    id: 'actions',
-    cell: props => props.row,
-  })
-
   let { title = "", className = "", height = 400, debug = true, records, columns } = props;
   const columnConfigs = React.useMemo(() => 
     createColumnConfigs(columns), [columns]
