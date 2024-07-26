@@ -1,4 +1,4 @@
 export * from "./button/UIButton";
 export * from "./table/UIDataTable";
-
-export { createPopup, closeCurrentPopup } from "./popup/UIPopup";
+export * from "./bootstrap/UILoading";
+export * from "./popup/UIPopup";

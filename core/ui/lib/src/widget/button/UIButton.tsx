@@ -7,25 +7,39 @@ declare interface ButtonProps {
   className?: string;
   onClick?: () => void;
   icon?: JSX.Element;
+  iconPosition?: "left" | "right";
   disabled?: boolean;
 }
 
 export function Button(props: ButtonProps) {
 
-  let { title: label = "untitled", type = "primary", className = "", onClick, icon, disabled = false } = props;
+  let { 
+    title = "untitled", 
+    type = "primary", 
+    className = "", 
+    disabled = false, 
+    iconPosition = "left", 
+    onClick, icon, 
+  } = props
 
   if (!onClick) onClick = () => {
     alert("Ops! Developers are working on it :)");
   };
 
-  let iconUI = null;
-  if (icon) iconUI = <>{icon}</>;
-
   return (
     <div>
-      <button type="button" className={`btn btn-${type} ${className}`} onClick={onClick} disabled={disabled}> 
-        {iconUI}
-        {label}
+      <button type="button" className={`flex-h btn btn-${type} ${className}`} onClick={onClick} disabled={disabled}> 
+        {
+          iconPosition === "left" && icon
+          ? <div> {icon} </div>
+          : null
+        }
+        <div className="mx-1"> {title} </div>
+        {
+          iconPosition === "right" && icon
+          ? <div> {icon} </div>
+          : null
+        }
       </button>
     </div>
   )

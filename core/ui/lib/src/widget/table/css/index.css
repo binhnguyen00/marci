@@ -26,6 +26,10 @@ td {
   padding: 2px 4px;
 }
 
+tbody tr:hover {
+  background-color: rgb(220, 220, 220);
+}
+
 .resizer {
   background: rgba(0, 0, 0, 0.5);
   cursor: col-resize;

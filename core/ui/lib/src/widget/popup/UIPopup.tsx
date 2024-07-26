@@ -10,7 +10,7 @@ declare interface PopupProps {
   className?: string;
 }
 
-export function Popup(props: PopupProps) {
+function Popup(props: PopupProps) {
   let { className = "", body, header } = props;
   const [ open, setOpen ] = React.useState(true);
   const popupRef = React.useRef<HTMLDialogElement | null>(null);
