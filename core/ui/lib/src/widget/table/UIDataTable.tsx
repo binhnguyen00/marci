@@ -1,20 +1,15 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 
 import "./css/index.css"
 import {
-  useReactTable,
-  ColumnResizeMode,
-  getCoreRowModel,
-  ColumnDef,
-  flexRender,
-  ColumnResizeDirection,
-  createColumnHelper,
-  HeaderGroup, TableOptions
+  useReactTable, getCoreRowModel, flexRender, createColumnHelper,
+  ColumnDef, HeaderGroup, TableOptions, Column, Table,
 } from '@tanstack/react-table'
 
 export interface DataTableColumn {
   field: string;
   header: string;
+  width?: number;
   customRender?: (record: any, index: number) => any;
 }
 
@@ -24,91 +19,76 @@ export interface DataTableProps {
   title?: string;
   height?: number;
   className?: string;
+  debug?: boolean;
 }
 
 export function DataTable(props: DataTableProps) {
-  let { title = "", className = "", height = 400, records, columns } = props;
-  console.log(records);
-  
+  type Person = {
+    firstName: string
+    lastName: string
+    age: number
+    visits: number
+    status: string
+    progress: number
+  }
+
+  const columnHelper = createColumnHelper<Person>()
+  columnHelper.display({
+    id: 'actions',
+    cell: props => props.row,
+  })
+
+  let { title = "", className = "", height = 400, debug = true, records, columns } = props;
   const columnConfigs = React.useMemo(() => 
-    createColumnConfigs(columns), 
-  [columns]);
+    createColumnConfigs(columns), [columns]
+  );
   const table = useReactTable({
     data: records,
     columns: columnConfigs,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
     getCoreRowModel: getCoreRowModel(),
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: true,
+    debugTable: debug,
+    debugHeaders: debug,
+    debugColumns: debug,
   } as TableOptions<any>)
 
   return (
     <div className={`${className}`}>
       <div className="h5"> {title} </div>
       <div style={{ direction: table.options.columnResizeDirection }}>
-        <div className="overflow-x-auto" style={{ height: height }}>
-          <table
-            style={{ 
-              width: table.getCenterTotalSize() 
-            }}
-          >
+        <div className="table-container" style={{ height: height }}>
 
-            <thead>
-              {table.getHeaderGroups().map((headerGroup: HeaderGroup<any>) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map(header => (
-                    <th   
-                      key={header.id} 
-                      colSpan={header.colSpan} 
-                      style={{ width: header.getSize() }}
-                    >
-                      {header.isPlaceholder
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())
-                      }
-                      <div
-                        onDoubleClick={() => header.column.resetSize()}
-                        onMouseDown={header.getResizeHandler()}
-                        onTouchStart={header.getResizeHandler()}
-                        className={`resizer ${table.options.columnResizeDirection} 
-                                            ${header.column.getIsResizing() ? 'isResizing' : ''}`}
-                        style={{
-                          transform:
-                            table.options.columnResizeMode === 'onEnd' && header.column.getIsResizing()
-                            ? `translateX(${
-                              (table.options.columnResizeDirection === 'rtl' ? -1 : 1) *
-                              (table.getState().columnSizingInfo.deltaOffset ?? 0)
-                            }px)`
-                            : "",
-                        }}
-                      />
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
+          <table style={{ width: table.getTotalSize() }}>
+
+            {renderTableHeader(table)}
 
             <tbody>
               {table.getRowModel().rows.map(row => (
                 <tr key={row.id}>
-                  {row.getVisibleCells().map(cell => (
-                    <td
-                      key={cell.id}
-                      style={{ width: cell.column.getSize() }}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
-                  ))}
+                  {row.getVisibleCells().map(cell => {
+                    const { column } = cell;
+                    return (
+                      <td
+                        key={cell.id}
+                        style={{ 
+                          width: column.getSize(),
+                          ...getPinedColumnCSS(column) // <-- IMPORTANT: use for Pinning the column 
+                        }}
+                      >
+                        {flexRender(
+                          column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </td>
+                    )
+                  })}
                 </tr>
               ))}
             </tbody>
 
           </table>
+          
         </div>
       </div>
     </div>
@@ -124,6 +104,7 @@ export function createColumnConfigs(columns: DataTableColumn[]) {
       return {
         header: column.header,
         accessorFn: column.customRender,
+        size: column.width ? column.width : 300,
         // more options...
       } as ColumnDef<any>
     })
@@ -131,4 +112,87 @@ export function createColumnConfigs(columns: DataTableColumn[]) {
   } catch (error) {
     console.error(error);
   }
+}
+
+function getPinedColumnCSS(column: Column<any>): CSSProperties {
+  const isPinned = column.getIsPinned();
+  return {
+    left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
+    right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
+    width: column.getSize(),
+    position: isPinned ? 'sticky' : 'relative',
+    zIndex: isPinned ? 1 : 0,
+  }
+}
+
+function renderTableHeader(table: Table<any>) {
+  return (
+    <thead>
+      {table.getHeaderGroups().map((headerGroup: HeaderGroup<any>) => (
+        <tr key={headerGroup.id}>
+          {headerGroup.headers.map(header => {
+            const { column } = header;
+            return (
+              <th 
+                key={header.id} 
+                colSpan={header.colSpan} 
+                style={{ 
+                  width: header.getSize(), 
+                  ...getPinedColumnCSS(column) // <-- IMPORTANT: use for Pinning the column 
+                }}
+              >
+                <div className="flex-h">
+                  {/* render Header's label */}
+                  <div className="whitespace-nowrap"> 
+                    {header.isPlaceholder
+                    ? null
+                    : flexRender(header.column.columnDef.header, header.getContext())
+                    }
+                  </div>
+                  <div className="flex-h justify-content-end">
+                    {/* Pin controller */}
+                    {!header.isPlaceholder && header.column.getCanPin() && (
+                      <div>
+                        {header.column.getIsPinned() !== 'left' ? (
+                          <button
+                            className="border rounded px-2"
+                            onClick={() => header.column.pin('left')}
+                          >
+                            {'<='}
+                          </button>
+                        ) : null}
+                        {header.column.getIsPinned() ? (
+                          <button
+                            className="border rounded px-2"
+                            onClick={() => header.column.pin(false)}
+                          >
+                            {'X'}
+                          </button>
+                        ) : null}
+                        {header.column.getIsPinned() !== 'right' ? (
+                          <button
+                            className="border rounded px-2"
+                            onClick={() => header.column.pin('right')}
+                          >
+                            {'=>'}
+                          </button>
+                        ) : null}
+                      </div>
+                    )}
+                    {/* Resize div */}
+                    <div  
+                      onDoubleClick={() => header.column.resetSize()}
+                      onMouseDown={header.getResizeHandler()}
+                      onTouchStart={header.getResizeHandler()}
+                      className={`resizer ${table.options.columnResizeDirection} ${header.column.getIsResizing() ? 'isResizing' : ''}`}>
+                    </div>
+                  </div>
+                </div>
+              </th>
+            )
+          })}
+        </tr>
+      ))}
+    </thead>
+  )
 }

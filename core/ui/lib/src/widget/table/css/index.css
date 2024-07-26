@@ -1,75 +1,44 @@
-* {
-  box-sizing: border-box;
-}
-
-table,
-.divTable {
+.table-container {
   border: 1px solid lightgray;
-  width: fit-content;
+  overflow-x: scroll;
+  width: 100%;
+  position: relative;
 }
 
-.tr {
-  display: flex;
+table {
+  /* box-shadow and borders will not work with positon: sticky otherwise */
+  border-collapse: separate !important;
+  border-spacing: 0;
 }
 
-tr,
-.tr {
-  width: fit-content;
-  height: 30px;
-}
-
-th,
-.th,
-td,
-.td {
-  box-shadow: inset 0 0 0 1px lightgray;
-  padding: 0.25rem;
-}
-
-th,
-.th {
+th {
+  background-color: rgb(240, 240, 240); /* Header color */
+  border-bottom: 1px solid lightgray;
+  font-weight: bold;
   padding: 2px 4px;
   position: relative;
-  font-weight: bold;
   text-align: center;
-  height: 30px;
 }
 
-td,
-.td {
-  height: 30px;
+td {
+  background-color: white; /* IMPORTAINT: this will hide the cells under pined columns */
+  box-shadow: inset 0 0 0 1px lightgray; /* border cells */
+  padding: 2px 4px;
 }
 
 .resizer {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 5px;
   background: rgba(0, 0, 0, 0.5);
   cursor: col-resize;
-  user-select: none;
-  touch-action: none;
-}
-
-.resizer.ltr {
+  height: 100%;
+  position: absolute;
   right: 0;
-}
-
-.resizer.rtl {
-  left: 0;
+  top: 0;
+  touch-action: none;
+  user-select: none;
+  width: 5px;
 }
 
 .resizer.isResizing {
   background: blue;
   opacity: 1;
-}
-
-@media (hover: hover) {
-  .resizer {
-    opacity: 0;
-  }
-
-  *:hover > .resizer {
-    opacity: 1;
-  }
 }
