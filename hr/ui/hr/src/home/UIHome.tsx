@@ -1,6 +1,6 @@
 import React from "react";
 import { widget } from "@marci-ui/lib"; 
-import { UIEmployee } from "employee/UIEmployee";
+import { UIEmployee } from "employee/UIEmployeeList";
 import { UIDemo } from "demo/UIDemo";
 
 export function UIHome() {
