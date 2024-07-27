@@ -7,10 +7,10 @@ interface UIEmployeeFormProps {
 }
 export function UIEmployeeForm(props: UIEmployeeFormProps) {
   let { reloadTable } = props;
-  const [employee, setEmployee] = React.useState({});
+  const [employeeState, setEmployee] = React.useState({});
 
   const handleInputChange = (field: string, newValue: any, rollbackValue: any) => {
-    setEmployee((prevState) => ({
+    setEmployee((prevState: any) => ({
       ...prevState,
       [field]: newValue,
     }));
@@ -32,21 +32,29 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
       widget.createPopup("Fail", html);
     }
 
-    server.rpc.call("EmployeeService", "save", { employee: employee }, successCB, failCB);
+    server.rpc.call("EmployeeService", "create", { model: employeeState }, successCB, failCB);
   }
 
   return (
     <div className="form-group p-1 border">
       <input.FieldString 
-        bean={employee} field="fullName" label="Full Name" onChange={handleInputChange}/>
+        bean={employeeState} field="userName" label="Username" onChange={handleInputChange}/>
       <input.FieldString 
-        bean={employee} field="nickName" label="Nick Name" onChange={handleInputChange}/>
+        bean={employeeState} field="password" label="Password" onChange={handleInputChange}/>
+
       <input.FieldString 
-        bean={employee} field="dateOfBirth" label="Birthday" onChange={handleInputChange}/>
+        bean={employeeState} field="fullName" label="Full Name" onChange={handleInputChange}/>
+      <input.FieldString 
+        bean={employeeState} field="nickName" label="Nick Name" onChange={handleInputChange}/>
+      <input.FieldString 
+        bean={employeeState} field="email" label="Email" onChange={handleInputChange}/>
+      <input.FieldString 
+        bean={employeeState} field="phoneNumber" label="Phone Number" onChange={handleInputChange}/>
+      <input.FieldString 
+        bean={employeeState} field="dateOfBirth" label="Birthday" onChange={handleInputChange}/>
 
       <widget.Button 
-        icon={<icon.BsSaveFill />}
-        title="Save" type="primary" onClick={createEmployee}/>
+        icon={<icon.BsSaveFill />} title="Create" type="primary" onClick={createEmployee}/>
     </div>
   )
 }

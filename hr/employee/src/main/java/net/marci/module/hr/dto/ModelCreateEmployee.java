@@ -12,9 +12,6 @@ import java.util.regex.Pattern;
 @Setter @Getter @NoArgsConstructor
 public class ModelCreateEmployee {
 
-  public enum CreateMethod { EMAIL, PHONE }
-  private CreateMethod mode;
-
   private String userName;
   private String password;
 
