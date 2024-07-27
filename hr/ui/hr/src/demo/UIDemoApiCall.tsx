@@ -24,7 +24,7 @@ export function UIDemoApiCall() {
 
   return (
       <div className="flex-v">
-        <h4>API Call</h4>
+        <h5>API Call</h5>
         <div className="flex-h">
           <widget.Button className="m-1"
             icon={<icon.BsSend />} title="RPC" type="primary" onClick={rpcCall}/>

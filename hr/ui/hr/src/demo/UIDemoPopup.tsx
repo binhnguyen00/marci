@@ -19,7 +19,7 @@ export function UIDemoPopup() {
 
   return (
     <div className="flex-v">
-      <h4>Popup</h4>
+      <h5>Popup</h5>
       <widget.Button className="m-1" title="Click me" onClick={showPopupUI}/>
     </div>
   )
