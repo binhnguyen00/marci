@@ -22,6 +22,12 @@ import net.marci.module.deletegraph.DeleteGraphs;
       columnNames = {
         "user_name", "email"
       }
+    ),
+    @UniqueConstraint(
+      name = "account_user_name_phone_number",
+      columnNames = {
+        "user_name", "phone_number"
+      }
     )
   }
 )
@@ -42,8 +48,30 @@ public class Account extends BaseEntity {
   @NotNull
   private String password;
 
+  @Column(name = "email", updatable = false)
   private String email;
 
   @Column(name = "phone_number", length = 12)
   private String phoneNumber;
+
+  @Column(name = "country_code")
+  private String countryCode;
+
+  @Column(name = "country_name")
+  private String countryName;
+
+  @Column(name = "state_code")
+  private String stateCode;
+
+  @Column(name = "state_name")
+  private String stateName;
+
+  @Column(name = "city_code")
+  private String cityCode;
+
+  @Column(name = "city_name")
+  private String cityName;
+
+  @Column(name = "address")
+  private String address;
 }

@@ -1,7 +1,10 @@
 package net.marci.module.hr.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 import net.marci.common.BaseEntity;
 import net.marci.module.account.entity.Account;
 
@@ -24,6 +27,7 @@ public class Employee extends BaseEntity {
 
   public static final String TABLE_NAME = "employee";
 
+  // Information
   @Column(name = "full_name")
   private String fullName;
 
@@ -33,6 +37,19 @@ public class Employee extends BaseEntity {
   @Column(name = "date_of_birth")
   private LocalDate dateOfBirth;
 
+  @NonNull
   @JoinColumn(name = "account_id", table = Account.TABLE_NAME, referencedColumnName = "id")
   private Long accountId;
+
+  // Position
+  @Column(name = "department_code")
+  private String departmentCode;
+
+  @Column(name = "position_code")
+  private String positionCode;
+
+  public Long delegateToAccount(@NonNull Account account) {
+    this.accountId = account.getId();
+    return this.accountId;
+  }
 }
