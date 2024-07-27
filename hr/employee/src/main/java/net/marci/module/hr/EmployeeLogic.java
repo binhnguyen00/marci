@@ -34,8 +34,8 @@ public class EmployeeLogic {
   public Employee getByUserName(String userName) {
     final Account accountInDb = accountLogic.getByUserName(userName);
     if (Objects.isNull(accountInDb)) {
-      log.error("User {} not found", userName);
-      throw new RuntimeException("User not found");
+      log.error("Username {} not found", userName);
+      throw new RuntimeException("Employee not found");
     }
     return getByAccountId(accountInDb.getId());
   }
@@ -43,43 +43,40 @@ public class EmployeeLogic {
   public Employee getByEmail(String email) {
     final Account accountInDb = accountLogic.getByEmail(email);
     if (Objects.isNull(accountInDb)) {
-      log.error("User with email {} not found", email);
-      throw new RuntimeException("User not found");
+      log.error("Email {} not found", email);
+      throw new RuntimeException("Employee not found");
     }
     return getByAccountId(accountInDb.getId());
   }
 
   public Employee create(ModelCreateEmployee model) {
-    Account accountInDb = accountLogic.getByUserName(model.getUserName());
-    if (Objects.nonNull(accountInDb)) {
-      log.error("User Name {} is already used", model.getUserName());
-      throw new RuntimeException("User already exists");
+    if (Objects.nonNull(accountLogic.getByUserName(model.getUserName()))) {
+      log.error("Username {} already exists", model.getUserName());
+      throw new RuntimeException("Username already exists");
     }
-    Employee employeeInDb = getByEmail(model.getEmail());
-    if (Objects.nonNull(employeeInDb)) {
+    if (Objects.nonNull(accountLogic.getByEmail(model.getEmail()))) {
       log.error("Email {} is already used", model.getEmail());
-      throw new RuntimeException("User already exists");
+      throw new RuntimeException("Email already exists");
     }
 
     Account account = new Account();
-    account.setUserName(model.getEmail());
+    account.setEmail(model.getEmail());
+    account.setUserName(model.getUserName());
     account.setPassword(model.getPassword());
     account.setCityCode(model.getCityCode());
     account.setCountryCode(model.getCountryCode());
     account.setStateCode(model.getStateCode());
     account.setAddress(model.getAddress());
-    account.setUserName(model.getUserName());
     accountLogic.create(account);
+
 
     Employee employee = new Employee();
     employee.delegateToAccount(account);
     employee.setFullName(model.getFullName());
     employee.setNickName(model.getNickName());
-    employee.setEmail(model.getEmail());
     employee.setPhoneNumber(model.getPhoneNumber());
     employee.setDateOfBirth(model.getDateOfBirth());
-    employee.setUserInteract();
-    employee = repository.save(employee);
+    employee = save(employee);
 
     return employee;
   }

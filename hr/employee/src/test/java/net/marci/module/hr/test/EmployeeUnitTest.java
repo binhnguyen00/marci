@@ -7,6 +7,7 @@ import net.marci.module.config.EmployeeModuleConfig;
 import net.marci.module.config.HttpModuleConfig;
 import net.marci.module.deletegraph.DeleteGraphBuilder;
 import net.marci.module.hr.EmployeeLogic;
+import net.marci.module.hr.dto.ModelCreateEmployee;
 import net.marci.module.hr.entity.Employee;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
@@ -48,17 +49,43 @@ public class EmployeeUnitTest {
   private EmployeeLogic employeeLogic;
 
   @Test @Tag("unit")
-  public void allTest() {
-    Employee employee = new Employee();
-    employee.setFullName("Nguyen Nang Binh");
-    employee.setDateOfBirth(LocalDate.of(2000, 3, 28));
-    employee.setNickName("jack-jack");
-    employee = employeeLogic.save(employee);
-    Assertions.assertNotNull(employee);
+  public void testAll() {
+    createEmployee();
+    getEmployee();
+    deleteEmployee();
+  }
 
-    Employee employeeInDb = employeeLogic.getById(employee.getId());
+  @Test @Tag("unit")
+  public void createEmployee() {
+    ModelCreateEmployee model = new ModelCreateEmployee();
+    model.setUserName("_jackjack68");
+    model.setPassword("123456");
+
+    model.setNickName("Jack");
+    model.setFullName("Nguyen Nang Binh");
+    model.setEmail("jacjack2000.kahp@gmail.com");
+    model.setPhoneNumber("0942659016");
+    model.setDateOfBirth(LocalDate.of(2000, 3, 28));
+
+    Employee employee = employeeLogic.create(model);
+    Assertions.assertNotNull(employee);
+  }
+
+  @Test @Tag("unit")
+  public void getEmployee() {
+    Employee employeeInDb = employeeLogic.getByUserName("_jackjack68");
     Assertions.assertNotNull(employeeInDb);
 
+    employeeInDb = employeeLogic.getByEmail("jacjack2000.kahp@gmail.com");
+    Assertions.assertNotNull(employeeInDb);
+
+    employeeInDb = employeeLogic.getById(1L);
+    Assertions.assertNotNull(employeeInDb);
+  }
+
+  @Test @Tag("unit")
+  public void deleteEmployee() {
+    Employee employeeInDb = employeeLogic.getByUserName("_jackjack68");
     DBConnectUtils connectUtils = new DBConnectUtils(dataSource);
     DeleteGraphBuilder deleteGraphBuilder = new DeleteGraphBuilder(connectUtils, Employee.class, List.of(employeeInDb.getId()));
     int target = deleteGraphBuilder.doDelete();

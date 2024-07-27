@@ -20,12 +20,6 @@ import java.time.LocalDate;
         "account_id"
       }
     ),
-    @UniqueConstraint(
-      name = "employee_email",
-      columnNames = {
-        "email"
-      }
-    )
   }
 )
 @NoArgsConstructor @Getter @Setter
@@ -42,9 +36,6 @@ public class Employee extends BaseEntity {
 
   @Column(name = "date_of_birth")
   private LocalDate dateOfBirth;
-
-  @Column(name = "email")
-  private String email;
 
   @Column(name = "phone_number")
   private String phoneNumber;

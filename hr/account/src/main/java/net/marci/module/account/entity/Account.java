@@ -3,6 +3,7 @@ package net.marci.module.account.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,10 +17,16 @@ import net.marci.module.deletegraph.DeleteGraphs;
 @Table(
   name = Account.TABLE_NAME,
   uniqueConstraints = {
-    @jakarta.persistence.UniqueConstraint(
+    @UniqueConstraint(
       name = "account_user_name",
       columnNames = {
         "user_name"
+      }
+    ),
+    @UniqueConstraint(
+      name = "account_email",
+      columnNames = {
+        "email"
       }
     )
   }
@@ -33,6 +40,10 @@ import net.marci.module.deletegraph.DeleteGraphs;
 public class Account extends BaseEntity {
 
   public static final String TABLE_NAME = "account";
+
+  @NotNull
+  @Column(name = "email")
+  private String email;
 
   @NotNull
   @Column(name = "user_name", updatable = false)

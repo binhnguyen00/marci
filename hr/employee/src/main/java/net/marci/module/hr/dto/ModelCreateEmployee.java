@@ -2,13 +2,14 @@ package net.marci.module.hr.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 @Slf4j
-@Getter @NoArgsConstructor
+@Setter @Getter @NoArgsConstructor
 public class ModelCreateEmployee {
 
   public enum CreateMethod { EMAIL, PHONE }
@@ -50,14 +51,14 @@ public class ModelCreateEmployee {
       [Local]
         - It allows numeric values from 0 to 9.
         - Both uppercase and lowercase letters from a to z are allowed.
-        - Allowed are underscore “_”, hyphen “-“, and dot “.”
+        - Allowed are underscore `_`, hyphen `-`, and dot `.`
         - Dot isn’t allowed at the start and end of the local part.
         - Consecutive dots aren’t allowed.
         - For the local part, a maximum of 64 characters are allowed.
       [Domain]
         - It allows numeric values from 0 to 9.
         - We allow both uppercase and lowercase letters from a to z.
-        - Hyphen “-” and dot “.” aren’t allowed at the start and end of the domain part.
+        - Hyphen `-` and dot `.` aren’t allowed at the start and end of the domain part.
         - No consecutive dots.
       """;
       throw new RuntimeException(errorMessage);

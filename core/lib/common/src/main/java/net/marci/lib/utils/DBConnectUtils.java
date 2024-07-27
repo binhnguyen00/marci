@@ -26,6 +26,7 @@ public class DBConnectUtils {
   public DBConnectUtils(DataSource dataSource) {
     try {
       this.connection = dataSource.getConnection();
+      this.connection.setAutoCommit(false);
     } catch (SQLException e) {
       log.error("Failed to connect to database", e);
       throw new RuntimeException(e.getMessage());
