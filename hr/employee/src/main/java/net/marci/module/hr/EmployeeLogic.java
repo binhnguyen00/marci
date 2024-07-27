@@ -50,12 +50,14 @@ public class EmployeeLogic {
   }
 
   public Employee create(ModelCreateEmployee model) {
-    if (Objects.nonNull(accountLogic.getByUserName(model.getUserName()))) {
+    Account accountByUserName = accountLogic.getByUserName(model.getUserName());
+    if (Objects.nonNull(accountByUserName)) {
       log.error("Username {} already exists", model.getUserName());
       throw new RuntimeException("Username already exists");
     }
-    if (Objects.nonNull(accountLogic.getByEmail(model.getEmail()))) {
-      log.error("Email {} is already used", model.getEmail());
+    Account accountByEmail = accountLogic.getByEmail(model.getEmail());
+    if (Objects.nonNull(accountByEmail)) {
+      log.error("Email {} already exists", model.getEmail());
       throw new RuntimeException("Email already exists");
     }
 
@@ -68,7 +70,6 @@ public class EmployeeLogic {
     account.setStateCode(model.getStateCode());
     account.setAddress(model.getAddress());
     accountLogic.create(account);
-
 
     Employee employee = new Employee();
     employee.delegateToAccount(account);
