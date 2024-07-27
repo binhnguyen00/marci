@@ -5,6 +5,7 @@ import net.marci.module.http.dto.ServerResponse;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.text.MessageFormat;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 @Slf4j
@@ -25,7 +26,11 @@ abstract public class BaseController {
       log.error("Error executing {}:{}", component, service, ex);
       response.setStatus(ServerResponse.Status.ERROR);
       response.setMessage(MessageFormat.format("Error executing {0}:{1}", component, service));
-      response.setBody(ex.getMessage());
+      if (Objects.nonNull(ex.getCause())) {
+        response.setBody(ex.getCause().getMessage());
+      } else {
+        response.setBody(ex.getMessage());
+      }
       response.setFinishTimestamp(System.currentTimeMillis());
       return response;
     }

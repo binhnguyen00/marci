@@ -54,13 +54,13 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
 export function UIEmployeeList() {
   const [ employeeData, setEmployeeData ] = React.useState<Array<any>>([]);
 
-  const columns: any[] = React.useMemo(() => [ 
+  const columns: widget.DataTableColumn[] = [ 
     { field: "id", header: "ID" },
     { field: "fullName", header: "Full Name" },
     { field: "nickName", header: "Nick Name" },
     { field: "dateOfBirth", header: "Birthday" },
     { field: "accountId", header: "Account ID" },
-  ], []);
+  ];
 
   const reloadTable = (newEmployee: any) => {
     let employees = [...employeeData, newEmployee];

@@ -42,4 +42,9 @@ public class AccountService {
   public List<Account> findAll() {
     return logic.findAll();
   }
+
+  @Transactional
+  public List<Account> search() {
+    return logic.search();
+  }
 }

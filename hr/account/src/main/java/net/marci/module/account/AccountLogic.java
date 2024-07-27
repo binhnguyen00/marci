@@ -21,10 +21,15 @@ public class AccountLogic {
   private AccountRepository repository;
 
   public Account create(Account target) {
-    Account accountInDb = repository.getByUserName(target.getUserName());
-    if (Objects.nonNull(accountInDb)) {
-      log.error("User {} already exists", target.getUserName());
-      throw new RuntimeException("User already exists");
+    Account byUserName = getByUserName(target.getUserName());
+    if (Objects.nonNull(byUserName)) {
+      log.error("Username {} already exists", target.getUserName());
+      throw new RuntimeException("Username already exists");
+    }
+    Account byEmail = getByEmail(target.getEmail());
+    if (Objects.nonNull(byEmail)) {
+      log.error("Email {} already exists", target.getEmail());
+      throw new RuntimeException("Email already exists");
     }
     target.setUserInteract();
     target = repository.save(target);
@@ -55,10 +60,7 @@ public class AccountLogic {
     return repository.findAll();
   }
 
-  public int delete(Long accountId) {
-    final Account account = getById(accountId);
-
-    repository.delete(account);
-    return 1;
+  public List<Account> search() {
+    return repository.search();
   }
 }
