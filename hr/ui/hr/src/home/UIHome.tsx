@@ -1,6 +1,6 @@
 import React from "react";
 import { widget } from "@marci-ui/lib"; 
-import { UIEmployee } from "employee/UIEmployeeList";
+import { UIEmployeeList } from "employee/UIEmployeeList";
 import { UIDemo } from "demo/UIDemo";
 
 export function UIHome() {
@@ -16,7 +16,7 @@ export function UIHome() {
       <div className="flex-h justify-content-between border-bottom align-items-center">
         <div className="h1" onClick={() => renderPage(homeUI)}>Home</div>
         <div className="flex-h">
-          <widget.Button title="Employee" type="link" onClick={() => renderPage(<UIEmployee/>)}/>
+          <widget.Button title="Employee" type="link" onClick={() => renderPage(<UIEmployeeList/>)}/>
           <widget.Button title="Demo" type="link" onClick={() => renderPage(<UIDemo/>)}/>
           {/* more pages */}
         </div>
