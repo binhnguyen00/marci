@@ -51,7 +51,7 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
   )
 }
 
-export function UIEmployee() {
+export function UIEmployeeList() {
   const [ employeeData, setEmployeeData ] = React.useState<Array<any>>([]);
 
   const columns: any[] = React.useMemo(() => [ 
