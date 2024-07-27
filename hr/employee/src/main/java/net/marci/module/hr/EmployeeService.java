@@ -2,6 +2,7 @@ package net.marci.module.hr;
 
 import lombok.extern.slf4j.Slf4j;
 import net.marci.lib.common.Record;
+import net.marci.module.hr.dto.ModelCreateEmployee;
 import net.marci.module.hr.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,11 @@ public class EmployeeService {
   @Transactional
   public Employee save(Employee employee) {
     return logic.save(employee);
+  }
+
+  @Transactional
+  public Employee create(ModelCreateEmployee model) {
+    return logic.create(model);
   }
 
   @Transactional

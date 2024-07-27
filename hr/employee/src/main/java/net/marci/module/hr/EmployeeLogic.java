@@ -1,12 +1,10 @@
 package net.marci.module.hr;
 
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import net.marci.lib.common.Record;
 import net.marci.module.account.AccountLogic;
 import net.marci.module.account.entity.Account;
 import net.marci.module.hr.dto.ModelCreateEmployee;
-import net.marci.module.hr.dto.ModelCreateEmployee.CreateMethod;
 import net.marci.module.hr.entity.Employee;
 import net.marci.module.hr.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,46 +50,38 @@ public class EmployeeLogic {
   }
 
   public Employee create(ModelCreateEmployee model) {
-    Employee employee = new Employee();
-
-    if (CreateMethod.EMAIL.equals(model.getMode())) {
-      Employee employeeInDb = getByEmail(model.getEmail());
-      if (Objects.nonNull(employeeInDb)) {
-        log.warn("Employee with email {} already exists", model.getEmail());
-        throw new RuntimeException("Email already exists");
-      } else {
-        Account account = new Account();
-        account.setUserName(model.getEmail());
-        account.setEmail(model.getEmail());
-        account.setPhoneNumber(model.getPhoneNumber());
-        account.setCityCode(model.getCityCode());
-        account.setCountryCode(model.getCountryCode());
-        account.setStateCode(model.getStateCode());
-        account.setAddress(model.getAddress());
-        accountLogic.save(account);
-
-        employee.delegateToAccount(account);
-        employee.setFullName(model.getFullName());
-        employee.setNickName(model.getNickName());
-        employee.setDateOfBirth(model.getDateOfBirth());
-      }
-    } else if (CreateMethod.PHONE.equals(model.getMode())) {
-      // TODO
+    Account accountInDb = accountLogic.getByUserName(model.getUserName());
+    if (Objects.nonNull(accountInDb)) {
+      log.error("User Name {} is already used", model.getUserName());
+      throw new RuntimeException("User already exists");
+    }
+    Employee employeeInDb = getByEmail(model.getEmail());
+    if (Objects.nonNull(employeeInDb)) {
+      log.error("Email {} is already used", model.getEmail());
+      throw new RuntimeException("User already exists");
     }
 
-    return employee;
-  }
-
-  public Employee createFromAccount(@NonNull Account account) {
-    if (account.isNew()) {
-      log.error("Account {} not found", account.getId());
-      throw new RuntimeException("Account not found");
-    }
+    Account account = new Account();
+    account.setUserName(model.getEmail());
+    account.setPassword(model.getPassword());
+    account.setCityCode(model.getCityCode());
+    account.setCountryCode(model.getCountryCode());
+    account.setStateCode(model.getStateCode());
+    account.setAddress(model.getAddress());
+    account.setUserName(model.getUserName());
+    accountLogic.create(account);
 
     Employee employee = new Employee();
     employee.delegateToAccount(account);
+    employee.setFullName(model.getFullName());
+    employee.setNickName(model.getNickName());
+    employee.setEmail(model.getEmail());
+    employee.setPhoneNumber(model.getPhoneNumber());
+    employee.setDateOfBirth(model.getDateOfBirth());
+    employee.setUserInteract();
+    employee = repository.save(employee);
 
-    return null;
+    return employee;
   }
 
   public Employee save(Employee employee) {
