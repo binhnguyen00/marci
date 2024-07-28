@@ -20,12 +20,13 @@ export interface DataTableProps {
   height?: number;
   className?: string;
   debug?: boolean;
+  enableRowSelection?: boolean;
 }
 
 export function DataTable(props: DataTableProps) {
-  let { title = "", className = "", height = 400, debug = true, records, columns } = props;
+  let { title = "", className = "", height = 400, debug = true, enableRowSelection = false, records, columns } = props;
   const columnConfigs = React.useMemo(() => 
-    createColumnConfigs(columns), [columns]
+    createColumnConfigs(props), [columns]
   );
   const table = useReactTable({
     data: records,
@@ -33,6 +34,7 @@ export function DataTable(props: DataTableProps) {
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
     getCoreRowModel: getCoreRowModel(),
+    enableRowSelection: enableRowSelection,
     debugTable: debug,
     debugHeaders: debug,
     debugColumns: debug,
@@ -80,7 +82,8 @@ export function DataTable(props: DataTableProps) {
   )
 }
 
-export function createColumnConfigs(columns: DataTableColumn[]) {
+export function createColumnConfigs(props: DataTableProps) {
+  const columns: DataTableColumn[] = props.columns;
   try {
     const columnConfigs: ColumnDef<any>[] = columns.map((column: DataTableColumn) => {
       if (!column.customRender) {
@@ -93,6 +96,27 @@ export function createColumnConfigs(columns: DataTableColumn[]) {
         // more options...
       } as ColumnDef<any>
     })
+
+    if (props.enableRowSelection) {
+      columnConfigs.unshift({
+        id: 'selection',
+        header: ({ table }) => (
+          <input type="checkbox"
+            checked={table.getIsAllRowsSelected()}
+            onChange={table.getToggleAllPageRowsSelectedHandler()} //or getToggleAllRowsSelectedHandler
+          />
+        ),
+        cell: ({ row }) => (
+          <input type="checkbox"
+            checked={row.getIsSelected()}
+            disabled={!row.getCanSelect()}
+            onChange={row.getToggleSelectedHandler()}
+          />
+        ),
+        maxSize: 30,
+      })
+    }
+
     return columnConfigs
   } catch (error) {
     console.error(error);
@@ -137,7 +161,7 @@ function renderTableHeader(table: Table<any>) {
                   <div className="flex-h justify-content-end">
                     {/* Pin controller */}
                     {!header.isPlaceholder && header.column.getCanPin() && (
-                      <div>
+                      <>
                         {header.column.getIsPinned() !== 'left' ? (
                           <button
                             className="border rounded px-2"
@@ -162,7 +186,7 @@ function renderTableHeader(table: Table<any>) {
                             {'=>'}
                           </button>
                         ) : null}
-                      </div>
+                      </>
                     )}
                     {/* Resize div */}
                     <div  

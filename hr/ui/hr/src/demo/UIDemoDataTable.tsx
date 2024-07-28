@@ -38,7 +38,8 @@ export function UIDemoDataTable() {
   return (
     <div className="flex-v">
       <widget.DataTable 
-        title="Data Table" columns={defaultColumns} records={defaultData}/>
+        title="Data Table" enableRowSelection
+        columns={defaultColumns} records={defaultData}/>
     </div>
   );
 }
