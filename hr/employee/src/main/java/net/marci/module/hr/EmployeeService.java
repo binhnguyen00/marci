@@ -53,6 +53,11 @@ public class EmployeeService {
   }
 
   @Transactional
+  public void deleteByIds(List<Long> ids) {
+    logic.deleteByIds(ids);
+  }
+
+  @Transactional
   public List<Employee> findAll() {
     return logic.findAll();
   }

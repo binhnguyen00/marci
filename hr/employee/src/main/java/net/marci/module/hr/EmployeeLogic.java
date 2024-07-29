@@ -91,6 +91,10 @@ public class EmployeeLogic {
     repository.deleteById(id);
   }
 
+  public void deleteByIds(List<Long> ids) {
+    ids.forEach(this::deleteById);
+  }
+
   public List<Employee> findAll() {
     return repository.findAll();
   }
