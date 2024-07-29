@@ -26,7 +26,9 @@ export function createColumnConfigs(props: DataTableProps) {
       return {
         id: field,
         header: header,
-        accessorFn: customRender,
+        cell: ({ row }) => (
+          customRender(row.original, row.index)
+        ),
         size: width,
         // more options...
       } as ColumnDef<any>

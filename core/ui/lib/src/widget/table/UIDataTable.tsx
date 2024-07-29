@@ -31,9 +31,6 @@ export function DataTable(props: DataTableProps) {
     TableUtils.createColumnConfigs(props), [columns]
   );
   const table = useReactTable({
-    // state: {
-    //   columnVisibility: TableUtils.processColumnVisibility(columns),
-    // },
     data: records,
     columns: columnConfigs,
     columnResizeMode: "onChange",
@@ -131,10 +128,7 @@ export function DataTable(props: DataTableProps) {
                           ...TableUtils.getPinedColumnCSS(column) // <-- IMPORTANT: use for Pinning the column 
                         }}
                       >
-                        {flexRender(
-                          column.columnDef.cell,
-                          cell.getContext()
-                        )}
+                        {flexRender(column.columnDef.cell, cell.getContext())}
                       </td>
                     )
                   })}
