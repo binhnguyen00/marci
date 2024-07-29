@@ -14,14 +14,15 @@ function ensureRoot(): HTMLElement {
 
 function renderRoot() {
   const root = ensureRoot();
-  ReactDOM.createRoot(root).render(
+  const reactDOMRoot = ReactDOM.createRoot(root);
+  reactDOMRoot.render(
     <React.StrictMode>
       <UIHome />
     </React.StrictMode>
   )
-  return root;
+  return reactDOMRoot;
 }
 
-const root = renderRoot();
+const reactDOMRoot = renderRoot();
 
-export default root;
+export default reactDOMRoot;
