@@ -5,11 +5,13 @@ import {
   useReactTable, getCoreRowModel, flexRender, createColumnHelper,
   ColumnDef, HeaderGroup, TableOptions, Column, Table,
 } from '@tanstack/react-table'
+import * as TableUtils from "./uitls";
 
 export interface DataTableColumn {
   field: string;
   header: string;
   width?: number;
+  hide?: boolean;
   customRender?: (record: any, index: number) => any;
 }
 
@@ -26,9 +28,12 @@ export interface DataTableProps {
 export function DataTable(props: DataTableProps) {
   let { title = "", className = "", height = 400, debug = true, enableRowSelection = false, records, columns } = props;
   const columnConfigs = React.useMemo(() => 
-    createColumnConfigs(props), [columns]
+    TableUtils.createColumnConfigs(props), [columns]
   );
   const table = useReactTable({
+    // state: {
+    //   columnVisibility: TableUtils.processColumnVisibility(columns),
+    // },
     data: records,
     columns: columnConfigs,
     columnResizeMode: "onChange",
@@ -42,14 +47,77 @@ export function DataTable(props: DataTableProps) {
 
   return (
     <div className={`${className}`}>
+      {/* title */}
       <div className="h5"> {title} </div>
       <div style={{ direction: table.options.columnResizeDirection }}>
         <div className="table-container" style={{ height: height }}>
 
           <table style={{ width: table.getTotalSize() }}>
 
-            {renderTableHeader(table)}
+            {/* header */}
+            <thead>
+              {table.getHeaderGroups().map((headerGroup: HeaderGroup<any>) => (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map(header => {
+                    let { column } = header;
+                    const isSelection: boolean = column.id == "selection"
+                    return (
+                      <th 
+                        key={header.id} 
+                        colSpan={header.colSpan} 
+                        style={{ 
+                          width: header.getSize(), 
+                          ...TableUtils.getPinedColumnCSS(column) // <-- IMPORTANT: use for Pinning the column 
+                        }}
+                      >
+                        <div className="flex-h">
+                          {/* render Header's label */}
+                          <div className="whitespace-nowrap"> 
+                            {header.isPlaceholder
+                            ? null
+                            : flexRender(column.columnDef.header, header.getContext())
+                            }
+                          </div>
+                          <div className="flex-h justify-content-end">
+                            {/* pin controller */}
+                            {!header.isPlaceholder && column.getCanPin() && !isSelection
+                            ? (
+                              <>
+                                {column.getIsPinned() !== 'left' && !isSelection ? (
+                                  <button className="border rounded px-2" onClick={() => column.pin('left')}>
+                                    {'<='}
+                                  </button>
+                                ) : null}
+                                {column.getIsPinned() && !isSelection ? (
+                                  <button className="border rounded px-2" onClick={() => column.pin(false)}>
+                                    {'X'}
+                                  </button>
+                                ) : null}
+                                {column.getIsPinned() !== 'right' && !isSelection ? (
+                                  <button className="border rounded px-2" onClick={() => column.pin('right')}>
+                                    {'=>'}
+                                  </button>
+                                ) : null}
+                              </>
+                            ) : null
+                            }
+                            {/* Resize div */}
+                            <div  
+                              onDoubleClick={() => header.column.resetSize()}
+                              onMouseDown={header.getResizeHandler()}
+                              onTouchStart={header.getResizeHandler()}
+                              className={`resizer ${table.options.columnResizeDirection} ${header.column.getIsResizing() ? 'isResizing' : ''}`}>
+                            </div>
+                          </div>
+                        </div>
+                      </th>
+                    )
+                  })}
+                </tr>
+              ))}
+            </thead>
 
+            {/* body */}
             <tbody>
               {table.getRowModel().rows.map(row => (
                 <tr key={row.id}>
@@ -60,7 +128,7 @@ export function DataTable(props: DataTableProps) {
                         key={cell.id}
                         style={{ 
                           width: column.getSize(),
-                          ...getPinedColumnCSS(column) // <-- IMPORTANT: use for Pinning the column 
+                          ...TableUtils.getPinedColumnCSS(column) // <-- IMPORTANT: use for Pinning the column 
                         }}
                       >
                         {flexRender(
@@ -79,129 +147,5 @@ export function DataTable(props: DataTableProps) {
         </div>
       </div>
     </div>
-  )
-}
-
-export function createColumnConfigs(props: DataTableProps) {
-  const columns: DataTableColumn[] = props.columns;
-  try {
-    const columnConfigs: ColumnDef<any>[] = columns.map((column: DataTableColumn) => {
-      if (!column.customRender) {
-        column.customRender = (record: any, index: number) => record[column.field]
-      }
-      return {
-        header: column.header,
-        accessorFn: column.customRender,
-        size: column.width ? column.width : 300,
-        // more options...
-      } as ColumnDef<any>
-    })
-
-    if (props.enableRowSelection) {
-      columnConfigs.unshift({
-        id: 'selection',
-        header: ({ table }) => (
-          <input type="checkbox"
-            checked={table.getIsAllRowsSelected()}
-            onChange={table.getToggleAllPageRowsSelectedHandler()} //or getToggleAllRowsSelectedHandler
-          />
-        ),
-        cell: ({ row }) => (
-          <input type="checkbox"
-            checked={row.getIsSelected()}
-            disabled={!row.getCanSelect()}
-            onChange={row.getToggleSelectedHandler()}
-          />
-        ),
-        maxSize: 30,
-      })
-    }
-
-    return columnConfigs
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-function getPinedColumnCSS(column: Column<any>): CSSProperties {
-  const isPinned = column.getIsPinned();
-  return {
-    left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
-    right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
-    width: column.getSize(),
-    position: isPinned ? 'sticky' : 'relative',
-    zIndex: isPinned ? 1 : 0,
-  }
-}
-
-function renderTableHeader(table: Table<any>) {
-  return (
-    <thead>
-      {table.getHeaderGroups().map((headerGroup: HeaderGroup<any>) => (
-        <tr key={headerGroup.id}>
-          {headerGroup.headers.map(header => {
-            const { column } = header;
-            return (
-              <th 
-                key={header.id} 
-                colSpan={header.colSpan} 
-                style={{ 
-                  width: header.getSize(), 
-                  ...getPinedColumnCSS(column) // <-- IMPORTANT: use for Pinning the column 
-                }}
-              >
-                <div className="flex-h">
-                  {/* render Header's label */}
-                  <div className="whitespace-nowrap"> 
-                    {header.isPlaceholder
-                    ? null
-                    : flexRender(header.column.columnDef.header, header.getContext())
-                    }
-                  </div>
-                  <div className="flex-h justify-content-end">
-                    {/* Pin controller */}
-                    {!header.isPlaceholder && header.column.getCanPin() && (
-                      <>
-                        {header.column.getIsPinned() !== 'left' ? (
-                          <button
-                            className="border rounded px-2"
-                            onClick={() => header.column.pin('left')}
-                          >
-                            {'<='}
-                          </button>
-                        ) : null}
-                        {header.column.getIsPinned() ? (
-                          <button
-                            className="border rounded px-2"
-                            onClick={() => header.column.pin(false)}
-                          >
-                            {'X'}
-                          </button>
-                        ) : null}
-                        {header.column.getIsPinned() !== 'right' ? (
-                          <button
-                            className="border rounded px-2"
-                            onClick={() => header.column.pin('right')}
-                          >
-                            {'=>'}
-                          </button>
-                        ) : null}
-                      </>
-                    )}
-                    {/* Resize div */}
-                    <div  
-                      onDoubleClick={() => header.column.resetSize()}
-                      onMouseDown={header.getResizeHandler()}
-                      onTouchStart={header.getResizeHandler()}
-                      className={`resizer ${table.options.columnResizeDirection} ${header.column.getIsResizing() ? 'isResizing' : ''}`}>
-                    </div>
-                  </div>
-                </div>
-              </th>
-            )
-          })}
-        </tr>
-      ))}
-    </thead>
   )
 }
