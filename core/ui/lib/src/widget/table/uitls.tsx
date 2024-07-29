@@ -56,13 +56,16 @@ export function createColumnConfigs(props: DataTableProps) {
             onChange={() => {
               table.toggleAllRowsSelected()
               console.log("models", table.getSelectedRowModel());
-            }} //or getToggleAllRowsSelectedHandler 
+            }}
           />
         ),
-        cell: ({ row }) => (
+        cell: ({ row, table }) => (
           <input type="checkbox"
             checked={row.getIsSelected()}
-            onChange={() => row.toggleSelected()}
+            onChange={() => {
+              row.toggleSelected()
+              console.log("models", table.getSelectedRowModel());
+            }}
           />
         ),
         maxSize: 30,

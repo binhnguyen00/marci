@@ -31,7 +31,7 @@ export interface DataTableProps {
 
 export function DataTable(props: DataTableProps) {
   let { 
-    title = "", className = "", height = 400, debug = true, enableRowSelection = false, 
+    title = "", className = "", height = 400, debug = false, enableRowSelection = false, 
     records, columns, onCreateCallBack, onDeleteCallBack
   } = props;
   const columnConfigs = React.useMemo(() => 
