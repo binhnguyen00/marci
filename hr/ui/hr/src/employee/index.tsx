@@ -1,1 +1,1 @@
-export { UIEmployeeList as UIEmployee } from "./UIEmployeeList";
+export { UIEmployeeList } from "./UIEmployeeList";

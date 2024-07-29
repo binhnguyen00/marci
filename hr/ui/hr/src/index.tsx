@@ -1,3 +1,4 @@
-import * as employee from "./employee"
+import * as employee from "./employee";
+import * as account from "./account";
 
-export { employee }
+export { employee, account }
