@@ -7,7 +7,7 @@ import {
 import "./css/index.css"
 import * as TableUtils from "./uitls";
 import { Button } from "../button/UIButton";
-import { createPopup } from "widget/popup/UIPopup";
+import { createPopup, createWarningPopup } from "widget/popup/UIPopup";
 
 export interface DataTableColumn {
   field: string;
@@ -67,10 +67,7 @@ export function DataTable(props: DataTableProps) {
           onClick={() => {
             const ids = TableUtils.getSelectedIds(table);
             if (!ids?.length) {
-              createPopup(
-                <div className="text-warning"> {"Warning"} </div>, 
-                <div> {"Please select at least 1 record"} </div>
-              ); 
+              createWarningPopup(<div> {"Please select at least 1 record"} </div>); 
               return;
             } else onDeleteCallBack(ids);
           }} />
@@ -111,25 +108,20 @@ export function DataTable(props: DataTableProps) {
                           <div className="flex-h justify-content-end">
                             {/* pin controller */}
                             {!header.isPlaceholder && column.getCanPin() && !isSelection
-                            ? (
-                              <>
-                                {column.getIsPinned() !== 'left' && !isSelection ? (
-                                  <button className="border rounded px-2" onClick={() => column.pin('left')}>
-                                    {'<='}
-                                  </button>
-                                ) : null}
-                                {column.getIsPinned() && !isSelection ? (
-                                  <button className="border rounded px-2" onClick={() => column.pin(false)}>
-                                    {'X'}
-                                  </button>
-                                ) : null}
-                                {column.getIsPinned() !== 'right' && !isSelection ? (
-                                  <button className="border rounded px-2" onClick={() => column.pin('right')}>
-                                    {'=>'}
-                                  </button>
-                                ) : null}
-                              </>
-                            ) : null
+                            ? (<>
+                              {column.getIsPinned() !== 'left' && !isSelection ? (
+                                <button className="border rounded px-2" onClick={() => column.pin('left')} value={"<"}/>
+                              ) : null
+                              }
+                              {column.getIsPinned() && !isSelection ? (
+                                <button className="border rounded px-2" onClick={() => column.pin(false)} value={"X"}/>
+                              ) : null
+                              }
+                              {column.getIsPinned() !== 'right' && !isSelection ? (
+                                <button className="border rounded px-2" onClick={() => column.pin('right')} value={">"}/>
+                              ) : null
+                              }
+                            </>) : null
                             }
                             {/* resize div */}
                             <div  

@@ -62,14 +62,19 @@ export function createPopup(header?: React.ReactElement<any> | string, body?: Re
   );
 }
 
-export function createSuccessPopup(title?: string, body?: React.ReactElement<any>) {
+export function createSuccessPopup(body?: React.ReactElement<any>, title?: string) {
   if (!title) title = "Success";
   createPopup(<p className="text-success font-weight-bold"> {title} </p>, body);
 }
 
-export function createDangerPopup(title?: string, body?: React.ReactElement<any>) {
+export function createDangerPopup(body?: React.ReactElement<any>, title?: string) {
   if (!title) title = "Fail";
   createPopup(<p className="text-danger font-weight-bold"> {title} </p>, body);
+}
+
+export function createWarningPopup(body?: React.ReactElement<any>, title?: string) {
+  if (!title) title = "Warning";
+  createPopup(<p className="text-warning font-weight-bold"> {title} </p>, body);
 }
 
 export function closeCurrentPopup(): void {
