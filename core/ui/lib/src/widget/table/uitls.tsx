@@ -6,6 +6,19 @@ import {
 } from '@tanstack/react-table'
 import { DataTableColumn, DataTableProps } from "./UIDataTable";
 
+export function getSelectedIds(table: Table<any>): number[] | undefined {
+  try {
+    let selectedRowIds = [] as number[]
+    if (!table.getIsSomePageRowsSelected()) return selectedRowIds;
+    selectedRowIds = table.getSelectedRowModel()
+      .rows.map((row) => row.original.id as number);
+    return selectedRowIds as number[];
+  } catch (error) {
+    console.error(error);
+    return;
+  }
+}
+
 export function getPinedColumnCSS(column: Column<any>): CSSProperties {
   const isPinned = column.getIsPinned();
   return {
@@ -40,13 +53,16 @@ export function createColumnConfigs(props: DataTableProps) {
         header: ({ table }) => (
           <input type="checkbox"
             checked={table.getIsAllRowsSelected()}
-            onChange={table.getToggleAllRowsSelectedHandler()} //or getToggleAllRowsSelectedHandler 
+            onChange={() => {
+              table.toggleAllRowsSelected()
+              console.log("models", table.getSelectedRowModel());
+            }} //or getToggleAllRowsSelectedHandler 
           />
         ),
         cell: ({ row }) => (
           <input type="checkbox"
             checked={row.getIsSelected()}
-            onChange={row.getToggleSelectedHandler()}
+            onChange={() => row.toggleSelected()}
           />
         ),
         maxSize: 30,

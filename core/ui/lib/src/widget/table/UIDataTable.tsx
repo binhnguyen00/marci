@@ -1,11 +1,13 @@
-import React, { CSSProperties } from "react";
-
-import "./css/index.css"
+import React from "react";
+import * as icon from "react-icons/bs";
 import {
   useReactTable, getCoreRowModel, flexRender, createColumnHelper,
   ColumnDef, HeaderGroup, TableOptions, Column, Table,
 } from '@tanstack/react-table'
+import "./css/index.css"
 import * as TableUtils from "./uitls";
+import { Button } from "../button/UIButton";
+import { createPopup } from "widget/popup/UIPopup";
 
 export interface DataTableColumn {
   field: string;
@@ -22,11 +24,16 @@ export interface DataTableProps {
   height?: number;
   className?: string;
   debug?: boolean;
+  onCreateCallBack?: () => void;
+  onDeleteCallBack?: (targetIds: number[]) => void;
   enableRowSelection?: boolean;
 }
 
 export function DataTable(props: DataTableProps) {
-  let { title = "", className = "", height = 400, debug = true, enableRowSelection = false, records, columns } = props;
+  let { 
+    title = "", className = "", height = 400, debug = true, enableRowSelection = false, 
+    records, columns, onCreateCallBack, onDeleteCallBack
+  } = props;
   const columnConfigs = React.useMemo(() => 
     TableUtils.createColumnConfigs(props), [columns]
   );
@@ -46,6 +53,32 @@ export function DataTable(props: DataTableProps) {
     <div className={`${className}`}>
       {/* title */}
       <div className="h5"> {title} </div>
+      
+      {/* buttons */}
+      <div className="flex-h my-1">
+        {onCreateCallBack 
+        ? <Button icon={<icon.BsPlus />} title="Create" onClick={() => onCreateCallBack()} />
+        : null
+        }
+        {onDeleteCallBack
+        ? (
+        <Button 
+          className="mx-1" icon={<icon.BsTrash />} title="Delete" 
+          onClick={() => {
+            const ids = TableUtils.getSelectedIds(table);
+            if (!ids?.length) {
+              createPopup(
+                <div className="text-warning"> {"Warning"} </div>, 
+                <div> {"Please select at least 1 record"} </div>
+              ); 
+              return;
+            } else onDeleteCallBack(ids);
+          }} />
+        ) : null
+        }
+      </div>
+
+      {/* table */}
       <div style={{ direction: table.options.columnResizeDirection }}>
         <div className="table-container" style={{ height: height }}>
 
@@ -98,7 +131,7 @@ export function DataTable(props: DataTableProps) {
                               </>
                             ) : null
                             }
-                            {/* Resize div */}
+                            {/* resize div */}
                             <div  
                               onDoubleClick={() => header.column.resetSize()}
                               onMouseDown={header.getResizeHandler()}

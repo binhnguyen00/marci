@@ -95,22 +95,27 @@ export function UIEmployeeList() {
     widget.createPopup("Create Employee", <UICreateEmployeeForm reloadTable={reloadTable}/>);
   }
 
-  const successCB: server.CallBack = (response: server.ServerResponse) => {
-    const employees = response.body as any[];
-    setEmployeeData(employees);
+  const deleteEmployeeByIds = (targetIds: number[]) => {
+    const successCB: server.CallBack = (response: server.ServerResponse) => {
+      reloadTable(null);
+    }
+    server.rpc.call("EmployeeService", "deleteByIds", { ids: targetIds }, successCB);
   }
 
   React.useEffect(() => {
     const searchParams = {} as any;
+    const successCB: server.CallBack = (response: server.ServerResponse) => {
+      const employees = response.body as any[];
+      setEmployeeData(employees);
+    }
     server.rpc.call("EmployeeService", "search", { params: searchParams }, successCB);
   }, [])
   
   return (
     <div className="flex-v">
-      <widget.Button icon={<icon.BsPlus />}
-        className="m-1" title="Create" onClick={showCreateEmployeeForm}/>
       <widget.DataTable 
-        title="Employees" columns={columns} records={employeeData}/>
+        title="Employees" columns={columns} records={employeeData} enableRowSelection
+        onCreateCallBack={showCreateEmployeeForm} onDeleteCallBack={deleteEmployeeByIds}/>
     </div>
   );
 }
