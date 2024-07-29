@@ -43,6 +43,14 @@ const config = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
+      },
+      {
+        test: /\.(css|s[ac]ss)$/i,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'sass-loader', options: { sourceMap: developing } }
+        ],
       }
     ]
   },
