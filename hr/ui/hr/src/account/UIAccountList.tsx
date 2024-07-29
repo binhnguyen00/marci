@@ -18,6 +18,7 @@ export function UIAccountForm(props: UIAccountFormProps) {
   };
 
   const createAccount = () => {
+    
     const successCB: server.CallBack = (response: server.ServerResponse) => {
       const account = response.body as any;
       const html = (<div> {JSON.stringify(account, null, 2)} </div>)
@@ -86,10 +87,9 @@ export function UIAccountList() {
 
   return (
     <div className="flex-v">
-      <widget.Button icon={<icon.BsPlus />}
-        className="m-1" title="Create" onClick={showAccountForm}/>
       <widget.DataTable 
-        title="Accounts" columns={columns} records={accountRecords}/>
+        title="Accounts" columns={columns} records={accountRecords}
+        onCreateCallBack={showAccountForm}/>
     </div>
   )
 }
