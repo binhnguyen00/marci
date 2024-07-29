@@ -3,6 +3,12 @@ import { server, widget } from "@marci-ui/lib";
 import { RPCRequest } from "Interface";
 import "./scss/index.scss";
 
+/** 
+ * Usage: should be use for List components through out the project
+ * Classes name format:UI<your-class-name>List.tsx
+ * For example: UIEmployeeList.tsx
+ */
+
 export interface ShowRowDetailsRequest {
   id: any;
   cellValue: any;

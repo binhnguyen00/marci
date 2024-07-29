@@ -25,14 +25,14 @@ export function UICreateEmployeeForm(props: UIEmployeeFormProps) {
       const employee = response.body as any;
       const html = (<div> {JSON.stringify(employee, null, 2)} </div>)
       widget.closeCurrentPopup();  
-      widget.createPopup("Success", html);
+      widget.createSuccessPopup(html);
       reloadTable(employee);
     }
     
     const failCB: server.CallBack = (response: server.ServerResponse) => {
       const html = (<div> {JSON.stringify(response.message, null, 2)} </div>)
       widget.closeCurrentPopup();
-      widget.createPopup("Fail", html);
+      widget.createDangerPopup(html);
     }
 
     server.rpc.call("EmployeeService", "create", { model: employeeState }, successCB, failCB);

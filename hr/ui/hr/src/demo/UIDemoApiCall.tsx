@@ -6,12 +6,12 @@ export function UIDemoApiCall() {
 
   const successCB: server.CallBack = (response: server.ServerResponse) => {
     const item = (<div> {response.body} </div>);
-    widget.createPopup("Success", item);
+    widget.createSuccessPopup(item);
   }
 
   const failCB: server.CallBack = (response: server.ServerResponse) => {
     const item = (<div> {response.message} </div>);
-    widget.createPopup("Fail", item);
+    widget.createPopup(item);
   }
 
   const rpcCall = () => {
