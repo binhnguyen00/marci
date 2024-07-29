@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FieldProps } from "./Field";
 
 interface FieldTextProps extends FieldProps {
 }
 
 export function FieldText(props: FieldTextProps) {
-  let { bean, field, placeholder, label, className, onChange, disabled } = props;
-  let [ beanState, setBeanState ] = useState(bean);
+  let { bean, field, placeholder, label, className, onChange, disabled, hide } = props;
+  if (hide) return null;
 
-  useEffect(() => {
+  let [ beanState, setBeanState ] = React.useState(bean);
+
+  React.useEffect(() => {
     setBeanState(bean);
   }, [bean]);
 

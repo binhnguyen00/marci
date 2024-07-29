@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FieldProps } from "./Field";
 
 interface FieldStringProps extends FieldProps {
 }
 
 export const FieldString = (props: FieldStringProps) => {
-  let { bean, field, placeholder, label, className, onChange, disabled } = props;
-  let [ beanState, setBeanState ] = useState(bean);
+  let { bean, field, placeholder, label, className, onChange, disabled, hide } = props;
+  if (hide) return null;
+  
+  let [ beanState, setBeanState ] = React.useState(bean);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setBeanState(bean);
   }, [bean]);
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FieldProps } from "./Field";
 
 interface FieldNumberProps extends FieldProps {}
@@ -11,14 +11,16 @@ function formatNumber(target: number, precision: number) {
 }
 
 export function FieldNumber(props: FieldNumberProps) {
-  let { bean, field, placeholder, label, className, onChange, disabled } = props;
-  let [beanState, setBeanState] = useState(bean);
+  let { bean, field, placeholder, label, className, onChange, disabled, hide } = props;
+  if (hide) return null;
+
+  let [beanState, setBeanState] = React.useState(bean);
 
   if (!placeholder) placeholder = `Enter date...`;
   if (!label) label = field;
   if (!disabled) disabled = false;
 
-  useEffect(() => {
+  React.useEffect(() => {
     setBeanState(bean);
   }, [bean]);
 

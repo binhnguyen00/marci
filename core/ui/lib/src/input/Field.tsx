@@ -6,5 +6,6 @@ export interface FieldProps {
   disabled?: boolean;
   required?: boolean;
   className?: string;
+  hide?: boolean;
   onChange?: (field: string, newValue: any, rollbackValue: any) => void;
 } 
