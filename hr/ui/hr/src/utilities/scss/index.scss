@@ -1,0 +1,9 @@
+.cell-clickable {
+  font-weight: bolder;
+  color: #007bff;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

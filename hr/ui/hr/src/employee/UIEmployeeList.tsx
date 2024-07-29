@@ -1,13 +1,16 @@
 import React from "react";
 import * as icon from "react-icons/bs";
 import { server, input, widget } from "@marci-ui/lib";
+import { ListUtils, ShowRowDetailsRequest } from "utilities/ListUtils";
 
 interface UIEmployeeFormProps {
+  entity?: any;
   reloadTable: (newEmployee: any) => void;
 }
-export function UIEmployeeForm(props: UIEmployeeFormProps) {
-  let { reloadTable } = props;
-  const [employeeState, setEmployee] = React.useState({});
+export function UICreateEmployeeForm(props: UIEmployeeFormProps) {
+  let { entity = {}, reloadTable } = props;
+  const isNewEntity = entity.id === undefined;
+  const [employeeState, setEmployee] = React.useState(entity);
 
   const handleInputChange = (field: string, newValue: any, rollbackValue: any) => {
     setEmployee((prevState: any) => ({
@@ -37,16 +40,16 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
 
   return (
     <div className="form-group p-1 border">
-      <input.FieldString 
+      <input.FieldString hide={!isNewEntity}
         bean={employeeState} field="userName" label="Username" onChange={handleInputChange}/>
-      <input.FieldString 
+      <input.FieldString hide={!isNewEntity}
         bean={employeeState} field="password" label="Password" onChange={handleInputChange}/>
 
       <input.FieldString 
         bean={employeeState} field="fullName" label="Full Name" onChange={handleInputChange}/>
       <input.FieldString 
         bean={employeeState} field="nickName" label="Nick Name" onChange={handleInputChange}/>
-      <input.FieldString 
+      <input.FieldString hide={!isNewEntity}
         bean={employeeState} field="email" label="Email" onChange={handleInputChange}/>
       <input.FieldString 
         bean={employeeState} field="phoneNumber" label="Phone Number" onChange={handleInputChange}/>
@@ -54,7 +57,7 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
         bean={employeeState} field="dateOfBirth" label="Birthday" onChange={handleInputChange}/>
 
       <widget.Button 
-        icon={<icon.BsSaveFill />} title="Create" type="primary" onClick={createEmployee}/>
+        icon={isNewEntity ? <icon.BsSaveFill /> : <icon.BsSave />} title={isNewEntity ? "Create" : "Save"} type="primary" onClick={createEmployee}/>
     </div>
   )
 }
@@ -63,8 +66,21 @@ export function UIEmployeeList() {
   const [ employeeData, setEmployeeData ] = React.useState<Array<any>>([]);
 
   const columns: widget.DataTableColumn[] = [ 
-    { field: "id", header: "ID" },
-    { field: "fullName", header: "Full Name" },
+    { field: "fullName", header: "Full Name", customRender(record, index) {
+      const request: ShowRowDetailsRequest = {
+        id: record.id,
+        cellValue: record.fullName,
+        rpcRequest: {
+          component: "EmployeeService",
+          service: "getById",
+        },
+        callBack(entity) {
+          const html = <UICreateEmployeeForm entity={entity} reloadTable={reloadTable}/>;
+          widget.createPopup(`Employee: ${entity.fullName}`, html);
+        },
+      }
+      return ListUtils.renderCellGetRecordById(request);
+    }},
     { field: "nickName", header: "Nick Name" },
     { field: "dateOfBirth", header: "Birthday" },
     { field: "accountId", header: "Account ID" },
@@ -75,8 +91,8 @@ export function UIEmployeeList() {
     setEmployeeData(employees);
   };
 
-  const showEmployeeForm = () => {
-    widget.createPopup("Create Employee ", <UIEmployeeForm reloadTable={reloadTable}/>);
+  const showCreateEmployeeForm = () => {
+    widget.createPopup("Create Employee", <UICreateEmployeeForm reloadTable={reloadTable}/>);
   }
 
   const successCB: server.CallBack = (response: server.ServerResponse) => {
@@ -92,7 +108,7 @@ export function UIEmployeeList() {
   return (
     <div className="flex-v">
       <widget.Button icon={<icon.BsPlus />}
-        className="m-1" title="Create" onClick={showEmployeeForm}/>
+        className="m-1" title="Create" onClick={showCreateEmployeeForm}/>
       <widget.DataTable 
         title="Employees" columns={columns} records={employeeData}/>
     </div>
