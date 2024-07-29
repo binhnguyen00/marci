@@ -25,7 +25,7 @@ export function renderCellGetRecordById(request: ShowRowDetailsRequest) {
   }
 
   return (
-    <a href="#" onClick={() => {
+    <a style={{ textDecoration: "none" }} href="#" onClick={() => {
       server.rpc.call(rpcRequest.component, rpcRequest.service, { id: id }, successCB, failCB);
     }}>
       <div className="cell-clickable"> {cellValue} </div>
