@@ -75,9 +75,7 @@ public class Employee extends BaseEntity {
   }
 
   public List<Education> appendEducation(@NonNull Education ... educations) {
-    for (Education education : educations) {
-      getEducations().add(education);
-    }
+    getEducations().addAll(List.of(educations));
     return getEducations();
   }
 }
