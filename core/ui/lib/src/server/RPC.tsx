@@ -1,7 +1,6 @@
 import React from "react";
 import { Api } from "./Api";
 import { CallBack, HttpMethod, ServerResponse } from "./Interface";
-import * as PopupManager from "../widget/popup/PopupManager";
 
 type RPCRequest = {
   version: string,
@@ -13,13 +12,6 @@ type RPCRequest = {
 export class RPC extends Api { 
 
   call(component: string, service: string, params: any, successCB: CallBack, failCB?: CallBack): void {
-    
-    if (!failCB) failCB = (response: ServerResponse) => {
-      const errorTitle = (<div className="text-danger"> {response.message} </div>);
-      const errorContent = (<div> {response.message} </div>);
-      PopupManager.createPopup(errorTitle, errorContent);
-    }
-
     const url: string = this.initialUrl("rpc/call");
     const rpcRequest: RPCRequest = {
       version: '1.0',

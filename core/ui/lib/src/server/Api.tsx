@@ -1,4 +1,6 @@
+import React from "react";
 import { CallBack, HttpMethod, ResponseStatus, ServerResponse } from "./Interface";
+import * as PopupManager from "../widget/popup/PopupManager";
 
 export abstract class Api {
   serverUrl: string;
@@ -42,6 +44,11 @@ export abstract class Api {
   }
 
   doFetch(url: string, requestInit: RequestInit, successCB: CallBack, failCB?: CallBack): void {
+    if (!failCB) failCB = (response: ServerResponse) => {
+      const errorContent = (<div> {response.message} </div>);
+      PopupManager.createDangerPopup(errorContent);
+    }
+
     fetch(url, requestInit)
     .then((response: Response) => {
       return response.json();
