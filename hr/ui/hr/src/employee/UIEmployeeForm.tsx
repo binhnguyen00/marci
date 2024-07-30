@@ -20,7 +20,6 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
   };
 
   const createEmployee = () => {
-
     const successCB: server.CallBack = (response: server.ServerResponse) => {
       const employee = response.body as any;
       const html = (<div> {JSON.stringify(employee, null, 2)} </div>)

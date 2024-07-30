@@ -22,17 +22,16 @@ export function UIEducationList(props: UIEducationListProps) {
     const clone = [...educationsState];
     const filteredRecords = clone.filter(record => !targetIds.includes(record.id));
     setEducations(filteredRecords);
+    if (onModify) onModify("educations", filteredRecords, educations);
   }
 
   const onCreate = () => {
-
     const reloadTable = (newEducation: any) => {
       const clone = [...educationsState, newEducation];
       setEducations(clone);
       if (onModify) onModify("educations", clone, educations);
       widget.closeCurrentPopup();
     }
-
     widget.createPopup("Create Education", <UIEducationForm reloadTable={reloadTable}/>);
   }
 

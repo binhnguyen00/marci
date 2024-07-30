@@ -55,7 +55,8 @@ public class Employee extends BaseEntity {
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "employee_id", referencedColumnName = "id")
-  private List<Education> educations;
+  private List<Education> educations = new ArrayList<>();
+
 
   public Long delegateToAccount(Account account) {
     this.accountId = Objects.requireNonNull(account.getId());
@@ -65,6 +66,12 @@ public class Employee extends BaseEntity {
   public List<Education> getEducations() {
     if (Objects.isNull(educations)) educations = new ArrayList<>();
     return educations;
+  }
+
+  public void setEducations(List<Education> educations) {
+    if (Objects.isNull(this.educations)) this.educations = new ArrayList<>();
+    this.educations.clear();
+    if (Objects.nonNull(educations)) this.educations.addAll(educations);
   }
 
   public List<Education> appendEducation(@NonNull Education ... educations) {
