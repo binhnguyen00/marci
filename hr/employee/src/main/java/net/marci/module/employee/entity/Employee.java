@@ -1,4 +1,4 @@
-package net.marci.module.hr.entity;
+package net.marci.module.employee.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,8 +7,15 @@ import lombok.NonNull;
 import lombok.Setter;
 import net.marci.common.BaseEntity;
 import net.marci.module.account.entity.Account;
+import net.marci.module.deletegraph.DeleteGraph;
+import net.marci.module.deletegraph.DeleteGraphJoinType;
+import net.marci.module.deletegraph.DeleteGraphs;
+import net.marci.module.education.entity.Education;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(
@@ -22,6 +29,9 @@ import java.time.LocalDate;
     ),
   }
 )
+@DeleteGraphs({
+  @DeleteGraph(target = Education.class, joinField = "employee_id", joinType = DeleteGraphJoinType.OneToMany)
+})
 @NoArgsConstructor @Getter @Setter
 public class Employee extends BaseEntity {
 
@@ -44,6 +54,10 @@ public class Employee extends BaseEntity {
   @JoinColumn(name = "account_id", table = Account.TABLE_NAME, referencedColumnName = "id")
   private Long accountId;
 
+  @OneToMany
+  @JoinColumn(name = "employee_id", referencedColumnName = "id")
+  private List<Education> educations;
+
   // Position
   @Column(name = "department_code")
   private String departmentCode;
@@ -51,8 +65,20 @@ public class Employee extends BaseEntity {
   @Column(name = "position_code")
   private String positionCode;
 
-  public Long delegateToAccount(@NonNull Account account) {
-    this.accountId = account.getId();
-    return this.accountId;
+  public Long delegateToAccount(Account account) {
+    this.accountId = Objects.requireNonNull(account.getId());
+    return getAccountId();
+  }
+
+  public List<Education> getEducations() {
+    if (Objects.isNull(educations)) educations = new ArrayList<>();
+    return educations;
+  }
+
+  public List<Education> appendEducation(@NonNull Education ... educations) {
+    for (Education education : educations) {
+      getEducations().add(education);
+    }
+    return getEducations();
   }
 }

@@ -54,18 +54,20 @@ export function createColumnConfigs(props: DataTableProps) {
     if (enableRowSelection) {
       columnConfigs.unshift({
         id: 'selection',
-        header: ({ table }) => (
+        header: ({ table }) => {
+          return (
           <input type="checkbox"
             checked={table.getIsAllRowsSelected()}
             onChange={table.getToggleAllPageRowsSelectedHandler()}
           />
-        ),
-        cell: ({ row }) => (
+        )},
+        cell: ({ row }) => {
+          return(
           <input type="checkbox"
             checked={row.getIsSelected()}
             onChange={row.getToggleSelectedHandler()}
           />
-        ),
+        )},
         maxSize: 30,
       })
     }

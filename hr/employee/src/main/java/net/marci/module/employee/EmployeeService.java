@@ -1,9 +1,9 @@
-package net.marci.module.hr;
+package net.marci.module.employee;
 
 import lombok.extern.slf4j.Slf4j;
 import net.marci.lib.common.Record;
-import net.marci.module.hr.dto.ModelCreateEmployee;
-import net.marci.module.hr.entity.Employee;
+import net.marci.module.employee.dto.ModelCreateEmployee;
+import net.marci.module.employee.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

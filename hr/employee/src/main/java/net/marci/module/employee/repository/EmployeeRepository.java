@@ -1,6 +1,6 @@
-package net.marci.module.hr.repository;
+package net.marci.module.employee.repository;
 
-import net.marci.module.hr.entity.Employee;
+import net.marci.module.employee.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

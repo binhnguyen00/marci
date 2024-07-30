@@ -1,4 +1,4 @@
-package net.marci.module.hr.test;
+package net.marci.module.employee.test;
 
 import net.marci.lib.utils.DBConnectUtils;
 import net.marci.module.config.AccountModuleConfig;
@@ -6,9 +6,9 @@ import net.marci.module.config.DeleteGraphModuleConfig;
 import net.marci.module.config.EmployeeModuleConfig;
 import net.marci.module.config.HttpModuleConfig;
 import net.marci.module.deletegraph.DeleteGraphBuilder;
-import net.marci.module.hr.EmployeeLogic;
-import net.marci.module.hr.dto.ModelCreateEmployee;
-import net.marci.module.hr.entity.Employee;
+import net.marci.module.employee.EmployeeLogic;
+import net.marci.module.employee.dto.ModelCreateEmployee;
+import net.marci.module.employee.entity.Employee;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

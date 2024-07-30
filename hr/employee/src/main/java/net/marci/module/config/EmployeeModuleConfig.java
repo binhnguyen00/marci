@@ -10,16 +10,24 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ComponentScan(
   basePackages = {
-    "net.marci.module.hr",
+    "net.marci.module.education",
+    "net.marci.module.job",
+    "net.marci.module.employee",
   }
 )
 @EnableJpaRepositories(
   basePackages = {
-    "net.marci.module.hr.repository",
+    "net.marci.module.education.repository",
+    "net.marci.module.job.repository",
+    "net.marci.module.employee.repository",
   }
 )
 @EntityScan(
-  basePackages = "net.marci.module.hr.entity"
+  basePackages = {
+    "net.marci.module.education.entity",
+    "net.marci.module.job.entity",
+    "net.marci.module.employee.entity",
+  }
 )
 @EnableConfigurationProperties
 @EnableTransactionManagement

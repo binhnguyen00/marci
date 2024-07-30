@@ -1,8 +1,7 @@
-package net.marci.module.hr.controller;
+package net.marci.module.employee.controller;
 
-import lombok.extern.slf4j.Slf4j;
-import net.marci.module.hr.EmployeeService;
-import net.marci.module.hr.entity.Employee;
+import net.marci.module.employee.EmployeeService;
+import net.marci.module.employee.entity.Employee;
 import net.marci.module.http.controller.BaseController;
 import net.marci.module.http.dto.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;

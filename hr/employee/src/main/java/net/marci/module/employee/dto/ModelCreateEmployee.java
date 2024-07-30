@@ -1,4 +1,4 @@
-package net.marci.module.hr.dto;
+package net.marci.module.employee.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
