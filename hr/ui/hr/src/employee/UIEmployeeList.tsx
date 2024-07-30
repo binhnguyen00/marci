@@ -5,6 +5,7 @@ import { UIEmployeeForm } from "./UIEmployeeForm";
 
 export function UIEmployeeList() {
   const [ employeeData, setEmployeeData ] = React.useState<Array<any>>([]);
+  const [ reload, setReload ] = React.useState(false);
 
   const columns: widget.DataTableColumn[] = [ 
     { field: "fullName", header: "Full Name", customRender(record, index) {
@@ -27,9 +28,8 @@ export function UIEmployeeList() {
     { field: "accountId", header: "Account ID" },
   ];
 
-  const reloadTable = (newEmployee: any) => {
-    let employees = [...employeeData, newEmployee];
-    setEmployeeData(employees);
+  const reloadTable = () => {
+    setReload(!reload);
   };
 
   const onCreate = () => {
@@ -37,10 +37,12 @@ export function UIEmployeeList() {
   }
 
   const onDelete = (targetIds: number[]) => {
-    const successCB: server.CallBack = (response: server.ServerResponse) => {
-      reloadTable(null);
-    }
-    server.rpc.call("EmployeeService", "deleteByIds", { ids: targetIds }, successCB);
+    server.rpc.call(
+      "EmployeeService", "deleteByIds", { ids: targetIds }, 
+      (response: server.ServerResponse) => {
+        reloadTable();
+      }
+    );
   }
 
   React.useEffect(() => {
@@ -50,7 +52,7 @@ export function UIEmployeeList() {
       setEmployeeData(employees);
     }
     server.rpc.call("EmployeeService", "search", { params: searchParams }, successCB);
-  }, [])
+  }, [reload])
   
   return (
     <div className="flex-v">

@@ -5,7 +5,7 @@ import { UIEducationList } from "./education/UIEducationList";
 
 interface UIEmployeeFormProps {
   entity?: any;
-  reloadTable: (newEmployee: any) => void;
+  reloadTable: () => void;
 }
 export function UIEmployeeForm(props: UIEmployeeFormProps) {
   let { entity = {}, reloadTable } = props;
@@ -26,7 +26,7 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
       const html = (<div> {JSON.stringify(employee, null, 2)} </div>)
       widget.closeCurrentPopup();  
       widget.createSuccessPopup(html);
-      reloadTable(employee);
+      reloadTable();
     }
     
     const failCB: server.CallBack = (response: server.ServerResponse) => {
@@ -36,6 +36,22 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
     }
 
     server.rpc.call("EmployeeService", "create", { model: employeeState }, successCB, failCB);
+  }
+
+  const saveEmployee = () => {
+
+    const successCB: server.CallBack = (response: server.ServerResponse) => {
+      widget.closeCurrentPopup();  
+      reloadTable();
+    }
+
+    const failCB: server.CallBack = (response: server.ServerResponse) => {
+      const html = (<div> {JSON.stringify(response.message, null, 2)} </div>) 
+      widget.closeCurrentPopup();
+      widget.createDangerPopup(html);
+    }
+
+    server.rpc.call("EmployeeService", "save", { model: employeeState }, successCB, failCB);
   }
 
   return (
@@ -60,7 +76,10 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
         educations={employeeState.educations}/>
 
       <widget.Button 
-        icon={isNewEntity ? <icon.BsSaveFill /> : <icon.BsSave />} title={isNewEntity ? "Create" : "Save"} type="primary" onClick={createEmployee}/>
+        icon={isNewEntity ? <icon.BsSaveFill /> : <icon.BsSave />} 
+        title={isNewEntity ? "Create" : "Save"} type="primary" 
+        onClick={isNewEntity ? createEmployee : saveEmployee}
+      />
     </div>
   )
 }
