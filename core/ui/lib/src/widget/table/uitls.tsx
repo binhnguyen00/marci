@@ -2,17 +2,21 @@ import React, { CSSProperties } from "react";
 import "./css/index.css"
 import {
   useReactTable, getCoreRowModel, flexRender, createColumnHelper,
-  ColumnDef, HeaderGroup, TableOptions, Column, Table, VisibilityState
+  ColumnDef, HeaderGroup, TableOptions, Column, Table, VisibilityState, Row
 } from '@tanstack/react-table'
 import { DataTableColumn, DataTableProps } from "./UIDataTable";
 
 export function getSelectedIds(table: Table<any>): number[] | undefined {
   try {
     let selectedRowIds = [] as number[]
-    if (!table.getIsSomePageRowsSelected()) return selectedRowIds;
-    selectedRowIds = table.getSelectedRowModel()
-      .rows.map((row) => row.original.id as number);
-    return selectedRowIds as number[];
+    const selectedRows: Row<any>[] = table.getSelectedRowModel().rows;
+    if (!selectedRows.length) return selectedRowIds;
+    else {
+      selectedRowIds = table.getSelectedRowModel().rows.map((row) => {
+        return row.original.id as number
+      });
+      return selectedRowIds as number[];
+    } 
   } catch (error) {
     console.error(error);
     return;
@@ -53,19 +57,13 @@ export function createColumnConfigs(props: DataTableProps) {
         header: ({ table }) => (
           <input type="checkbox"
             checked={table.getIsAllRowsSelected()}
-            onChange={() => {
-              table.toggleAllRowsSelected()
-              console.log("models", table.getSelectedRowModel());
-            }}
+            onChange={table.getToggleAllPageRowsSelectedHandler()}
           />
         ),
-        cell: ({ row, table }) => (
+        cell: ({ row }) => (
           <input type="checkbox"
             checked={row.getIsSelected()}
-            onChange={() => {
-              row.toggleSelected()
-              console.log("models", table.getSelectedRowModel());
-            }}
+            onChange={row.getToggleSelectedHandler()}
           />
         ),
         maxSize: 30,

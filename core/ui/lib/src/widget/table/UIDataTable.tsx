@@ -37,13 +37,18 @@ export function DataTable(props: DataTableProps) {
   const columnConfigs = React.useMemo(() => 
     TableUtils.createColumnConfigs(props), [columns]
   );
+  const [rowSelection, setRowSelection] = React.useState({}) // Row selection state
   const table = useReactTable({
+    state: {
+      rowSelection,
+    },
     data: records,
     columns: columnConfigs,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
     getCoreRowModel: getCoreRowModel(),
     enableRowSelection: enableRowSelection,
+    onRowSelectionChange: setRowSelection,
     debugTable: debug,
     debugHeaders: debug,
     debugColumns: debug,
@@ -110,15 +115,15 @@ export function DataTable(props: DataTableProps) {
                             {!header.isPlaceholder && column.getCanPin() && !isSelection
                             ? (<>
                               {column.getIsPinned() !== 'left' && !isSelection ? (
-                                <button className="border rounded px-2" onClick={() => column.pin('left')} value={"<"}/>
+                                <button className="border rounded px-2" onClick={() => column.pin('left')}> {"<"} </button>
                               ) : null
                               }
                               {column.getIsPinned() && !isSelection ? (
-                                <button className="border rounded px-2" onClick={() => column.pin(false)} value={"X"}/>
+                                <button className="border rounded px-2" onClick={() => column.pin(false)}> {"X"} </button> 
                               ) : null
                               }
                               {column.getIsPinned() !== 'right' && !isSelection ? (
-                                <button className="border rounded px-2" onClick={() => column.pin('right')} value={">"}/>
+                                <button className="border rounded px-2" onClick={() => column.pin('right')}> {">"} </button> 
                               ) : null
                               }
                             </>) : null
