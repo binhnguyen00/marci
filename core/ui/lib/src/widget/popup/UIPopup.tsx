@@ -64,17 +64,17 @@ export function createPopup(header?: React.ReactElement<any> | string, body?: Re
 
 export function createSuccessPopup(body?: React.ReactElement<any>, title?: string) {
   if (!title) title = "Success";
-  createPopup(<p className="text-success font-weight-bold"> {title} </p>, body);
+  createPopup(<strong className="text-success"> {title} </strong>, body);
 }
 
 export function createDangerPopup(body?: React.ReactElement<any>, title?: string) {
   if (!title) title = "Fail";
-  createPopup(<p className="text-danger font-weight-bold"> {title} </p>, body);
+  createPopup(<strong className="text-danger"> {title} </strong>, body);
 }
 
 export function createWarningPopup(body?: React.ReactElement<any>, title?: string) {
   if (!title) title = "Warning";
-  createPopup(<p className="text-warning font-weight-bold"> {title} </p>, body);
+  createPopup(<strong className="text-warning"> {title} </strong>, body);
 }
 
 export function closeCurrentPopup(): void {
