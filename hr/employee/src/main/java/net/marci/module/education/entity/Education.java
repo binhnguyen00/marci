@@ -18,7 +18,7 @@ public class Education extends BaseEntity {
   public static final String TABLE_NAME = "education";
 
   private String university;
-  private String field;
+  private String major;
 
   @Enumerated(EnumType.STRING)
   private Degree degree;
