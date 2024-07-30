@@ -4,9 +4,10 @@ import { widget, input } from "@marci-ui/lib";
 
 interface UIEducationListProps {
   educations: any[];
+  onModify?: (field: string, newValue: any, rollbackValue: any) => void;
 }
 export function UIEducationList(props: UIEducationListProps) {
-  let { educations = [] } = props;
+  let { educations = [], onModify } = props;
   let [ educationsState, setEducations ] = React.useState(educations);
 
   const columns: widget.DataTableColumn[] = [
@@ -24,17 +25,21 @@ export function UIEducationList(props: UIEducationListProps) {
   }
 
   const onCreate = () => {
+
     const reloadTable = (newEducation: any) => {
       const clone = [...educationsState, newEducation];
       setEducations(clone);
+      if (onModify) onModify("educations", clone, educations);
+      widget.closeCurrentPopup();
     }
+
     widget.createPopup("Create Education", <UIEducationForm reloadTable={reloadTable}/>);
   }
 
   return (
     <div>
       <widget.DataTable enableRowSelection
-        title="Educations" columns={columns} records={educations}
+        title="Educations" columns={columns} records={educationsState}
         onDeleteCallBack={onDelete} onCreateCallBack={onCreate}/>
     </div>
   )

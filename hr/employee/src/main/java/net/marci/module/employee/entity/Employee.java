@@ -37,7 +37,6 @@ public class Employee extends BaseEntity {
 
   public static final String TABLE_NAME = "employee";
 
-  // Information
   @Column(name = "full_name")
   private String fullName;
 
@@ -54,16 +53,9 @@ public class Employee extends BaseEntity {
   @JoinColumn(name = "account_id", table = Account.TABLE_NAME, referencedColumnName = "id")
   private Long accountId;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "employee_id", referencedColumnName = "id")
   private List<Education> educations;
-
-  // Position
-  @Column(name = "department_code")
-  private String departmentCode;
-
-  @Column(name = "position_code")
-  private String positionCode;
 
   public Long delegateToAccount(Account account) {
     this.accountId = Objects.requireNonNull(account.getId());

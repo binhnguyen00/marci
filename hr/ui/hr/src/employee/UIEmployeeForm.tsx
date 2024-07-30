@@ -39,19 +39,17 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
   }
 
   const saveEmployee = () => {
-
     const successCB: server.CallBack = (response: server.ServerResponse) => {
       widget.closeCurrentPopup();  
       reloadTable();
     }
-
     const failCB: server.CallBack = (response: server.ServerResponse) => {
       const html = (<div> {JSON.stringify(response.message, null, 2)} </div>) 
       widget.closeCurrentPopup();
       widget.createDangerPopup(html);
     }
 
-    server.rpc.call("EmployeeService", "save", { model: employeeState }, successCB, failCB);
+    server.rpc.call("EmployeeService", "save", { employee: employeeState }, successCB, failCB);
   }
 
   return (
@@ -73,7 +71,7 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
         bean={employeeState} field="dateOfBirth" label="Birthday" onChange={handleInputChange}/>
 
       <UIEducationList 
-        educations={employeeState.educations}/>
+        educations={employeeState.educations} onModify={handleInputChange}/>
 
       <widget.Button 
         icon={isNewEntity ? <icon.BsSaveFill /> : <icon.BsSave />} 
