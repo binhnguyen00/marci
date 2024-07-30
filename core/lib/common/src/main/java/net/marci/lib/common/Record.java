@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Objects;
 
 /**
- * @author Binh Nguye
+ * @author Binh Nguyen
  * @Email jackjack2000.kahp@gmail.com
  */
 @Slf4j
