@@ -5,9 +5,9 @@ import {
   ColumnDef, HeaderGroup, TableOptions, Column, Table,
 } from '@tanstack/react-table'
 import "./css/index.css"
-import * as TableUtils from "./uitls";
 import { Button } from "../button/UIButton";
-import { createPopup, createWarningPopup } from "widget/popup/UIPopup";
+import * as TableUtils from "./uitls";
+import * as PopupManager from "../popup/PopupManager";
 
 export interface DataTableColumn {
   field: string;
@@ -72,7 +72,7 @@ export function DataTable(props: DataTableProps) {
           onClick={() => {
             const ids = TableUtils.getSelectedIds(table);
             if (!ids?.length) {
-              createWarningPopup(<div> {"Please select at least 1 record"} </div>); 
+              PopupManager.createWarningPopup(<div> {"Please select at least 1 record"} </div>); 
               return;
             } else onDeleteCallBack(ids);
           }} />
