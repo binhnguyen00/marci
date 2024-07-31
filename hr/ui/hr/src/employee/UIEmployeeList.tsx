@@ -45,20 +45,11 @@ export function UIEmployeeList() {
     );
   }
 
-  // React.useEffect(() => {
-  //   const searchParams = {} as any;
-  //   const successCB: server.CallBack = (response: server.ServerResponse) => {
-  //     const employees = response.body as any[];
-  //     setEmployeeData(employees);
-  //   }
-  //   server.rpc.call("EmployeeService", "search", { sqlArgs: searchParams }, successCB);
-  // }, [reload])
-
   const successCB: server.CallBack = (response: server.ServerResponse) => {
     const employees = response.body as any[];
     setEmployeeData(employees);
   }
-  
+
   hook.useSearch({ 
     component: "EmployeeService", service: "search", sqlArgs: {}, 
     successCB: successCB,

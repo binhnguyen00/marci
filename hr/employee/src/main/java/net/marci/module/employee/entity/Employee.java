@@ -59,9 +59,8 @@ public class Employee extends BaseEntity {
   private List<Education> educations = new ArrayList<>();
 
 
-  public Long delegateToAccount(Account account) {
+  public void delegateToAccount(Account account) {
     this.accountId = Objects.requireNonNull(account.getId());
-    return getAccountId();
   }
 
   public List<Education> getEducations() {
