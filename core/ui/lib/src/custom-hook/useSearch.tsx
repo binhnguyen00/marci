@@ -1,17 +1,29 @@
 import React from "react";
 import { ServerResponse } from "server/Interface";
 import { rpc } from "server/RPC";
+import * as PopupManager from "../widget/popup/PopupManager";
 
 interface useSearchProps {
-  successCB: (response: ServerResponse) => void;
-  failCB?: (response: ServerResponse) => void;
   component: string;
   service?: string;
   sqlArgs?: any;
   dependency?: any;
+  updateData:  React.Dispatch<React.SetStateAction<any[]>>;
 }
 export function useSearch(props: useSearchProps) {
-  const { sqlArgs = {}, successCB, failCB, component, service = "search", dependency } = props;
+  const { sqlArgs = {}, component, service = "search", dependency, updateData } = props;
+
+  const successCB = (response: ServerResponse) => {
+    const dataAsArray = response.body as any[];
+    updateData(dataAsArray);
+    return;
+  };
+
+  const failCB = (response: ServerResponse) => {
+    PopupManager.createDangerPopup(<div> {response.message} </div>, "Search Error");
+    return;
+  }
+
   React.useEffect(() => {
     rpc.call(component, service, { sqlArgs: sqlArgs }, successCB, failCB);
   }, [dependency])

@@ -46,14 +46,9 @@ export function UIJobList(props: IJobListProps) {
     setReload(!reload);
   };
 
-  const successSearch = (response: server.ServerResponse) => {
-    const jobs = response.body as any[];
-    setJobData(jobs);
-  }
-
   hook.useSearch({ 
-    component: "JobService", service: "search", sqlArgs: {}, dependency: reload,
-    successCB: successSearch, failCB: undefined,
+    component: "JobService", service: "search", sqlArgs: {}, 
+    dependency: reload, updateData: setJobData
   });
 
   return (

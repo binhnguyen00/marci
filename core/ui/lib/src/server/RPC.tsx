@@ -1,6 +1,5 @@
-import React from "react";
 import { Api } from "./Api";
-import { CallBack, HttpMethod, ServerResponse } from "./Interface";
+import { CallBack, HttpMethod } from "./Interface";
 
 type RPCRequest = {
   version: string,

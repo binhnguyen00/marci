@@ -45,14 +45,9 @@ export function UIEmployeeList() {
     );
   }
 
-  const successCB: server.CallBack = (response: server.ServerResponse) => {
-    const employees = response.body as any[];
-    setEmployeeData(employees);
-  }
-
   hook.useSearch({ 
-    component: "EmployeeService", service: "search", sqlArgs: {}, dependency: reload,
-    successCB: successCB, failCB: undefined,
+    component: "EmployeeService", service: "search", sqlArgs: {}, 
+    dependency: reload, updateData: setEmployeeData,
   });
   
   return (
