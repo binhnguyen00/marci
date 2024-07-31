@@ -99,8 +99,8 @@ public class EmployeeLogic {
     return repository.findAll();
   }
 
-  public List<Employee> search(Record params) {
-    final String fullName = params.getAsString("fullName");
+  public List<Employee> search(Record sqlArgs) {
+    final String fullName = sqlArgs.getAsString("fullName");
     return repository.search(fullName);
   }
 }

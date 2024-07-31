@@ -51,7 +51,7 @@ export function UIEmployeeList() {
       const employees = response.body as any[];
       setEmployeeData(employees);
     }
-    server.rpc.call("EmployeeService", "search", { params: searchParams }, successCB);
+    server.rpc.call("EmployeeService", "search", { sqlArgs: searchParams }, successCB);
   }, [reload])
   
   return (
