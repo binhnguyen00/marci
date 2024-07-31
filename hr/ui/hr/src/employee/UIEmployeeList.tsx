@@ -4,25 +4,28 @@ import { ListUtils, ShowRowDetailsRequest } from "utilities/ListUtils";
 import { UIEmployeeForm } from "./UIEmployeeForm";
 
 export function UIEmployeeList() {
-  const [ employeeData, setEmployeeData ] = React.useState<Array<any>>([]);
+  const [ employeeData, setEmployeeData ] = React.useState<any[]>([]);
   const [ reload, setReload ] = React.useState(false);
 
   const columns: widget.DataTableColumn[] = [ 
-    { field: "fullName", header: "Full Name", customRender(record, index) {
-      const request: ShowRowDetailsRequest = {
-        id: record.id,
-        cellValue: record.fullName,
-        rpcRequest: {
-          component: "EmployeeService",
-          service: "getById",
-        },
-        callBack(entity) {
-          const html = <UIEmployeeForm entity={entity} reloadTable={reloadTable}/>;
-          widget.createPopup(`Employee: ${entity.fullName}`, html);
-        },
-      }
-      return ListUtils.renderCellGetRecordById(request);
-    }},
+    { 
+      field: "fullName", header: "Full Name", 
+      customRender(record, index) {
+        const request: ShowRowDetailsRequest = {
+          id: record.id,
+          cellValue: record.fullName,
+          rpcRequest: {
+            component: "EmployeeService",
+            service: "getById",
+          },
+          callBack(entity) {
+            const html = (<UIEmployeeForm entity={entity} reloadParent={reloadTable}/>);
+            widget.createPopup(`Employee: ${entity.fullName}`, html);
+          },
+        }
+        return ListUtils.renderCellGetRecordById(request);
+      },
+    },
     { field: "nickName", header: "Nick Name" },
     { field: "dateOfBirth", header: "Birthday" },
     { field: "accountId", header: "Account ID" },
@@ -33,7 +36,7 @@ export function UIEmployeeList() {
   };
 
   const onCreate = () => {
-    widget.createPopup("Create Employee", <UIEmployeeForm reloadTable={reloadTable}/>);
+    widget.createPopup("Create Employee", <UIEmployeeForm reloadParent={reloadTable}/>);
   }
 
   const onDelete = (targetIds: number[]) => {
@@ -46,7 +49,7 @@ export function UIEmployeeList() {
   }
 
   hook.useSearch({ 
-    component: "EmployeeService", service: "search", sqlArgs: {}, 
+    component: "EmployeeService", sqlArgs: {}, 
     dependency: reload, updateData: setEmployeeData,
   });
   

@@ -2,10 +2,11 @@ import React from "react";
 import { FieldProps } from "./Field";
 
 interface FieldTextProps extends FieldProps {
+  height?: number | string;
 }
 
 export function FieldText(props: FieldTextProps) {
-  let { bean, field, placeholder, label, className, onChange, disabled, hide } = props;
+  let { bean, field, placeholder, label, className, onChange, disabled, hide, height } = props;
   if (hide) return null;
 
   let [ beanState, setBeanState ] = React.useState(bean);
@@ -32,6 +33,7 @@ export function FieldText(props: FieldTextProps) {
     <div className="flex-vbox">
       <div className="text-capitalize font-weight-bold"> {label} </div>
       <textarea 
+        style={{ height: height }}
         className={`form-control ${className || ""}`}
         value={beanState[field]}
         onChange={onInputChange}

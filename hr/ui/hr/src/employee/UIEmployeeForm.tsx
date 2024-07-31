@@ -2,13 +2,11 @@ import React from "react";
 import * as icon from "react-icons/bs";
 import { server, input, widget } from "@marci-ui/lib";
 import { UIEducationList } from "./education/UIEducationList";
+import { IFormProps } from "../interface/IFormProps";
 
-interface UIEmployeeFormProps {
-  entity?: any;
-  reloadTable: () => void;
-}
+interface UIEmployeeFormProps extends IFormProps{}
 export function UIEmployeeForm(props: UIEmployeeFormProps) {
-  let { entity = {}, reloadTable } = props;
+  let { entity = {}, reloadParent = () => {} } = props;
   const isNewEntity = entity.id === undefined;
   const [employeeState, setEmployee] = React.useState(entity);
 
@@ -25,7 +23,7 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
       const html = (<div> {JSON.stringify(employee, null, 2)} </div>)
       widget.closeCurrentPopup();  
       widget.createSuccessPopup(html);
-      reloadTable();
+      reloadParent();
     }
     
     const failCB: server.CallBack = (response: server.ServerResponse) => {
@@ -40,7 +38,7 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
   const saveEmployee = () => {
     const successCB: server.CallBack = (response: server.ServerResponse) => {
       widget.closeCurrentPopup();  
-      reloadTable();
+      reloadParent();
     }
     const failCB: server.CallBack = (response: server.ServerResponse) => {
       const html = (<div> {JSON.stringify(response.message, null, 2)} </div>) 
