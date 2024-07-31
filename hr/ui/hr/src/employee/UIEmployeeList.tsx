@@ -51,9 +51,8 @@ export function UIEmployeeList() {
   }
 
   hook.useSearch({ 
-    component: "EmployeeService", service: "search", sqlArgs: {}, 
-    successCB: successCB,
-    dependency: reload
+    component: "EmployeeService", service: "search", sqlArgs: {}, dependency: reload,
+    successCB: successCB, failCB: undefined,
   });
   
   return (
