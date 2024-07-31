@@ -1,5 +1,5 @@
 import React from "react";
-import { server, widget } from "@marci-ui/lib";
+import { server, widget, hook } from "@marci-ui/lib";
 import { ListUtils, ShowRowDetailsRequest } from "utilities/ListUtils";
 import { UIEmployeeForm } from "./UIEmployeeForm";
 
@@ -45,14 +45,25 @@ export function UIEmployeeList() {
     );
   }
 
-  React.useEffect(() => {
-    const searchParams = {} as any;
-    const successCB: server.CallBack = (response: server.ServerResponse) => {
-      const employees = response.body as any[];
-      setEmployeeData(employees);
-    }
-    server.rpc.call("EmployeeService", "search", { sqlArgs: searchParams }, successCB);
-  }, [reload])
+  // React.useEffect(() => {
+  //   const searchParams = {} as any;
+  //   const successCB: server.CallBack = (response: server.ServerResponse) => {
+  //     const employees = response.body as any[];
+  //     setEmployeeData(employees);
+  //   }
+  //   server.rpc.call("EmployeeService", "search", { sqlArgs: searchParams }, successCB);
+  // }, [reload])
+
+  const successCB: server.CallBack = (response: server.ServerResponse) => {
+    const employees = response.body as any[];
+    setEmployeeData(employees);
+  }
+  
+  hook.useSearch({ 
+    component: "EmployeeService", service: "search", sqlArgs: {}, 
+    successCB: successCB,
+    dependency: reload
+  });
   
   return (
     <div className="flex-v">
