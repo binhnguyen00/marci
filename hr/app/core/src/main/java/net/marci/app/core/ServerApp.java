@@ -56,7 +56,7 @@ public class ServerApp {
         waitTime -= 100;
         if (!running && waitTime > 0) Thread.sleep(100);
       }
-    } catch(Exception ex) {
+    } catch (Exception ex) {
       log.error(ex.getMessage());
     }
   }
@@ -92,5 +92,4 @@ public class ServerApp {
     };
     springApp.setBanner(banner);
   }
-
 }

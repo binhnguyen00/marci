@@ -37,7 +37,13 @@ fi
 function start() {
   DATETIME=$(date '+%Y.%m.%d.%H%M%S')
   PROFILE=$(get_opt --profile 'console' $@)
-  CONFIG_FILES="file:$APP_CONFIG_HOME/application.yaml"
+  
+  if [ $PROFILE_PRODUCTION = "true" ] ; then
+    CONFIG_FILES="file:$APP_CONFIG_HOME/application-production.yaml"
+  else 
+    CONFIG_FILES="file:$APP_CONFIG_HOME/application.yaml"
+  fi
+
   CLASS="net.marci.app.core.ServerApp"
   ARGS="""
     --app.home=$APP_SERVER_HOME 
@@ -94,9 +100,13 @@ Usage: ./server.sh [COMMAND] [-OPTION]
 These are common commaneds to run the server
 
 Start the server:
+  [COMMAND]
   start               Run the server as console
-  [-daemon]           Run the server as daemon
   stop                Stop the server
+  
+  [-OPTION]
+  -daemon             Run the server as daemon
+  -production         Database won't be drop
 
 Start the UI:
   start-ui            Run the UI
@@ -108,7 +118,8 @@ COMMAND=$1;
 shift
 
 if [ "$COMMAND" = "start" ] ; then
-  start $@
+  PROFILE_PRODUCTION=$(has_opt "-production" $@)
+  start $@ $PROFILE_PRODUCTION
 elif [ "$COMMAND" = "stop" ] ; then
   stop $@
 elif [ "$COMMAND" = "help" ] ; then
