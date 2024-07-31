@@ -1,7 +1,7 @@
 import React from "react";
 import * as icon from "react-icons/bs";
 import { widget, input } from "@marci-ui/lib";
-import { IListProps } from "interface/IListProps";
+import { IListProps } from "../../interface/IListProps";
 
 interface UIEducationListProps extends IListProps {
   educations: any[];
