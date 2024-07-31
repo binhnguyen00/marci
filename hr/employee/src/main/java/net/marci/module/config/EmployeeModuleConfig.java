@@ -24,8 +24,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 )
 @EntityScan(
   basePackages = {
-    "net.marci.module.employee.education",
-    "net.marci.module.employee.job",
+    "net.marci.module.education.entity",
+    "net.marci.module.job.entity",
     "net.marci.module.employee.entity",
   }
 )
