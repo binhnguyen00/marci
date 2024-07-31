@@ -7,7 +7,7 @@ interface UIEducationListProps extends IListProps {
   educations: any[];
 }
 export function UIEducationList(props: UIEducationListProps) {
-  let { educations = [], onModify } = props;
+  let { educations = [], onModify, height } = props;
   let [ educationsState, setEducations ] = React.useState(educations);
 
   const columns: widget.DataTableColumn[] = [
@@ -37,8 +37,9 @@ export function UIEducationList(props: UIEducationListProps) {
 
   return (
     <div>
-      <widget.DataTable enableRowSelection
-        title="Educations" columns={columns} records={educationsState}
+      <widget.DataTable 
+        title="Educations" height={height}
+        enableRowSelection columns={columns} records={educationsState}
         onDeleteCallBack={onDelete} onCreateCallBack={onCreate}/>
     </div>
   )

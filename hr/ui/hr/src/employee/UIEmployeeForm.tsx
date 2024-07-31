@@ -70,7 +70,7 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
         bean={employeeState} field="dateOfBirth" label="Birthday" onChange={handleInputChange}/>
 
       <UIEducationList 
-        educations={employeeState.educations} onModify={handleInputChange} height={200}/>
+        educations={employeeState.educations} onModify={handleInputChange} height={150}/>
 
       <widget.Button 
         icon={isNewEntity ? <icon.BsSaveFill /> : <icon.BsSave />} 
