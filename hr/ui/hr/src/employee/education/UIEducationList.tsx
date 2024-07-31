@@ -1,10 +1,10 @@
 import React from "react";
 import * as icon from "react-icons/bs";
 import { widget, input } from "@marci-ui/lib";
+import { IListProps } from "interface/IListProps";
 
-interface UIEducationListProps {
+interface UIEducationListProps extends IListProps {
   educations: any[];
-  onModify?: (field: string, newValue: any, rollbackValue: any) => void;
 }
 export function UIEducationList(props: UIEducationListProps) {
   let { educations = [], onModify } = props;

@@ -77,6 +77,7 @@ public class EmployeeLogic {
     employee.setNickName(model.getNickName());
     employee.setPhoneNumber(model.getPhoneNumber());
     employee.setDateOfBirth(model.getDateOfBirth());
+    employee.setEducations(model.getEducations());
     employee = save(employee);
 
     return employee;

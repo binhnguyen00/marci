@@ -4,8 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import net.marci.module.education.entity.Education;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Slf4j
@@ -28,6 +30,8 @@ public class ModelCreateEmployee {
 
   private String departmentCode;
   private String positionCode;
+
+  private List<Education> educations;
 
 
   public String setEmail(String email) {
