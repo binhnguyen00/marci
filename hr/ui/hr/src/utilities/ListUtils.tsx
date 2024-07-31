@@ -1,6 +1,6 @@
 import React from "react";
 import { server, widget } from "@marci-ui/lib";
-import { RPCRequest } from "Interface";
+import { RPCRequest } from "../interface/common";
 import "./scss/index.scss";
 
 /** 
