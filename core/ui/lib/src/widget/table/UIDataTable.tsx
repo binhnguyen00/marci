@@ -1,13 +1,11 @@
 import React from "react";
 import * as icon from "react-icons/bs";
-import {
-  useReactTable, getCoreRowModel, flexRender, createColumnHelper,
-  ColumnDef, HeaderGroup, TableOptions, Column, Table,
-} from '@tanstack/react-table'
+import * as Tanstack from '@tanstack/react-table'
 import "./css/index.css"
 import { Button } from "../button/UIButton";
-import * as TableUtils from "./uitls";
+import * as TableUtils from "./uitlities";
 import * as PopupManager from "../popup/PopupManager";
+import { SearchBar } from "./UISearchBar";
 
 export interface DataTableColumn {
   field: string;
@@ -38,7 +36,7 @@ export function DataTable(props: DataTableProps) {
     TableUtils.createColumnConfigs(props), [columns]
   );
   const [rowSelection, setRowSelection] = React.useState({}) // Row selection state
-  const table = useReactTable({
+  const table = Tanstack.useReactTable({
     state: {
       rowSelection,
     },
@@ -46,38 +44,45 @@ export function DataTable(props: DataTableProps) {
     columns: columnConfigs,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
-    getCoreRowModel: getCoreRowModel(),
+    getCoreRowModel: Tanstack.getCoreRowModel(),
     enableRowSelection: enableRowSelection,
     onRowSelectionChange: setRowSelection,
     debugTable: debug,
     debugHeaders: debug,
     debugColumns: debug,
-  } as TableOptions<any>)
+  } as Tanstack.TableOptions<any>)
 
   return (
     <div className={`${className}`}>
+
       {/* title */}
       <div className="h5"> {title} </div>
       
-      {/* buttons */}
-      <div className="flex-h my-1">
-        {onCreateCallBack 
-        ? <Button icon={<icon.BsPlus />} title="Create" onClick={() => onCreateCallBack()} />
-        : null
-        }
-        {onDeleteCallBack
-        ? (
-        <Button 
-          className="mx-1" icon={<icon.BsTrash />} title="Delete" 
-          onClick={() => {
-            const ids = TableUtils.getSelectedIds(table);
-            if (!ids?.length) {
-              PopupManager.createWarningPopup(<div> {"Please select at least 1 record"} </div>); 
-              return;
-            } else onDeleteCallBack(ids);
-          }} />
-        ) : null
-        }
+      {/* toolbar */}
+      <div className="flex-h justify-content-between">
+
+        {/* buttons */}
+        <div className="flex-h justify-content-start my-1">
+          {onCreateCallBack ? <Button icon={<icon.BsPlus />} title="Create" onClick={() => onCreateCallBack()} /> : null}
+          {onDeleteCallBack ? (
+            <Button 
+              className="mx-1" icon={<icon.BsTrash />} title="Delete" 
+              onClick={() => {
+                const ids = TableUtils.getSelectedIds(table);
+                if (!ids?.length) {
+                  PopupManager.createWarningPopup(<div> {"Please select at least 1 record"} </div>); 
+                  return;
+                } else onDeleteCallBack(ids);
+              }} />
+            ) : null
+          }
+        </div>
+
+        {/* search */}
+        <div className="flex-h justify-content-end">
+          <SearchBar />
+        </div>
+
       </div>
 
       {/* table */}
@@ -88,7 +93,7 @@ export function DataTable(props: DataTableProps) {
 
             {/* header */}
             <thead>
-              {table.getHeaderGroups().map((headerGroup: HeaderGroup<any>) => (
+              {table.getHeaderGroups().map((headerGroup: Tanstack.HeaderGroup<any>) => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map(header => {
                     let { column } = header;
@@ -107,7 +112,7 @@ export function DataTable(props: DataTableProps) {
                           <div className="whitespace-nowrap"> 
                             {header.isPlaceholder
                             ? null
-                            : flexRender(column.columnDef.header, header.getContext())
+                            : Tanstack.flexRender(column.columnDef.header, header.getContext())
                             }
                           </div>
                           <div className="flex-h justify-content-end">
@@ -158,7 +163,7 @@ export function DataTable(props: DataTableProps) {
                           ...TableUtils.getPinedColumnCSS(column) // <-- IMPORTANT: use for Pinning the column 
                         }}
                       >
-                        {flexRender(column.columnDef.cell, cell.getContext())}
+                        {Tanstack.flexRender(column.columnDef.cell, cell.getContext())}
                       </td>
                     )
                   })}
