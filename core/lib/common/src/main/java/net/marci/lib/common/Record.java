@@ -27,7 +27,10 @@ public class Record extends LinkedHashMap<String, Object> {
   public String getAsString(String key, String defaultValue) {
     if (!hasKey(key)) return defaultValue;
     Object value = get(key);
-    if (value instanceof String) return (String) value;
+    if (value instanceof String) {
+      if (((String) value).isEmpty() && ((String) value).isBlank()) return defaultValue;
+      return (String) value;
+    }
     else if (Objects.isNull(value)) return defaultValue;
     else return value.toString();
   }
