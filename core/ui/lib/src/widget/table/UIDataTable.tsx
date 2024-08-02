@@ -24,13 +24,14 @@ export interface DataTableProps {
   debug?: boolean;
   onCreateCallBack?: () => void;
   onDeleteCallBack?: (targetIds: number[]) => void;
+  onUseSearch?: (sqlArgs: any) => void;
   enableRowSelection?: boolean;
 }
 
 export function DataTable(props: DataTableProps) {
   let { 
     title = "", className = "", height = 400, debug = false, enableRowSelection = false, 
-    records, columns, onCreateCallBack, onDeleteCallBack
+    records, columns, onCreateCallBack, onDeleteCallBack, onUseSearch
   } = props;
   const columnConfigs = React.useMemo(() => 
     TableUtils.createColumnConfigs(props), [columns]
@@ -61,10 +62,10 @@ export function DataTable(props: DataTableProps) {
       {/* toolbar */}
       <div className="flex-h justify-content-between">
 
-        {/* buttons */}
+        {/* toolbar: buttons */}
         <div className="flex-h justify-content-start my-1">
-          {onCreateCallBack ? <Button icon={<icon.BsPlus />} title="Create" onClick={() => onCreateCallBack()} /> : null}
-          {onDeleteCallBack ? (
+          {onCreateCallBack && <Button icon={<icon.BsPlus />} title="Create" onClick={() => onCreateCallBack()} />}
+          {onDeleteCallBack && (
             <Button 
               className="mx-1" icon={<icon.BsTrash />} title="Delete" 
               onClick={() => {
@@ -74,13 +75,12 @@ export function DataTable(props: DataTableProps) {
                   return;
                 } else onDeleteCallBack(ids);
               }} />
-            ) : null
-          }
+          )}
         </div>
 
-        {/* search */}
+        {/* toolbar: search */}
         <div className="flex-h justify-content-end">
-          <SearchBar />
+          {onUseSearch && <SearchBar onUseSearch={onUseSearch}/>}
         </div>
 
       </div>
@@ -91,7 +91,7 @@ export function DataTable(props: DataTableProps) {
 
           <table style={{ width: table.getTotalSize() }}>
 
-            {/* header */}
+            {/* table: header */}
             <thead>
               {table.getHeaderGroups().map((headerGroup: Tanstack.HeaderGroup<any>) => (
                 <tr key={headerGroup.id}>
@@ -149,7 +149,7 @@ export function DataTable(props: DataTableProps) {
               ))}
             </thead>
 
-            {/* body */}
+            {/* table: body */}
             <tbody>
               {table.getRowModel().rows.map(row => (
                 <tr key={row.id}>

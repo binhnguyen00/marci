@@ -30,7 +30,7 @@ export const FieldString = (props: FieldStringProps) => {
 
   return (
     <div className="flex-vbox">
-      <div className="text-capitalize font-weight-bold"> {label} </div>
+      {label && <div className="text-capitalize font-weight-bold"> {label} </div>}
       <input 
         className={`form-control ${className || ""}`}
         type="text"

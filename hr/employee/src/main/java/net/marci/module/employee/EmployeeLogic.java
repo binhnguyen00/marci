@@ -101,7 +101,7 @@ public class EmployeeLogic {
   }
 
   public List<Employee> search(Record sqlArgs) {
-    final String fullName = sqlArgs.getAsString("fullName");
-    return repository.search(fullName);
+    final String filterValue = sqlArgs.getAsString("filterValue");
+    return repository.search(filterValue);
   }
 }

@@ -46,7 +46,7 @@ export function UIJobList(props: IJobListProps) {
 
   hook.useSearch({ 
     component: "JobService", sqlArgs: {}, 
-    dependency: reload, updateData: setJobData
+    dependencies: [reload], updateData: setJobData
   });
 
   return (

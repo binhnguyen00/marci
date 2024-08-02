@@ -5,6 +5,7 @@ import { UIEmployeeForm } from "./UIEmployeeForm";
 
 export function UIEmployeeList() {
   const [ employeeData, setEmployeeData ] = React.useState<any[]>([]);
+  const [ sqlArgs, setSqlArgs ] = React.useState<any>();
   const [ reload, setReload ] = React.useState(false);
 
   const columns: widget.DataTableColumn[] = [ 
@@ -48,16 +49,21 @@ export function UIEmployeeList() {
     );
   }
 
+  const onUseSearch = (sqlArgs: any) => {
+    console.log(sqlArgs);
+    setSqlArgs(sqlArgs);
+  }
+
   hook.useSearch({ 
-    component: "EmployeeService", sqlArgs: {}, 
-    dependency: reload, updateData: setEmployeeData,
+    component: "EmployeeService", service: "search", sqlArgs: sqlArgs, 
+    dependencies: [reload, sqlArgs], updateData: setEmployeeData,
   });
-  
+
   return (
     <div className="flex-v">
       <widget.DataTable 
         title="Employees" columns={columns} records={employeeData} enableRowSelection
-        onCreateCallBack={onCreate} onDeleteCallBack={onDelete}/>
+        onCreateCallBack={onCreate} onDeleteCallBack={onDelete} onUseSearch={onUseSearch}/>
     </div>
   );
 }

@@ -19,7 +19,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Serializable
     SELECT e
     FROM Employee e
     WHERE
-      e.fullName ILIKE COALESCE(:fullName, e.fullName)
+      e.fullName ILIKE COALESCE(:filterValue, e.fullName)
   """)
-  List<Employee> search(@Param("fullName") String fullName);
+  List<Employee> search(@Param("filterValue") String filterValue);
 }

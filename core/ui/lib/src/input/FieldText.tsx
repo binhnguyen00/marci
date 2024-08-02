@@ -31,7 +31,7 @@ export function FieldText(props: FieldTextProps) {
 
   return (
     <div className="flex-vbox">
-      <div className="text-capitalize font-weight-bold"> {label} </div>
+      {label && <div className="text-capitalize font-weight-bold"> {label} </div>}
       <textarea 
         style={{ height: height }}
         className={`form-control ${className || ""}`}
