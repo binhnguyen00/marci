@@ -4,9 +4,11 @@ import * as PopupManager from "../widget/popup/PopupManager";
 
 export abstract class Api {
   serverUrl: string;
+  abortController = new AbortController();
 
   constructor(serverUrl: string) {
     this.serverUrl = serverUrl;
+    this.abortController = new AbortController();
   }
 
   /**
@@ -43,7 +45,7 @@ export abstract class Api {
     return requestInit;
   }
 
-  doFetch(url: string, requestInit: RequestInit, successCB: CallBack, failCB?: CallBack): void {
+  doFetch(url: string, requestInit: RequestInit, successCB: CallBack, failCB?: CallBack) {
     if (!failCB) failCB = (response: ServerResponse) => {
       const errorContent = (<div> {response.message} </div>);
       PopupManager.createDangerPopup(errorContent);

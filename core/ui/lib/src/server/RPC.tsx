@@ -8,6 +8,9 @@ type RPCRequest = {
   parameters: any
 }
 
+/**
+ * Remote Procedure Call (RPC)
+ */
 export class RPC extends Api { 
 
   call(component: string, service: string, params: any, successCB: CallBack, failCB?: CallBack): void {

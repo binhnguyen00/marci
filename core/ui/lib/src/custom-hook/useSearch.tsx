@@ -10,8 +10,7 @@ interface useSearchProps {
   dependencies?: React.DependencyList;
   updateData:  React.Dispatch<React.SetStateAction<any[]>>;
 }
-export function useSearch(props: useSearchProps) {
-  const { sqlArgs = {}, component, service = "search", dependencies, updateData } = props;
+export function useSearch({ component, service = "search", sqlArgs = {}, dependencies = [], updateData }: useSearchProps) {
 
   const successCB = (response: ServerResponse) => {
     const dataAsArray = response.body as any[];
@@ -26,5 +25,8 @@ export function useSearch(props: useSearchProps) {
 
   React.useEffect(() => {
     rpc.call(component, service, { sqlArgs: sqlArgs }, successCB, failCB);
+    return () => {
+      rpc.abortController.abort();
+    }
   }, dependencies);
 }
