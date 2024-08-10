@@ -80,7 +80,7 @@ export function DataTable(props: DataTableProps) {
 
         {/* toolbar: search */}
         <div className="flex-h justify-content-end">
-          {onUseSearch && <SearchBar onUseSearch={onUseSearch}/>}
+          {onUseSearch && <SearchBar onUseSearch={onUseSearch} title={title}/>}
         </div>
 
       </div>
