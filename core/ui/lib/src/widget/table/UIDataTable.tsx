@@ -19,7 +19,7 @@ export interface DataTableProps {
   records: any[];
   columns: DataTableColumn[];
   title?: string;
-  height?: number;
+  height?: number | string;
   className?: string;
   debug?: boolean;
   onCreateCallBack?: () => void;
@@ -30,7 +30,7 @@ export interface DataTableProps {
 
 export function DataTable(props: DataTableProps) {
   let { 
-    title = "", className = "", height = 400, debug = false, enableRowSelection = false, 
+    title = "", className = "", height = "100%", debug = false, enableRowSelection = false, 
     records, columns, onCreateCallBack, onDeleteCallBack, onUseSearch
   } = props;
   const columnConfigs = React.useMemo(() => 

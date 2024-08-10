@@ -30,7 +30,7 @@ export function SearchBar({ title, onUseSearch }: SearchBarProps) {
       <FieldString 
         bean={sqlArgs} field="filterValue" onChange={handleInputChange} placeholder={`Search ${title}...`}/> 
       <Button className="my-1"
-        icon={<icon.BsSearch/>} title="Search" type="primary" onClick={doSearch}/>
+        icon={<icon.BsSearch/>} title="Lookup" type="primary" onClick={doSearch}/>
     </>
   )
 }

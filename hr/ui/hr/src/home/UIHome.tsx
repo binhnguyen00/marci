@@ -10,7 +10,11 @@ export function UIHome() {
   const [page, setPage] = React.useState(homeUI);
 
   const renderPage = React.useCallback(() => {
-    return page;
+    return (
+      <div style={{ height: "100%" }}>
+        {page}
+      </div>
+    );
   }, [page]);
 
   const homeButtonStyle: React.CSSProperties = {
@@ -18,7 +22,7 @@ export function UIHome() {
   }
 
   return (
-    <div className="flex-v">
+    <div className="flex-v" style={{ height: "100%" }}>
       <div className="flex-h justify-content-between border-bottom align-items-center">
         <div className="h1 text-primary" style={homeButtonStyle} onClick={() => setPage(homeUI)}>Home</div>
         <div className="flex-h">
