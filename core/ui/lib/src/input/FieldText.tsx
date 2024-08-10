@@ -6,7 +6,7 @@ interface FieldTextProps extends FieldProps {
 }
 
 export function FieldText(props: FieldTextProps) {
-  let { bean, field, placeholder, label, className, onChange, disabled, hide, height } = props;
+  let { bean, field, placeholder = "Enter text...", label, className, onChange, disabled = false, hide = false, height } = props;
   if (hide) return null;
 
   let [ beanState, setBeanState ] = React.useState(bean);
@@ -14,10 +14,6 @@ export function FieldText(props: FieldTextProps) {
   React.useEffect(() => {
     setBeanState(bean);
   }, [bean]);
-
-  if (!placeholder) placeholder = `Enter text...`;
-  if (!label) label = field;
-  if (!disabled) disabled = false;
 
   const onInputChange = (event: any) => {
     const rollbackValue = bean[field];

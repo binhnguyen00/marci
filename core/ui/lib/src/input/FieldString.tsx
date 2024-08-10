@@ -5,7 +5,7 @@ interface FieldStringProps extends FieldProps {
 }
 
 export const FieldString = (props: FieldStringProps) => {
-  let { bean, field, placeholder, label, className, onChange, disabled, hide } = props;
+  let { bean, field, placeholder = "Enter text...", label, className, onChange, disabled = false, hide = false } = props;
   if (hide) return null;
   
   let [ beanState, setBeanState ] = React.useState(bean);
@@ -13,10 +13,6 @@ export const FieldString = (props: FieldStringProps) => {
   React.useEffect(() => {
     setBeanState(bean);
   }, [bean]);
-
-  if (!placeholder) placeholder = `Enter text...`;
-  if (!label) label = field;
-  if (!disabled) disabled = false;
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const rollbackValue = bean[field];

@@ -11,14 +11,10 @@ function formatNumber(target: number, precision: number) {
 }
 
 export function FieldNumber(props: FieldNumberProps) {
-  let { bean, field, placeholder, label, className, onChange, disabled, hide } = props;
+  let { bean, field, placeholder = "Enter number...", label, className, onChange, disabled = false, hide = false } = props;
   if (hide) return null;
 
   let [beanState, setBeanState] = React.useState(bean);
-
-  if (!placeholder) placeholder = `Enter date...`;
-  if (!label) label = field;
-  if (!disabled) disabled = false;
 
   React.useEffect(() => {
     setBeanState(bean);

@@ -7,7 +7,7 @@ interface FieldDateProps extends FieldProps {
 }
 
 export const FieldDate = (props: FieldDateProps) => {
-  let { bean, field, placeholder, label, className, onChange, disabled, hide, hasTime } = props;
+  let { bean, field, placeholder = "Enter date...", label, className, onChange, disabled = false, hide = false, hasTime } = props;
   if (hide) return null;
 
   let [ beanState, setBeanState ] = React.useState(bean);
@@ -15,10 +15,6 @@ export const FieldDate = (props: FieldDateProps) => {
   React.useEffect(() => {
     setBeanState(bean);
   }, [bean]);
-
-  if (!placeholder) placeholder = `Enter date...`;
-  if (!label) label = field;
-  if (!disabled) disabled = false;
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const rollbackValue = bean[field];
