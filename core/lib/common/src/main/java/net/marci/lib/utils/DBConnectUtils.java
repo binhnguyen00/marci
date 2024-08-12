@@ -3,7 +3,6 @@ package net.marci.lib.utils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.marci.lib.common.Record;
-import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -136,17 +135,12 @@ public class DBConnectUtils {
       Object value = entry.getValue();
       String formatValue;
       if (value instanceof Collection) {
-        formatValue = StringUtils.collectionToCommaDelimitedString((Collection<?>) value);
+        formatValue = StringUtils.collectionToCommaDelimitedSqlString((Collection<?>) value);
       } else if (value instanceof Object[]) {
-        formatValue = StringUtils.arrayToCommaDelimitedString((Object[]) value);
-      } else if (Objects.isNull(value)) {
-        formatValue = String.valueOf((Object) null); // => 'null'
-      } else if (value instanceof String) {
-        if (((String) value).isEmpty()) {
-          formatValue = String.valueOf((Object) null); // => 'null'
-        } else {
-          formatValue = value.toString();
-        }
+        formatValue = StringUtils.arrayToCommaDelimitedSqlString((Object[]) value);
+      }  else if (value instanceof String) {
+        if (((String) value).isEmpty()) return null;
+        else formatValue = "'" + value + "'";
       } else {
         formatValue = value.toString();
       }

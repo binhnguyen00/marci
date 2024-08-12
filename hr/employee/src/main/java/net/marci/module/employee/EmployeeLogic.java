@@ -103,25 +103,24 @@ public class EmployeeLogic extends DBConnectService {
   protected List<Record> search(Record sqlArgs) {
     final String SQL_QUERY = """
       SELECT
-        e.id                  AS id,
-        e.full_name           AS fullName,
-        e.nick_name           AS nickName,
-        e.date_of_birth       AS dateOfBirth,
-        e.phone_number        AS phoneNumber,
-        e.account_id          AS accountId,
-        e.storage_state       AS storageState,
-        e.modifier            AS modifier,
-        e.modified_time       AS modifiedTime,
-        e.creator             AS creator,
-        e.created_time        AS createdTime
-      FROM Employee e
+        e.id                  AS "id",
+        e.full_name           AS "fullName",
+        e.nick_name           AS "nickName",
+        e.date_of_birth       AS "dateOfBirth",
+        e.phone_number        AS "phoneNumber",
+        e.account_id          AS "accountId",
+        e.storage_state       AS "storageState",
+        e.modifier            AS "modifier",
+        e.modified_time       AS "modifiedTime",
+        e.creator             AS "creator",
+        e.created_time        AS "createdTime"
+      FROM employee e
       WHERE
-        ( e.full_name ILIKE COALESCE(:pattern, e.full_name) OR
-          e.nick_name ILIKE COALESCE(:pattern, e.nick_name)
+        ( e.full_name ILIKE '%' || COALESCE(:pattern, e.full_name) || '%' OR
+          e.nick_name ILIKE '%' || COALESCE(:pattern, e.nick_name) || '%'
         )
         AND (e.storage_state IS NULL OR e.storage_state IN (:storageState))
-        --AND (e.modified_time IS NULL OR e.modified_time > :modifiedTime)
-        --AND (e.created_time IS NULL OR e.created_time > :createdTime)
+        AND (e.modified_time > COALESCE(:modifiedTime, e.modified_time))
     """;
     return this.connectUtils.execute(SQL_QUERY, sqlArgs);
   }

@@ -11,7 +11,7 @@ import java.util.Objects;
  * @Email jackjack2000.kahp@gmail.com
  */
 @Slf4j
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Record extends LinkedHashMap<String, Object> {
 
   public Record(String key, Object value) {

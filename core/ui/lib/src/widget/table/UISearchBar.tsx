@@ -11,11 +11,11 @@ interface SearchBarProps {
 }
 export function SearchBar({ title, onUseSearch }: SearchBarProps) {
   const [ sqlArgs, setSqlArgs ] = React.useState({
-    pattern: "",
+    pattern: null,
+    modifiedTime: null,
     storageState: [ 
       StorageState.ACTIVE 
     ],
-    // modifiedTime: new Date(),
     // more args
   });
 
