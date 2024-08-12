@@ -15,7 +15,7 @@ export function SearchBar({ title, onUseSearch }: SearchBarProps) {
     storageState: [ 
       StorageState.ACTIVE 
     ],
-    modifiedTime: new Date(),
+    // modifiedTime: new Date(),
     // more args
   });
 
@@ -47,9 +47,11 @@ export function SearchBar({ title, onUseSearch }: SearchBarProps) {
         bean={sqlArgs} field="pattern" onChange={handleInputChange} placeholder={`Search ${title}...`}/> 
       <div>
         <FieldCheckBox
-          bean={sqlArgs} field="storageState" value={StorageState.ACTIVE} label="Active" onChecked={handleCheckboxChange}/>
+          bean={sqlArgs} field="storageState" checked
+          value={StorageState.ACTIVE} label="Active" onChecked={handleCheckboxChange}/>
         <FieldCheckBox
-          bean={sqlArgs} field="storageState" value={StorageState.ARCHIVED} label="Archived" onChecked={handleCheckboxChange}/>
+          bean={sqlArgs} field="storageState" 
+          value={StorageState.ARCHIVED} label="Archived" onChecked={handleCheckboxChange}/>
       </div>
       <Button className="my-1"
         icon={<icon.BsSearch/>} title="Lookup" type="primary" onClick={doSearch}/>

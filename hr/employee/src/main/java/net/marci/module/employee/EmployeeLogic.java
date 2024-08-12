@@ -115,12 +115,13 @@ public class EmployeeLogic extends DBConnectService {
         e.creator             AS creator,
         e.created_time        AS createdTime
       FROM Employee e
-      WHERE (e.full_name ILIKE COALESCE(:pattern, e.full_name) OR
-            e.nick_name ILIKE COALESCE(:pattern, e.nick_name) OR
-            e.email ILIKE COALESCE(:pattern, e.email))
-        OR e.storageState IN COALESCE(:storageState, e.storage_state)
-        OR e.modifiedTime > COALESCE(:modifiedTime, e.modified_time)
-        OR e.createdTime > COALESCE(:createdTime, e.created_time)
+      WHERE
+        ( e.full_name ILIKE COALESCE(:pattern, e.full_name) OR
+          e.nick_name ILIKE COALESCE(:pattern, e.nick_name)
+        )
+        AND (e.storage_state IS NULL OR e.storage_state IN (:storageState))
+        --AND (e.modified_time IS NULL OR e.modified_time > :modifiedTime)
+        --AND (e.created_time IS NULL OR e.created_time > :createdTime)
     """;
     return this.connectUtils.execute(SQL_QUERY, sqlArgs);
   }
