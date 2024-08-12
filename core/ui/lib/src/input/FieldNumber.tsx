@@ -12,7 +12,6 @@ function formatNumber(target: number, precision: number) {
 
 export function FieldNumber(props: FieldNumberProps) {
   let { bean, field, placeholder = "Enter number...", label, className, onChange, disabled = false, hide = false } = props;
-  if (hide) return null;
 
   let [beanState, setBeanState] = React.useState(bean);
 
@@ -31,6 +30,7 @@ export function FieldNumber(props: FieldNumberProps) {
     if (onChange) onChange(field, newValue, rollbackValue);
   };
 
+  if (hide) return null;
   return (
     <div className="flex-vbox">
       {label && <div className="text-capitalize font-weight-bold"> {label} </div>}

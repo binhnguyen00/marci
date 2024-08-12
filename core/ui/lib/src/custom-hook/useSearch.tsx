@@ -25,8 +25,5 @@ export function useSearch({ component, service = "search", sqlArgs = {}, depende
 
   React.useEffect(() => {
     rpc.call(component, service, { sqlArgs: sqlArgs }, successCB, failCB);
-    return () => {
-      rpc.abortController.abort();
-    }
   }, dependencies);
 }

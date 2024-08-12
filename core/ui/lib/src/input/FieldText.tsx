@@ -7,7 +7,6 @@ interface FieldTextProps extends FieldProps {
 
 export function FieldText(props: FieldTextProps) {
   let { bean, field, placeholder = "Enter text...", label, className, onChange, disabled = false, hide = false, height } = props;
-  if (hide) return null;
 
   let [ beanState, setBeanState ] = React.useState(bean);
 
@@ -25,6 +24,7 @@ export function FieldText(props: FieldTextProps) {
     if (onChange) onChange(field, newValue, rollbackValue);
   }
 
+  if (hide) return null;
   return (
     <div className="flex-vbox">
       {label && <div className="text-capitalize font-weight-bold"> {label} </div>}

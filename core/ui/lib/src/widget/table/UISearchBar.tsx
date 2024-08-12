@@ -2,6 +2,8 @@ import React from "react";
 import * as icon from "react-icons/bs";
 import { FieldString } from "../../input/FieldString";
 import { Button } from "../button/UIButton";
+import { StorageState } from "../Interface";
+import { FieldCheckBox } from "input/FieldCheckBox";
 
 interface SearchBarProps {
   title?: string;
@@ -9,7 +11,11 @@ interface SearchBarProps {
 }
 export function SearchBar({ title, onUseSearch }: SearchBarProps) {
   const [ sqlArgs, setSqlArgs ] = React.useState({
-    filterValue: "",
+    pattern: "",
+    storageState: [ 
+      StorageState.ACTIVE 
+    ],
+    modifiedTime: new Date(),
     // more args
   });
 
@@ -17,6 +23,16 @@ export function SearchBar({ title, onUseSearch }: SearchBarProps) {
     setSqlArgs((prevState: any) => ({
       ...prevState,
       [field]: newValue,
+    }));
+  }
+
+  const handleCheckboxChange = (field: string, newValue: any, rollBackValue: any, isChecked: boolean) => {
+    let results: any[] = sqlArgs.storageState;
+    if (isChecked) results.push(newValue);
+    else results = results.filter((state: any) => state !== newValue);
+    setSqlArgs((prevState: any) => ({
+      ...prevState,
+      [field]: results,
     }));
   }
 
@@ -29,6 +45,12 @@ export function SearchBar({ title, onUseSearch }: SearchBarProps) {
     <> 
       <FieldString 
         bean={sqlArgs} field="pattern" onChange={handleInputChange} placeholder={`Search ${title}...`}/> 
+      <div>
+        <FieldCheckBox
+          bean={sqlArgs} field="storageState" value={StorageState.ACTIVE} label="Active" onChecked={handleCheckboxChange}/>
+        <FieldCheckBox
+          bean={sqlArgs} field="storageState" value={StorageState.ARCHIVED} label="Archived" onChecked={handleCheckboxChange}/>
+      </div>
       <Button className="my-1"
         icon={<icon.BsSearch/>} title="Lookup" type="primary" onClick={doSearch}/>
     </>

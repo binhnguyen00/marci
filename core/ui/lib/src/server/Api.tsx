@@ -40,7 +40,7 @@ export abstract class Api {
       // credentials: 'include',
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
-      body: body
+      body: body,
     }
     return requestInit;
   }

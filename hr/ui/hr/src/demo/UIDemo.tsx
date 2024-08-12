@@ -8,6 +8,9 @@ export function UIDemo() {
 
   return (
     <div className="flex-v">
+
+      <h1>Demo</h1>
+
       <div className="border-bottom py-2">
         <UIDemoApiCall/>
       </div>

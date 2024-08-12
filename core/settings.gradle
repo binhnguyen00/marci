@@ -11,3 +11,6 @@ project(':marci-module-http').projectDir = new File('module/http')
 
 include 'marci-module-deletegraph'
 project(':marci-module-deletegraph').projectDir = new File('module/deletegraph')
+
+include 'marci-module-db-connect-service'
+project(':marci-module-db-connect-service').projectDir = new File('module/db-connect-service')

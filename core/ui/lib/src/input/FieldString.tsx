@@ -1,12 +1,9 @@
 import React from "react";
 import { FieldProps } from "./Field";
 
-interface FieldStringProps extends FieldProps {
-}
-
-export const FieldString = (props: FieldStringProps) => {
-  let { bean, field, placeholder = "Enter text...", label, className, onChange, disabled = false, hide = false } = props;
-  if (hide) return null;
+interface FieldStringProps extends FieldProps {}
+export function FieldString({ 
+  bean, field, className, disabled = false, onChange, hide = false, label, placeholder = "Enter text...", required }: FieldStringProps) {
   
   let [ beanState, setBeanState ] = React.useState(bean);
 
@@ -24,6 +21,7 @@ export const FieldString = (props: FieldStringProps) => {
     if (onChange) onChange(field, newValue, rollbackValue);
   }
 
+  if (hide) return null;
   return (
     <div className="flex-vbox">
       {label && <div className="text-capitalize font-weight-bold"> {label} </div>}
@@ -33,7 +31,8 @@ export const FieldString = (props: FieldStringProps) => {
         value={beanState[field]}
         onChange={onInputChange}
         placeholder={placeholder}
-        disabled={disabled}/>
+        disabled={disabled}
+      />
     </div>
   );
 }

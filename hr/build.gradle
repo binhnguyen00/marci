@@ -82,6 +82,7 @@ subprojects {
     api group: 'net.marci.core', name: 'marci-module-common', version: "${marciCoreVersion}"
     api group: 'net.marci.core', name: 'marci-module-http', version: "${marciCoreVersion}"
     api group: 'net.marci.core', name: 'marci-module-deletegraph', version: "${marciCoreVersion}"
+    api group: 'net.marci.core', name: 'marci-module-db-connect-service', version: "${marciCoreVersion}"
 
     // Using Lib from this project
     // api project(':marci-modules-<module_name>')

@@ -141,10 +141,22 @@ public class DBConnectUtils {
         formatValue = StringUtils.arrayToCommaDelimitedString((Object[]) value);
       } else if (Objects.isNull(value)) {
         formatValue = String.valueOf((Object) null); // => 'null'
+      } else if (value instanceof String) {
+        if (((String) value).isEmpty()) {
+          formatValue = String.valueOf((Object) null); // => 'null'
+        } else {
+          formatValue = value.toString();
+        }
       } else {
         formatValue = value.toString();
       }
-      SQL_QUERY = SQL_QUERY.replace(":" + key, formatValue);
+      final String target = ":" + key;
+      if (SQL_QUERY.contains(target)) {
+        SQL_QUERY = SQL_QUERY.replace(target, formatValue);
+      } else {
+        log.error("Search Key: '{}' not found in SQL: \n{}", key, SQL_QUERY);
+        return null;
+      }
     }
 
     log.info("\nExecuted SQL: \n{}", SQL_QUERY);

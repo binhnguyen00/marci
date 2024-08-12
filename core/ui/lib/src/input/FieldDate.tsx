@@ -6,9 +6,8 @@ interface FieldDateProps extends FieldProps {
   hasTime?: boolean;
 }
 
-export const FieldDate = (props: FieldDateProps) => {
+export function FieldDate(props: FieldDateProps) {
   let { bean, field, placeholder = "Enter date...", label, className, onChange, disabled = false, hide = false, hasTime } = props;
-  if (hide) return null;
 
   let [ beanState, setBeanState ] = React.useState(bean);
 
@@ -26,6 +25,7 @@ export const FieldDate = (props: FieldDateProps) => {
     if (onChange) onChange(field, newValue, rollbackValue);
   }
 
+  if (hide) return null;
   return (
     <div className="flex-v">
       {label && <div className="text-capitalize font-weight-bold"> {label} </div>}
