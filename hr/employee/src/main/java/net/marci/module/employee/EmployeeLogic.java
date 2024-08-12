@@ -2,20 +2,26 @@ package net.marci.module.employee;
 
 import lombok.extern.slf4j.Slf4j;
 import net.marci.lib.common.Record;
+import net.marci.lib.utils.DBConnectUtils;
 import net.marci.module.account.AccountLogic;
 import net.marci.module.account.entity.Account;
+import net.marci.module.deletegraph.DeleteGraphBuilder;
 import net.marci.module.employee.dto.ModelCreateEmployee;
 import net.marci.module.employee.entity.Employee;
 import net.marci.module.employee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Objects;
 
 @Slf4j
 @Component
 public class EmployeeLogic {
+
+  @Autowired
+  private DataSource dataSource;
 
   @Autowired
   private AccountLogic accountLogic;
@@ -93,15 +99,24 @@ public class EmployeeLogic {
   }
 
   public void deleteByIds(List<Long> ids) {
-    ids.forEach(this::deleteById);
+    DBConnectUtils connectUtils = new DBConnectUtils(dataSource);
+    DeleteGraphBuilder deleteGraphBuilder = new DeleteGraphBuilder(connectUtils, Employee.class, ids);
+    int target = deleteGraphBuilder.doDelete();
+    if (ids.size() != target) throw new RuntimeException("There were some problems while deleting");
   }
 
-  public List<Employee> findAll() {
-    return repository.findAll();
-  }
-
-  public List<Employee> search(Record sqlArgs) {
-    final String filterValue = sqlArgs.getAsString("filterValue");
-    return repository.search(filterValue);
+  protected List<Record> search(Record sqlArgs) {
+    final String SQL_QUERY = """
+      SELECT e
+      FROM Employee e
+      WHERE (e.fullName ILIKE COALESCE(:pattern, e.fullName) OR
+            e.nickName ILIKE COALESCE(:pattern, e.nickName) OR
+            e.nickName ILIKE COALESCE(:pattern, e.nickName))
+        OR e.storageState = COALESCE(:storageState, e.storageState)
+        OR e.modifiedTime > COALESCE(:modifiedTime, e.modifiedTime)
+        OR e.createdTime > COALESCE(:createdTime, e.createdTime)
+    """;
+    DBConnectUtils connectUtils = new DBConnectUtils(dataSource);
+    return connectUtils.execute(SQL_QUERY, sqlArgs);
   }
 }

@@ -58,12 +58,7 @@ public class EmployeeService {
   }
 
   @Transactional
-  public List<Employee> findAll() {
-    return logic.findAll();
-  }
-
-  @Transactional
-  public List<Employee> search(Record params) {
+  public List<Record> search(Record params) {
     return logic.search(params);
   }
 

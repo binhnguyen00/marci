@@ -50,7 +50,6 @@ export function UIEmployeeList() {
   }
 
   const onUseSearch = (sqlArgs: any) => {
-    console.log(sqlArgs);
     setSqlArgs(sqlArgs);
   }
 
@@ -60,10 +59,8 @@ export function UIEmployeeList() {
   });
 
   return (
-    <div className="flex-v">
-      <widget.DataTable 
-        title="Employees" columns={columns} records={employeeData} enableRowSelection
-        onCreateCallBack={onCreate} onDeleteCallBack={onDelete} onUseSearch={onUseSearch}/>
-    </div>
+    <widget.DataTable 
+      title="Employees" columns={columns} records={employeeData} enableRowSelection
+      onCreateCallBack={onCreate} onDeleteCallBack={onDelete} onUseSearch={onUseSearch}/>
   );
 }

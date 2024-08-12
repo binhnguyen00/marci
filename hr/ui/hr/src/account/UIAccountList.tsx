@@ -1,6 +1,6 @@
 import React from "react";
 import * as icon from "react-icons/bs";
-import { widget, input, server } from "@marci-ui/lib";
+import { widget, input, server, hook } from "@marci-ui/lib";
 
 interface UIAccountFormProps {
   reloadTable: (newAccount: any) => void;
@@ -58,6 +58,8 @@ export function UIAccountForm(props: UIAccountFormProps) {
 
 export function UIAccountList() {
   const [ accountRecords, setAccountData ] = React.useState<Array<any>>([]);
+  const [ sqlArgs, setSqlArgs ] = React.useState<any>();
+  const [ reload, setReload ] = React.useState(false);
 
   const columns: widget.DataTableColumn[] = [ 
     { field: "id", header: "ID" },
@@ -71,25 +73,22 @@ export function UIAccountList() {
     setAccountData(accounts);
   };
 
-  const showAccountForm = () => {
+  const onCreateAccount = () => {
     widget.createPopup("Create Account", <UIAccountForm reloadTable={reloadTable}/>);
   }
 
-  const loadAccountsSuccessCB: server.CallBack = (response: server.ServerResponse) => {
-    const accounts = response.body as any[];
-    setAccountData(accounts);
+  const onUseSearch = (sqlArgs: any) => {
+    setSqlArgs(sqlArgs);
   }
 
-  React.useEffect(() => {
-    const searchParams = {} as any;
-    server.rpc.call("AccountService", "search", {}, loadAccountsSuccessCB);
-  }, [])
+  hook.useSearch({ 
+    component: "AccountService", service: "search", sqlArgs: sqlArgs, 
+    dependencies: [reload, sqlArgs], updateData: setAccountData,
+  });
 
   return (
-    <div className="flex-v">
-      <widget.DataTable 
-        title="Accounts" columns={columns} records={accountRecords}
-        onCreateCallBack={showAccountForm}/>
-    </div>
+    <widget.DataTable 
+      title="Accounts" columns={columns} records={accountRecords}
+      onCreateCallBack={onCreateAccount} onUseSearch={onUseSearch}/>
   )
 }

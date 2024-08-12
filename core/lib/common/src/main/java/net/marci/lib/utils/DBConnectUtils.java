@@ -7,10 +7,7 @@ import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Bình Nguyễn
@@ -66,6 +63,7 @@ public class DBConnectUtils {
 
   public int executeUpdate(String sql, Record keyValues) {
     sql = assignSqlHolderWithValue(sql, keyValues);
+    if (Objects.isNull(sql)) return 0;
     return executeUpdate(sql);
   }
 
@@ -91,6 +89,8 @@ public class DBConnectUtils {
 
   public List<Record> execute(String SQL_QUERY_TEMPLATE, Record keyValues) {
     final String SQL_QUERY = assignSqlHolderWithValue(SQL_QUERY_TEMPLATE, keyValues);
+    if (Objects.isNull(SQL_QUERY)) return Collections.emptyList();
+
     List<Record> results;
     try {
       Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -126,6 +126,11 @@ public class DBConnectUtils {
    * @return A full SQL with actual values
    */
   public String assignSqlHolderWithValue(String SQL_QUERY, Record keyValues) {
+    if (keyValues.isEmpty()) {
+      log.error("Search KeyValues (Parameters) is empty");
+      return null;
+    }
+
     for (Map.Entry<String, Object> entry : keyValues.entrySet()) {
       String key = entry.getKey();
       Object value = entry.getValue();
@@ -134,11 +139,15 @@ public class DBConnectUtils {
         formatValue = StringUtils.collectionToCommaDelimitedString((Collection<?>) value);
       } else if (value instanceof Object[]) {
         formatValue = StringUtils.arrayToCommaDelimitedString((Object[]) value);
+      } else if (Objects.isNull(value)) {
+        formatValue = String.valueOf((Object) null); // => 'null'
       } else {
         formatValue = value.toString();
       }
       SQL_QUERY = SQL_QUERY.replace(":" + key, formatValue);
     }
+
+    log.info("\nExecuted SQL: \n{}", SQL_QUERY);
     return SQL_QUERY;
   }
 }

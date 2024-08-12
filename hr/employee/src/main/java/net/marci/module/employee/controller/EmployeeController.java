@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 
 @RestController
@@ -17,12 +16,6 @@ public class EmployeeController extends BaseController {
 
   @Autowired
   private EmployeeService service;
-
-  @PostMapping("/find-all")
-  public @ResponseBody ServerResponse hello() {
-    Callable<List<Employee>> executor = () -> service.findAll();
-    return this.execute("EmployeeService", "findAll", executor);
-  }
 
   @PostMapping("/save")
   @ResponseStatus(HttpStatus.OK)

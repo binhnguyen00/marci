@@ -1,5 +1,6 @@
 package net.marci.common;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
@@ -8,8 +9,9 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.marci.lib.utils.DateUtils;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @MappedSuperclass
@@ -20,14 +22,16 @@ abstract public class BaseEntity extends Persistable<Long> {
   @Column(name = "creator")
   protected String creator;
 
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateUtils.timestamp)
   @Column(name = "created_time")
-  protected Date createdTime;
+  protected LocalDateTime createdTime;
 
   @Column(name = "modifier")
   protected String modifier;
 
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateUtils.timestamp)
   @Column(name = "modified_time")
-  protected Date modifiedTime;
+  protected LocalDateTime modifiedTime;
 
   @Column(name = "storage_state")
   @Enumerated(EnumType.STRING)
@@ -44,10 +48,10 @@ abstract public class BaseEntity extends Persistable<Long> {
    */
   public void setUserInteract(/* Client */) {
     // TODO: setCreator(), setModifier()
-    this.setMilestone(new Date());
+    this.setMilestone(LocalDateTime.now());
   }
 
-  public void setMilestone(Date time) {
+  public void setMilestone(LocalDateTime time) {
     if (this.isNew() && Objects.isNull(createdTime)) setCreatedTime(time);
     setModifiedTime(time);
   }
