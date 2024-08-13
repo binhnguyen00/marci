@@ -65,13 +65,14 @@ public class AccountLogic extends DBConnectService {
   public List<Record> search(Record sqlArgs) {
     final String SQL_QUERY = """
       SELECT
-        acc.id              AS "id",
-        acc.user_name       AS "userName",
-        acc.email           AS "email",
-        acc.country_name    AS "countryName",
-        acc.city_name       AS "cityName",
-        acc.state_name      AS "stateName",
-        acc.address         AS "address"
+        acc.id                    AS "id",
+        acc.user_name             AS "userName",
+        acc.display_name          AS "displayName",
+        acc.email                 AS "email",
+        acc.country_name          AS "countryName",
+        acc.city_name             AS "cityName",
+        acc.state_name            AS "stateName",
+        acc.address               AS "address"
       FROM
         account acc
       WHERE

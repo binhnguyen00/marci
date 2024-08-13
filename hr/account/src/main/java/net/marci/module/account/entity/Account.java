@@ -52,6 +52,10 @@ public class Account extends BaseEntity {
   private String userName;
 
   @NotNull
+  @Column(name = "display_name")
+  private String displayName = getUserName();
+
+  @NotNull
   private String password;
 
   @Column(name = "country_code")

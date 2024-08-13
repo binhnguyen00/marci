@@ -2,14 +2,15 @@ import React from "react";
 import * as icon from "react-icons/bs";
 import { widget, input, server, hook } from "@marci-ui/lib";
 import { IFormProps } from "interface/IFormProps";
+import { ListUtils, ShowRowDetailsRequest } from "utilities/ListUtils";
 
 interface UIAccountFormProps extends IFormProps {}
 export function UIAccountForm(props: UIAccountFormProps) {
-  let { reloadParent = () => {} } = props;
-  const [account, setAccount] = React.useState({});
+  let { entity = {}, reloadParent = () => {} } = props;
+  const [account, setAccount] = React.useState(entity);
 
   const handleInputChange = (field: string, newValue: any, rollbackValue: any) => {
-    setAccount((prevState) => ({
+    setAccount((prevState: any) => ({
       ...prevState,
       [field]: newValue,
     }));
@@ -42,7 +43,9 @@ export function UIAccountForm(props: UIAccountFormProps) {
   return (
     <div className="form-group p-1 border">
       <input.FieldString 
-        bean={account} field="userName" label="Username" onChange={handleInputChange}/>
+        bean={account} field="userName" label="Username" onChange={handleInputChange} disabled/>
+      <input.FieldString 
+        bean={account} field="displayName" label="Display Name" onChange={handleInputChange}/>
       <input.FieldString 
         bean={account} field="password" label="Password" onChange={handleInputChange}/>
       <input.FieldString
@@ -60,10 +63,30 @@ export function UIAccountList() {
   const [ reload, setReload ] = React.useState(false);
 
   const columns: widget.DataTableColumn[] = [ 
-    { field: "id", header: "ID" },
-    { field: "userName", header: "Username" },
-    { field: "password", header: "Password" },
+    { 
+      field: "userName", header: "Username", 
+      customRender(record, index) {
+        const request: ShowRowDetailsRequest = {
+          id: record.id,
+          cellValue: record.userName,
+          rpcRequest: {
+            component: "AccountService",
+            service: "getById",
+          },
+          callBack(entity) {
+            const html = (<UIAccountForm entity={entity} reloadParent={reloadTable}/>);
+            widget.createPopup(`Account: ${entity.userName}`, html);
+          },
+        }
+        return ListUtils.renderCellGetRecordById(request);
+      },
+    },
+    { field: "displayName", header: "Display Name" },
     { field: "email", header: "Email" },
+    { field: "address", header: "Address" },
+    { field: "countryName", header: "Country" },
+    { field: "cityName", header: "City" },
+    { field: "stateName", header: "State" },
   ];
 
   const reloadTable = () => {

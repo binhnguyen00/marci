@@ -16,7 +16,7 @@ public class DBConnectService {
   @Autowired
   private DataSource dataSource;
 
-  protected DBConnectUtils connectUtils;
+  private DBConnectUtils connectUtils;
 
   @PostConstruct
   public void init() {
