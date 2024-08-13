@@ -4,9 +4,7 @@ PID_FILE="/tmp/server_app.pid"
 LOG_FILE="/tmp/server_app.log"
 
 PROJECT_DIR=`cd $CURRENT_DIR/..; pwd`
-echo "PROJECT_DIR: $PROJECT_DIR"
 APP_HOME="$PROJECT_DIR/hr/app"
-echo "APP_HOME: $APP_HOME"
 
 if $windowsOS; then
   JAVA_HOME=`cygpath --absolute --windows "$JAVA_HOME"`
@@ -111,11 +109,21 @@ Start the server:
 Start the UI:
   start-ui            Run the UI
 
+Other Commands
+  [COMMAND]
+  help                Show command usages
+
 """
 }
 
 COMMAND=$1;
-shift
+if [ -n "$COMMAND" ]; then
+  shift
+else
+  echo "No command provided. Showing help..."
+  showHelp
+  exit 1
+fi
 
 if [ "$COMMAND" = "start" ] ; then
   PROFILE_PRODUCTION=$(has_opt "-production" $@)

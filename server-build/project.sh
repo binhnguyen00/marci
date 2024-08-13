@@ -137,13 +137,19 @@ Release Project
 
 Other Commands
   [COMMAND]
-  help              Show this help message
+  help              Show command usages
 
 """
 }
 
 COMMAND=$1;
-shift
+if [ -n "$COMMAND" ]; then
+  shift
+else
+  echo "No command provided. Showing help..."
+  showHelp
+  exit 1
+fi
 
 if [ "$COMMAND" = "build-server" ] ; then
   buildServer $@
