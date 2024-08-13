@@ -6,6 +6,7 @@ import { StorageState } from "../Interface";
 import { FieldCheckBox } from "input/FieldCheckBox";
 import * as TableUtils from "./uitlities";
 import { FieldDate } from "input";
+import { Popover } from "widget/popover/UIPopover";
 
 interface SearchBarProps {
   title?: string;
@@ -40,18 +41,27 @@ export function SearchBar({ title, onUseSearch }: SearchBarProps) {
 
   return (
     <> 
+      <div>
+        <Popover 
+          title="Search Options" header="Search Options" placement="bottom"
+          body={
+            <>
+              <div style={{ width: "100%" }}>
+                <FieldCheckBox
+                  bean={sqlArgs} field="storageState" checked
+                  value={StorageState.ACTIVE} label="Active" onChecked={handleCheckboxChange}/>
+                <FieldCheckBox
+                  bean={sqlArgs} field="storageState" 
+                  value={StorageState.ARCHIVED} label="Archived" onChecked={handleCheckboxChange}/>
+              </div>
+              <FieldDate 
+                bean={sqlArgs} field="modifiedTime" onChange={handleInputChange}/>
+            </>
+          }
+        />  
+      </div>
       <FieldString 
         bean={sqlArgs} field="pattern" onChange={handleInputChange} placeholder={`Search ${title}...`}/> 
-      <div>
-        <FieldCheckBox
-          bean={sqlArgs} field="storageState" checked
-          value={StorageState.ACTIVE} label="Active" onChecked={handleCheckboxChange}/>
-        <FieldCheckBox
-          bean={sqlArgs} field="storageState" 
-          value={StorageState.ARCHIVED} label="Archived" onChecked={handleCheckboxChange}/>
-      </div>
-      <FieldDate 
-        bean={sqlArgs} field="modifiedTime" onChange={handleInputChange}/>
       <Button className="my-1"
         icon={<icon.BsSearch/>} title="Lookup" type="primary" onClick={doSearch}/>
     </>

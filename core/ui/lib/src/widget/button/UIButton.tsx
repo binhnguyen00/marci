@@ -5,7 +5,7 @@ declare interface ButtonProps {
   title?: string;
   type?: ButtonType;
   className?: string;
-  onClick?: () => void;
+  onClick?: (event?: any) => void;
   icon?: JSX.Element;
   iconPosition?: "left" | "right";
   disabled?: boolean;

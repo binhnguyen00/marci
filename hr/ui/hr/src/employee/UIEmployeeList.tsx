@@ -60,7 +60,7 @@ export function UIEmployeeList() {
 
   return (
     <widget.DataTable 
-      title="Employees" columns={columns} records={employeeData} enableRowSelection
+      title="Employees Tran Minh Thu" columns={columns} records={employeeData} enableRowSelection
       onCreateCallBack={onCreate} onDeleteCallBack={onDelete} onUseSearch={onUseSearch}/>
   );
 }
