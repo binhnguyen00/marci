@@ -120,7 +120,7 @@ public class EmployeeLogic extends DBConnectService {
           e.nick_name ILIKE '%' || COALESCE(:pattern, e.nick_name) || '%'
         )
         AND (e.storage_state IS NULL OR e.storage_state IN (:storageState))
-        AND (e.modified_time > COALESCE(:modifiedTime, e.modified_time))
+        AND (e.modified_time >= COALESCE(:modifiedTime, e.modified_time))
     """;
     return this.connectUtils.execute(SQL_QUERY, sqlArgs);
   }

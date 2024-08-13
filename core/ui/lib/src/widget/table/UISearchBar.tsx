@@ -4,6 +4,7 @@ import { FieldString } from "../../input/FieldString";
 import { Button } from "../button/UIButton";
 import { StorageState } from "../Interface";
 import { FieldCheckBox } from "input/FieldCheckBox";
+import * as TableUtils from "./uitlities";
 
 interface SearchBarProps {
   title?: string;
@@ -11,12 +12,7 @@ interface SearchBarProps {
 }
 export function SearchBar({ title, onUseSearch }: SearchBarProps) {
   const [ sqlArgs, setSqlArgs ] = React.useState({
-    pattern: null,
-    modifiedTime: null,
-    storageState: [ 
-      StorageState.ACTIVE 
-    ],
-    // more args
+    ...TableUtils.initSqlArgs()
   });
 
   const handleInputChange = (field: string, newValue: any, rollBackValue: any) => {

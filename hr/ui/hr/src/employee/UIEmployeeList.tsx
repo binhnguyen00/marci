@@ -5,7 +5,7 @@ import { UIEmployeeForm } from "./UIEmployeeForm";
 
 export function UIEmployeeList() {
   const [ employeeData, setEmployeeData ] = React.useState<any[]>([]);
-  const [ sqlArgs, setSqlArgs ] = React.useState<any>();
+  const [ sqlArgs, setSqlArgs ] = React.useState<any>(widget.initSqlArgs());
   const [ reload, setReload ] = React.useState(false);
 
   const columns: widget.DataTableColumn[] = [ 

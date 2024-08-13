@@ -1,10 +1,10 @@
 import React, { CSSProperties } from "react";
 import "./css/index.css"
 import {
-  useReactTable, getCoreRowModel, flexRender, createColumnHelper,
-  ColumnDef, HeaderGroup, TableOptions, Column, Table, VisibilityState, Row
+  ColumnDef, Column, Table, VisibilityState, Row
 } from '@tanstack/react-table'
 import { DataTableColumn, DataTableProps } from "./UIDataTable";
+import { StorageState } from "widget/Interface";
 
 export function getSelectedIds(table: Table<any>): number[] | undefined {
   try {
@@ -86,4 +86,14 @@ export function processColumnVisibility(columns: DataTableColumn[]): VisibilityS
     else columnVisibility[column.field] = true;
   })
   return columnVisibility;
+}
+
+export function initSqlArgs() {
+  return {
+    pattern: "",
+    modifiedTime: null,
+    storageState: [ 
+      StorageState.ACTIVE 
+    ],
+  }
 }

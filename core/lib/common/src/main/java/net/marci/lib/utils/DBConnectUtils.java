@@ -125,35 +125,42 @@ public class DBConnectUtils {
    * @return A full SQL with actual values
    */
   public String assignSqlHolderWithValue(String SQL_QUERY, Record keyValues) {
-    if (keyValues.isEmpty()) {
-      log.error("Search KeyValues (Parameters) is empty");
-      return null;
-    }
+    final Record ensured = ensureKeyValues(keyValues);
+    if (Objects.isNull(ensured)) return null;
 
-    for (Map.Entry<String, Object> entry : keyValues.entrySet()) {
+    for (Map.Entry<String, Object> entry : ensured.entrySet()) {
       String key = entry.getKey();
       Object value = entry.getValue();
       String formatValue;
-      if (value instanceof Collection) {
-        formatValue = StringUtils.collectionToCommaDelimitedSqlString((Collection<?>) value);
-      } else if (value instanceof Object[]) {
-        formatValue = StringUtils.arrayToCommaDelimitedSqlString((Object[]) value);
-      }  else if (value instanceof String) {
-        if (((String) value).isEmpty()) return null;
-        else formatValue = "'" + value + "'";
-      } else {
-        formatValue = value.toString();
+      switch (value) {
+        case Collection<?> collection -> formatValue = StringUtils.collectionToCommaDelimitedSqlString(collection);
+        case Object[] objects -> formatValue = StringUtils.arrayToCommaDelimitedSqlString(objects);
+        case String str -> {
+          if (str.isEmpty() && str.isBlank()) formatValue = "''";
+          else formatValue = "'" + value + "'";
+        }
+        case null, default -> {
+          if (Objects.isNull(value)) formatValue = "NULL";
+          else formatValue = String.valueOf(value);
+        }
       }
       final String target = ":" + key;
-      if (SQL_QUERY.contains(target)) {
-        SQL_QUERY = SQL_QUERY.replace(target, formatValue);
-      } else {
-        log.error("Search Key: '{}' not found in SQL: \n{}", key, SQL_QUERY);
-        return null;
-      }
+      SQL_QUERY = SQL_QUERY.replace(target, formatValue);
     }
 
     log.info("\nExecuted SQL: \n{}", SQL_QUERY);
     return SQL_QUERY;
+  }
+
+  private Record ensureKeyValues(Record keyValues) {
+    if (Objects.isNull(keyValues)) {
+      log.warn("Search KeyValues (Parameters) is null");
+      return null;
+    }
+    if (keyValues.isEmpty()) {
+      log.warn("Search KeyValues (Parameters) is empty");
+      return null;
+    }
+    return keyValues;
   }
 }
