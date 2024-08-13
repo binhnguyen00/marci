@@ -22,6 +22,10 @@ export function FieldDate(props: FieldDateProps) {
       ...previousState,
       [field]: newValue,
     }));
+
+    // Debug
+    console.log("Date", newValue);
+
     if (onChange) onChange(field, newValue, rollbackValue);
   }
 
