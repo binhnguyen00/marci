@@ -1,6 +1,5 @@
 package net.marci.lib.common;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.LinkedHashMap;
@@ -11,7 +10,6 @@ import java.util.Objects;
  * @Email jackjack2000.kahp@gmail.com
  */
 @Slf4j
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Record extends LinkedHashMap<String, Object> {
 
   public Record(String key, Object value) {

@@ -44,10 +44,8 @@ export function UIDemoDataTable() {
   }
 
   return (
-    <div className="flex-v">
-      <widget.DataTable 
-        title="Data Table Tran Minh Thu" enableRowSelection 
-        columns={defaultColumns} records={defaultData} onDeleteCallBack={onDeleteCallBack}/>
-    </div>
+    <widget.DataTable 
+      title="Data Table" enableRowSelection 
+      columns={defaultColumns} records={defaultData} onDeleteCallBack={onDeleteCallBack}/>
   );
 }

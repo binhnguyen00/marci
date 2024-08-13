@@ -5,7 +5,6 @@ import net.marci.lib.common.Record;
 import net.marci.module.account.AccountLogic;
 import net.marci.module.account.entity.Account;
 import net.marci.module.dbConnectService.DBConnectService;
-import net.marci.module.deletegraph.DeleteGraphBuilder;
 import net.marci.module.employee.dto.ModelCreateEmployee;
 import net.marci.module.employee.entity.Employee;
 import net.marci.module.employee.repository.EmployeeRepository;
@@ -95,9 +94,7 @@ public class EmployeeLogic extends DBConnectService {
   }
 
   public void deleteByIds(List<Long> ids) {
-    DeleteGraphBuilder deleteGraphBuilder = new DeleteGraphBuilder(this.connectUtils, Employee.class, ids);
-    int target = deleteGraphBuilder.doDelete();
-    if (ids.size() != target) throw new RuntimeException("There were some problems while deleting");
+    this.deleteByIds(Employee.class, ids);
   }
 
   protected List<Record> search(Record sqlArgs) {

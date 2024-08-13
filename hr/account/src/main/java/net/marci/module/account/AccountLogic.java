@@ -1,8 +1,10 @@
 package net.marci.module.account;
 
 import lombok.extern.slf4j.Slf4j;
+import net.marci.lib.common.Record;
 import net.marci.module.account.entity.Account;
 import net.marci.module.account.repository.AccountRepository;
+import net.marci.module.dbConnectService.DBConnectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +14,7 @@ import java.util.Objects;
 
 @Slf4j
 @Component
-public class AccountLogic {
+public class AccountLogic extends DBConnectService {
 
   @Autowired
   private DataSource dataSource;
@@ -60,7 +62,25 @@ public class AccountLogic {
     return repository.findAll();
   }
 
-  public List<Account> search() {
-    return repository.search();
+  public List<Record> search(Record sqlArgs) {
+    final String SQL_QUERY = """
+      SELECT
+        acc.id              AS "id",
+        acc.user_name       AS "userName",
+        acc.email           AS "email",
+        acc.country_name    AS "countryName",
+        acc.city_name       AS "cityName",
+        acc.state_name      AS "stateName",
+        acc.address         AS "address"
+      FROM
+        account acc
+      WHERE
+        ( acc.user_name ILIKE '%' || COALESCE(:pattern, acc.user_name) || '%' OR
+          acc.email ILIKE '%' || COALESCE(:pattern, acc.email) || '%'
+        )
+        AND (acc.storage_state IS NULL OR acc.storage_state IN (:storageState))
+        AND (acc.modified_time >= COALESCE(:modifiedTime, acc.modified_time))
+    """;
+    return this.search(SQL_QUERY, sqlArgs);
   }
 }

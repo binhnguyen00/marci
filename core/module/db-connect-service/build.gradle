@@ -2,4 +2,5 @@ archivesBaseName = "marci-module-db-connect-service"
 
 dependencies {
   api project(":marci-lib-common")
+  api project(":marci-module-deletegraph")
 }

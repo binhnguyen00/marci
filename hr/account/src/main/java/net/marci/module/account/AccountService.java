@@ -1,5 +1,6 @@
 package net.marci.module.account;
 
+import net.marci.lib.common.Record;
 import net.marci.module.account.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,7 @@ public class AccountService {
   }
 
   @Transactional
-  public List<Account> search() {
-    return logic.search();
+  public List<Record> search(Record sqlArgs) {
+    return logic.search(sqlArgs);
   }
 }

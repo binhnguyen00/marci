@@ -1,13 +1,11 @@
 import React from "react";
 import * as icon from "react-icons/bs";
 import { widget, input, server, hook } from "@marci-ui/lib";
+import { IFormProps } from "interface/IFormProps";
 
-interface UIAccountFormProps {
-  reloadTable: (newAccount: any) => void;
-}
-
+interface UIAccountFormProps extends IFormProps {}
 export function UIAccountForm(props: UIAccountFormProps) {
-  let { reloadTable } = props;
+  let { reloadParent = () => {} } = props;
   const [account, setAccount] = React.useState({});
 
   const handleInputChange = (field: string, newValue: any, rollbackValue: any) => {
@@ -24,7 +22,7 @@ export function UIAccountForm(props: UIAccountFormProps) {
       const html = (<div> {JSON.stringify(account, null, 2)} </div>)
       widget.closeCurrentPopup();  
       widget.createPopup("Success", html);
-      reloadTable(account);
+      reloadParent();
     }
 
     const failCB: server.CallBack = (response: server.ServerResponse) => {
@@ -58,7 +56,7 @@ export function UIAccountForm(props: UIAccountFormProps) {
 
 export function UIAccountList() {
   const [ accountRecords, setAccountData ] = React.useState<Array<any>>([]);
-  const [ sqlArgs, setSqlArgs ] = React.useState<any>();
+  const [ sqlArgs, setSqlArgs ] = React.useState<any>(widget.initSqlArgs());
   const [ reload, setReload ] = React.useState(false);
 
   const columns: widget.DataTableColumn[] = [ 
@@ -68,13 +66,12 @@ export function UIAccountList() {
     { field: "email", header: "Email" },
   ];
 
-  const reloadTable = (newAccount: any) => {
-    let accounts = [...accountRecords, newAccount];
-    setAccountData(accounts);
+  const reloadTable = () => {
+    setReload(!reload);
   };
 
   const onCreateAccount = () => {
-    widget.createPopup("Create Account", <UIAccountForm reloadTable={reloadTable}/>);
+    widget.createPopup("Create Account", <UIAccountForm reloadParent={reloadTable}/>);
   }
 
   const onUseSearch = (sqlArgs: any) => {
