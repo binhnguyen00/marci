@@ -1,5 +1,7 @@
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { optimization } = require('../../../core/ui/lib/webpack.config');
 
 const developing = process.argv[process.argv.indexOf('--mode') + 1] === 'development';
 const watching = process.argv[process.argv.indexOf('--watch')];
@@ -12,7 +14,8 @@ if (developing) devtool = 'source-map'
 let configPlugins = [
   new HtmlWebpackPlugin({ // This helps create index.html in dist.
     template: './public/index.html'
-  })
+  }),
+  new webpack.HotModuleReplacementPlugin(),
 ];
 
 if (watching) {
@@ -28,8 +31,8 @@ const config = {
 
   output: {
     publicPath: '/',
-    filename: '[name].js',
-    chunkFilename: '[name].js',
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js',
     library: { // Required for exporting custom library
       name: 'marci-ui/lib',
       type: 'umd2',
@@ -60,8 +63,11 @@ const config = {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
   },
 
+  optimization: {
+    minimize: !developing,
+  },
+
   watchOptions: {
-    // aggregateTimeout: 200,
     ignored: new RegExp('.*^((?!(/src/)).)*$'), // To exclude all files and directories except those in /src.
   },
 
@@ -75,7 +81,8 @@ const config = {
   devtool: devtool,
 
   devServer: {
-    port: 3000
+    port: 3000,
+    hot: true,
   },
   
   plugins: configPlugins

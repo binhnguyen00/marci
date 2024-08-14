@@ -42,7 +42,7 @@ public class JobLogic extends DBConnectService {
         job.description     AS "description"
       FROM job
       WHERE
-        (job.full_name ILIKE '%' || COALESCE(:pattern, job.full_name) || '%')
+        (job.name ILIKE '%' || COALESCE(:pattern, job.name) || '%')
         AND (job.storage_state IS NULL OR job.storage_state IN (:storageState))
         AND (job.modified_time >= COALESCE(:modifiedTime, job.modified_time))
     """;

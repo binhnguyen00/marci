@@ -27,8 +27,8 @@ const config = {
 
   output: {
     publicPath: '/',
-    filename: '[name].js', // Output file name. The name is depended on entry.
-    chunkFilename: '[name].js',
+    filename: '[name].bundle.js', // Output file name. The name is depended on entry.
+    chunkFilename: '[name].bundle.js',
     library: { // Required for exporting custom library
       name: 'marci-ui/lib',
       type: 'umd2',
@@ -64,7 +64,6 @@ const config = {
   },
 
   watchOptions: {
-    // aggregateTimeout: 200,
     ignored: /node_modules/,
   },
 

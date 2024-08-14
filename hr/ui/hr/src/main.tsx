@@ -24,5 +24,3 @@ function renderRoot() {
 }
 
 const reactDOMRoot = renderRoot();
-
-export default reactDOMRoot;

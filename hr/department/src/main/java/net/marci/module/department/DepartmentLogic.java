@@ -51,15 +51,15 @@ public class DepartmentLogic extends DBConnectService {
         dept.family_tree,
         dept.description,
         \s
-        dept.createdTime,
+        dept.created_time,
         dept.creator,
-        dept.modifiedTime,
+        dept.modified_time,
         dept.modifier,
         dept.storage_state
         \s
       FROM department dept
       WHERE
-        (dept.name ILIKE '%' || COALESCE(:pattern, e.full_name) || '%')
+        (dept.name ILIKE '%' || COALESCE(:pattern, dept.name) || '%')
         AND (dept.storage_state IS NULL
           OR dept.storage_state IN (:storageState)
         )
