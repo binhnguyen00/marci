@@ -1,9 +1,11 @@
 import React from "react";
+
 import { widget } from "@marci-ui/lib"; 
 import { UIEmployeeList } from "employee/UIEmployeeList";
 import { UIDemo } from "demo/UIDemo";
 import { UIAccountList } from "account/UIAccountList";
 import { UIJobList } from "employee/job/UIJobList";
+import { UIDepartmentList } from "department/UIDepartmentList";
 
 export function UIHome() {
   const homeUI = <div className="h4 text-center">Welcome to Marci</div>;
@@ -29,6 +31,7 @@ export function UIHome() {
           <widget.Button title="Account" type="link" onClick={() => setPage(<UIAccountList title="Accounts"/>)}/>
           <widget.Button title="Employee" type="link" onClick={() => setPage(<UIEmployeeList title="Employees"/>)}/>
           <widget.Button title="Job" type="link" onClick={() => setPage(<UIJobList title="Jobs"/>)}/>
+          <widget.Button title="Department" type="link" onClick={() => setPage(<UIDepartmentList title="Departments"/>)}/>
           <widget.Button title="Demo" type="link" onClick={() => setPage(<UIDemo/>)}/>
           {/* more pages */}
         </div>
