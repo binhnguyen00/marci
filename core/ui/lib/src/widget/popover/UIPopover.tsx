@@ -1,10 +1,8 @@
 import React from "react";
 import * as icon from "react-icons/bs";
 import { 
-  OverlayTrigger as RBsOverlayTrigger, 
-  Overlay as RBsOverlay,
-  Popover as RBsPopover,
-  Button as RBsButton 
+  Overlay as ReactBsOverlay,
+  Popover as ReactBsPopover,
 } from "react-bootstrap";
 import { Button } from "widget/button/UIButton";
 
@@ -46,25 +44,25 @@ export function Popover(
     <div ref={ref}>
       <Button className="my-1" onClick={handleClick} title={title} icon={popoverIcon}/>
 
-      <RBsOverlay
+      <ReactBsOverlay
         show={show} target={target} placement={placement} 
         container={ref} containerPadding={0} transition
       >
         
-        <RBsPopover id="popover-contained">
-          <RBsPopover.Header 
-            style={{ minWidth: contentWidth, minHeight: contentHeight }} as="h5"
+        <ReactBsPopover id="popover-contained">
+          <ReactBsPopover.Header 
+            style={{ width: contentWidth, minHeight: contentHeight }} as="h5"
           >
             {header}  
-          </RBsPopover.Header>
-          <RBsPopover.Body 
-            style={{ minWidth: contentWidth, minHeight: contentHeight, padding: containerPadding }}
+          </ReactBsPopover.Header>
+          <ReactBsPopover.Body 
+            style={{ width: contentWidth, minHeight: contentHeight, padding: containerPadding }}
           >
             {body}
-          </RBsPopover.Body>
-        </RBsPopover>
+          </ReactBsPopover.Body>
+        </ReactBsPopover>
 
-      </RBsOverlay>
+      </ReactBsOverlay>
     </div>
   )
 }
