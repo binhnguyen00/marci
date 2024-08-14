@@ -26,9 +26,9 @@ export function UIHome() {
       <div className="flex-h justify-content-between border-bottom align-items-center">
         <div className="h1 text-primary" style={homeButtonStyle} onClick={() => setPage(homeUI)}>Home</div>
         <div className="flex-h">
-          <widget.Button title="Account" type="link" onClick={() => setPage(<UIAccountList/>)}/>
-          <widget.Button title="Employee" type="link" onClick={() => setPage(<UIEmployeeList/>)}/>
-          <widget.Button title="Job" type="link" onClick={() => setPage(<UIJobList/>)}/>
+          <widget.Button title="Account" type="link" onClick={() => setPage(<UIAccountList title="Accounts"/>)}/>
+          <widget.Button title="Employee" type="link" onClick={() => setPage(<UIEmployeeList title="Employees"/>)}/>
+          <widget.Button title="Job" type="link" onClick={() => setPage(<UIJobList title="Jobs"/>)}/>
           <widget.Button title="Demo" type="link" onClick={() => setPage(<UIDemo/>)}/>
           {/* more pages */}
         </div>

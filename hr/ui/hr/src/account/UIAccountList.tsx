@@ -3,6 +3,7 @@ import * as icon from "react-icons/bs";
 import { widget, input, server, hook } from "@marci-ui/lib";
 import { IFormProps } from "interface/IFormProps";
 import { ListUtils, ShowRowDetailsRequest } from "utilities/ListUtils";
+import { IListProps } from "interface/IListProps";
 
 interface UIAccountFormProps extends IFormProps {}
 export function UIAccountForm(props: UIAccountFormProps) {
@@ -57,7 +58,9 @@ export function UIAccountForm(props: UIAccountFormProps) {
   )
 }
 
-export function UIAccountList() {
+interface UIAccountListProps extends IListProps {}
+export function UIAccountList(props: UIAccountListProps) {
+  const { title = "Accounts", height } = props;
   const [ accountRecords, setAccountData ] = React.useState<Array<any>>([]);
   const [ sqlArgs, setSqlArgs ] = React.useState<any>(widget.initSqlArgs());
   const [ reload, setReload ] = React.useState(false);
@@ -108,7 +111,7 @@ export function UIAccountList() {
 
   return (
     <widget.DataTable 
-      title="Accounts" columns={columns} records={accountRecords}
+      title={title} height={height} columns={columns} records={accountRecords}
       onCreateCallBack={onCreateAccount} onUseSearch={onUseSearch}/>
   )
 }

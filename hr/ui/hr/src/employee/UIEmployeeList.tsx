@@ -2,8 +2,11 @@ import React from "react";
 import { server, widget, hook } from "@marci-ui/lib";
 import { ListUtils, ShowRowDetailsRequest } from "utilities/ListUtils";
 import { UIEmployeeForm } from "./UIEmployeeForm";
+import { IListProps } from "interface/IListProps";
 
-export function UIEmployeeList() {
+interface UIEmployeeListProps extends IListProps {}
+export function UIEmployeeList(props: UIEmployeeListProps) {
+  const { title = "Employees", height } = props;
   const [ employeeData, setEmployeeData ] = React.useState<any[]>([]);
   const [ sqlArgs, setSqlArgs ] = React.useState<any>(widget.initSqlArgs());
   const [ reload, setReload ] = React.useState(false);
@@ -60,7 +63,7 @@ export function UIEmployeeList() {
 
   return (
     <widget.DataTable 
-      title="Employees Tran Minh Thu" columns={columns} records={employeeData} enableRowSelection
+      title={title} height={height} columns={columns} records={employeeData} enableRowSelection
       onCreateCallBack={onCreate} onDeleteCallBack={onDelete} onUseSearch={onUseSearch}/>
   );
 }

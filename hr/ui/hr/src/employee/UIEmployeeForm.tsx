@@ -71,7 +71,7 @@ export function UIEmployeeForm(props: UIEmployeeFormProps) {
         educations={employeeState.educations} onModify={handleInputChange} height={150}/>
 
       <widget.Button 
-        icon={isNewEntity ? <icon.BsSaveFill /> : <icon.BsSave />} 
+        icon={isNewEntity ? <icon.BsPlus /> : <icon.BsSave />} 
         title={isNewEntity ? "Create" : "Save"} type="primary" 
         onClick={isNewEntity ? createEmployee : saveEmployee}
       />
