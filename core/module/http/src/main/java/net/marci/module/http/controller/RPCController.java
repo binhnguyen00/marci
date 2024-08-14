@@ -4,7 +4,6 @@ import net.marci.module.http.RPCService;
 import net.marci.module.http.dto.RPCRequest;
 import net.marci.module.http.dto.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import java.util.concurrent.Callable;
  * @RPC Stands for Remote Procedure Call. It's a protocol
  * @Usage Use for private api cases
  */
-
 @RestController
 @RequestMapping("/rpc")
 public class RPCController extends BaseController {

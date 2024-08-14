@@ -1,10 +1,14 @@
 package net.marci.module.employee.dto;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.marci.module.education.entity.Education;
+import net.marci.module.employee.entity.Employee;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,7 +23,13 @@ public class ModelCreateEmployee {
 
   private String fullName;
   private String nickName;
+
+  @Enumerated(EnumType.STRING)
+  private Employee.Gender gender;
+
+  @Email
   private String email;
+
   private String phoneNumber;
   private LocalDate dateOfBirth;
 
@@ -34,14 +44,13 @@ public class ModelCreateEmployee {
   private List<Education> educations;
 
 
-  public String setEmail(String email) {
+  public void setEmail(String email) {
     checkValidEmail(email);
     if (email.isEmpty()) {
       this.email = null;
-      return null;
+      return;
     }
     this.email = email.trim().toLowerCase();
-    return email;
   }
 
   private void checkValidEmail(String token) {
@@ -72,17 +81,16 @@ public class ModelCreateEmployee {
       .matches();
   }
 
-  public String setPhoneNumber(String phoneNumber) {
+  public void setPhoneNumber(String phoneNumber) {
     if (!checkValidPhoneNumber(phoneNumber)) {
       log.warn("Invalid Phone Number: {}", phoneNumber);
       throw new RuntimeException("Invalid Phone Number");
     }
     if (phoneNumber.isEmpty()) {
       this.phoneNumber = null;
-      return null;
+      return;
     }
     this.phoneNumber = phoneNumber.trim();
-    return this.phoneNumber;
   }
 
   private boolean checkValidPhoneNumber(String token) {

@@ -76,6 +76,7 @@ public class EmployeeLogic extends DBConnectService {
     employee.delegateToAccount(account);
     employee.setFullName(model.getFullName());
     employee.setNickName(model.getNickName());
+    employee.setGender(model.getGender());
     employee.setPhoneNumber(model.getPhoneNumber());
     employee.setDateOfBirth(model.getDateOfBirth());
     employee.setEducations(model.getEducations());

@@ -44,6 +44,10 @@ public class Employee extends BaseEntity {
   @Column(name = "nick_name")
   private String nickName;
 
+  @Column
+  @Enumerated(EnumType.STRING)
+  private Gender gender;
+
   @Column(name = "date_of_birth")
   private LocalDate dateOfBirth;
 
@@ -77,5 +81,9 @@ public class Employee extends BaseEntity {
   public List<Education> appendEducation(@NonNull Education ... educations) {
     getEducations().addAll(List.of(educations));
     return getEducations();
+  }
+
+  public enum Gender {
+    MALE, FEMALE
   }
 }

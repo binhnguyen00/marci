@@ -8,3 +8,6 @@ project(':marci-hr-account').projectDir = new File('account')
 
 include 'marci-hr-employee'
 project(':marci-hr-employee').projectDir = new File('employee')
+
+include 'marci-hr-department'
+project(':marci-hr-department').projectDir = new File('department')
