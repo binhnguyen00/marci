@@ -1,6 +1,7 @@
 package net.marci.module.job;
 
 import net.marci.lib.common.Record;
+import net.marci.module.dbConnectService.DBConnectService;
 import net.marci.module.employee.EmployeeStatusLogic;
 import net.marci.module.job.entity.Job;
 import net.marci.module.job.repository.JobRepository;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class JobLogic {
+public class JobLogic extends DBConnectService {
 
   @Autowired
   private JobRepository jobRepository;
@@ -33,8 +34,18 @@ public class JobLogic {
     return targetIds.size();
   }
 
-  public List<Job> search(Record sqlArgs) {
-    final String name = sqlArgs.getAsString("name");
-    return jobRepository.search(name);
+  public List<Record> search(Record sqlArgs) {
+    final String SQL_QUERY = """
+      SELECT
+        job.id              AS "id",
+        job.name            AS "name",
+        job.description     AS "description"
+      FROM job
+      WHERE
+        (job.full_name ILIKE '%' || COALESCE(:pattern, job.full_name) || '%')
+        AND (job.storage_state IS NULL OR job.storage_state IN (:storageState))
+        AND (job.modified_time >= COALESCE(:modifiedTime, job.modified_time))
+    """;
+    return this.search(SQL_QUERY, sqlArgs);
   }
 }

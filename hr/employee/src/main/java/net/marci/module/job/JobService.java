@@ -29,7 +29,7 @@ public class JobService {
   }
 
   @Transactional
-  public List<Job> search(Record sqlArgs) {
+  public List<Record> search(Record sqlArgs) {
     return jobLogic.search(sqlArgs);
   }
 }
