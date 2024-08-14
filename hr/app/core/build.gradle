@@ -84,7 +84,7 @@ tasks.register('releaseServer') {
     println ">> ${configurations.hibernateJars.size()} Hibernate Jars...";
 
     configurations.marciAppJars.each { File file ->
-      copy { from file into "${marciAppJars}/libs" }
+      copy { from file into "${marciAppJars}/libs/marci" }
     }
     println ">> ${configurations.marciAppJars.size()} Marci Jars...";
   }

@@ -25,7 +25,7 @@ JAVA_OPTS="""
   -Dfile.encoding=UTF-8
   -Duser.dir=$APP_SERVER_HOME
 """
-LIB="$PROJECT_DIR:$APP_RELEASE_HOME/libs/*:$APP_RELEASE_HOME/libs/springboot/*:$APP_RELEASE_HOME/libs/hibernate/*:$APP_RELEASE_HOME/libs/common/*"
+LIB="$PROJECT_DIR:$APP_RELEASE_HOME/libs/marci/*:$APP_RELEASE_HOME/libs/springboot/*:$APP_RELEASE_HOME/libs/hibernate/*:$APP_RELEASE_HOME/libs/common/*"
 CLASSPATH="${CLASSPATH}:$LIB:$APP_CONFIG_HOME"
 
 if $windowsOS; then
