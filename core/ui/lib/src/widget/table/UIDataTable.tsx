@@ -1,11 +1,13 @@
 import React from "react";
 import * as icon from "react-icons/bs";
 import * as Tanstack from '@tanstack/react-table'
-import "./css/index.css"
-import { Button } from "../button/UIButton";
 import * as TableUtils from "./uitlities";
 import * as PopupManager from "../popup/PopupManager";
+
+import { Button } from "../button/UIButton";
 import { SearchBar } from "./UISearchBar";
+
+import "./scss/stylesheet.scss"
 
 export interface DataTableColumn {
   field: string;
