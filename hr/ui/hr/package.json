@@ -2,8 +2,8 @@
   "name": "@marci-ui/hr",
   "description": "Marci HR UI library",
   "version": "1.0.0",
-  "main": "dist/main.bundle.js",
-  "module": "dist/main.bundle.js",
+  "main": "dist/main.js",
+  "module": "dist/main.js",
   "types": "dist/@types/index.d.ts",
   "scripts": {
     "build":  "webpack --mode production",

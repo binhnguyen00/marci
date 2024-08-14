@@ -31,7 +31,7 @@ export function UIHome() {
           <widget.Button title="Account" type="link" onClick={() => setPage(<UIAccountList title="Accounts"/>)}/>
           <widget.Button title="Employee" type="link" onClick={() => setPage(<UIEmployeeList title="Employees"/>)}/>
           <widget.Button title="Job" type="link" onClick={() => setPage(<UIJobList title="Jobs"/>)}/>
-          <widget.Button title="Department" type="link" onClick={() => setPage(<UIDepartmentList title="Departments Minh"/>)}/>
+          <widget.Button title="Department" type="link" onClick={() => setPage(<UIDepartmentList title="Departments"/>)}/>
           <widget.Button title="Demo" type="link" onClick={() => setPage(<UIDemo/>)}/>
           {/* more pages */}
         </div>

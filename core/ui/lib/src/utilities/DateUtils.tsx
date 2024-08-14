@@ -1,9 +1,9 @@
 import moment from "moment";
 
 export class DateUtils {
-  static date = "DD-MM-YYYY";
-  static timestamp = "DD-MM-YYYY HH:mm:ss";
-  static timestampTz = "DD-MM-YYYY HH:mm:ssZ";
+  private static date = "DD-MM-YYYY";
+  private static timestamp = "DD-MM-YYYY HH:mm:ss";
+  private static timestampTz = "DD-MM-YYYY HH:mm:ssZ";
   
   static getCurrentDate(format: string = this.date): string {
     return moment().format(format);

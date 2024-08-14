@@ -30,8 +30,8 @@ const config = {
 
   output: {
     publicPath: '/',
-    filename: '[name].bundle.js',
-    chunkFilename: '[name].bundle.js',
+    filename: '[name].js',
+    chunkFilename: '[name].js',
     library: { // Required for exporting custom library
       name: 'marci-ui/lib',
       type: 'umd2',

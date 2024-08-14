@@ -2,8 +2,11 @@ import React from "react";
 import {
   ColumnDef, Column, Table, VisibilityState, Row
 } from '@tanstack/react-table'
+
 import { StorageState } from "widget/Interface";
 import { DataTableColumn, DataTableProps } from "./UIDataTable";
+import { DateUtils } from "../../utilities/DateUtils";
+
 import "./scss/stylesheet.scss"
 
 export function getSelectedIds(table: Table<any>): number[] | undefined {
@@ -91,7 +94,7 @@ export function processColumnVisibility(columns: DataTableColumn[]): VisibilityS
 export function initSqlArgs() {
   return {
     pattern: "",
-    modifiedTime: new Date(),
+    modifiedTime: null,
     storageState: [ 
       StorageState.ACTIVE 
     ],

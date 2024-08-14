@@ -46,7 +46,7 @@ public class DepartmentLogic extends DBConnectService {
     final String SQL_QUERY = """
       SELECT
         dept.id                      AS "id",
-        dept.name                    AS "name",
+        dept."name"                  AS "name",
         dept.parent_id               AS "parentId",
         dept.family_tree             AS "familyTree",
         dept.description             AS "description",
