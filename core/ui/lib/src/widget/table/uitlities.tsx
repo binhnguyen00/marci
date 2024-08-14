@@ -1,10 +1,10 @@
-import React, { CSSProperties } from "react";
-import "./css/index.css"
+import React from "react";
 import {
   ColumnDef, Column, Table, VisibilityState, Row
 } from '@tanstack/react-table'
-import { DataTableColumn, DataTableProps } from "./UIDataTable";
 import { StorageState } from "widget/Interface";
+import { DataTableColumn, DataTableProps } from "./UIDataTable";
+import "./scss/stylesheet.scss"
 
 export function getSelectedIds(table: Table<any>): number[] | undefined {
   try {
@@ -23,7 +23,7 @@ export function getSelectedIds(table: Table<any>): number[] | undefined {
   }
 }
 
-export function getPinedColumnCSS(column: Column<any>): CSSProperties {
+export function getPinedColumnCSS(column: Column<any>): React.CSSProperties {
   const isPinned = column.getIsPinned();
   return {
     left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,

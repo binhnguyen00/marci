@@ -13,9 +13,9 @@ Project Directory: $CORE_HOME
 
   cd $CORE_HOME
   if [ $CLEAN_OPT = "true" ] ; then
-    gradle clean build publishToMavenLocal -x test
+    gradle clean build publishToMavenLocal -x test --warning-mode all
   else 
-    gradle build publishToMavenLocal -x test
+    gradle build publishToMavenLocal -x test --warning-mode all
   fi
 }
 
@@ -28,9 +28,9 @@ Project Directory: $HR_HOME
 
   cd $HR_HOME
   if [ $CLEAN_OPT = "true" ] ; then
-    gradle clean build publishToMavenLocal -x test
+    gradle clean build publishToMavenLocal -x test --warning-mode all
   else 
-    gradle build publishToMavenLocal -x test
+    gradle build publishToMavenLocal -x test --warning-mode all
   fi
 }
 

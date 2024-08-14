@@ -1,4 +1,4 @@
-archivesBaseName = "marci-hr-employee"
+base.setArchivesName('marci-hr-employee')
 
 dependencies {
   api project(":marci-hr-account")

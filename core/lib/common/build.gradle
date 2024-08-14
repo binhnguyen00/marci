@@ -1,1 +1,1 @@
-archivesBaseName = "marci-lib-common"
+base.setArchivesName("marci-lib-common")

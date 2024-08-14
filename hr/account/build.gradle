@@ -1,1 +1,1 @@
-archivesBaseName = "marci-hr-account"
+base.setArchivesName("marci-hr-account")

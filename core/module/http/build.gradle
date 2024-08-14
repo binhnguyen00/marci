@@ -1,4 +1,4 @@
-archivesBaseName = "marci-module-http"
+base.setArchivesName('marci-module-http')
 
 dependencies {
   implementation group: 'org.springframework', name: 'spring-webmvc', version: "${springFrameworkVersion}"

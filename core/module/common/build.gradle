@@ -1,4 +1,4 @@
-archivesBaseName = "marci-module-common"
+base.setArchivesName("marci-module-common")
 
 dependencies {
   api project(":marci-lib-common")
