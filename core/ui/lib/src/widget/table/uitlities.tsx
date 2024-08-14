@@ -91,7 +91,7 @@ export function processColumnVisibility(columns: DataTableColumn[]): VisibilityS
 export function initSqlArgs() {
   return {
     pattern: "",
-    modifiedTime: null,
+    modifiedTime: new Date(),
     storageState: [ 
       StorageState.ACTIVE 
     ],

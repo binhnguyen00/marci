@@ -12,7 +12,7 @@ if (developing) devtool = 'source-map'
 let configPlugins = [
   new HtmlWebpackPlugin({ // This helps create index.html in dist.
     template: './public/index.html'
-  })
+  }),
 ];
 
 if (watching) {

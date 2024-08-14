@@ -49,13 +49,13 @@ export function Popover(
         container={ref} containerPadding={0} transition
       >
         
-        <ReactBsPopover id="popover-contained">
+        <ReactBsPopover  style={{ width: contentWidth, minHeight: contentHeight }}>
           <ReactBsPopover.Header 
             style={{ width: contentWidth, minHeight: contentHeight }} as="h5"
           >
             {header}  
           </ReactBsPopover.Header>
-          <ReactBsPopover.Body 
+          <ReactBsPopover.Body
             style={{ width: contentWidth, minHeight: contentHeight, padding: containerPadding }}
           >
             {body}

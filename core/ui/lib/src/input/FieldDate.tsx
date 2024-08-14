@@ -7,7 +7,10 @@ interface FieldDateProps extends FieldProps {
 }
 
 export function FieldDate(props: FieldDateProps) {
-  let { bean, field, placeholder = "Enter date...", label, className, onChange, disabled = false, hide = false, hasTime } = props;
+  let { 
+    bean, field, placeholder = "Enter date...", label, className, onChange, 
+    disabled = false, hide = false, hasTime, format 
+  } = props;
 
   let [ beanState, setBeanState ] = React.useState(bean);
 
@@ -39,7 +42,8 @@ export function FieldDate(props: FieldDateProps) {
         value={beanState[field]}
         onChange={onInputChange}
         placeholder={placeholder}
-        disabled={disabled}/>
+        disabled={disabled}
+      />
     </div>
   );
 }

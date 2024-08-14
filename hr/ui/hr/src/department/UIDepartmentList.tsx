@@ -23,7 +23,7 @@ export function UIDepartmentList({ title = "Departments", height, onModify }: UI
             service: "getById",
           },
           callBack(entity) {
-            const html = (<></>);
+            const html = (<UIDepartmentForm entity={entity} reloadParent={reloadTable}/>);
             widget.createPopup(`Department: ${entity.name}`, html);
           },
         });
@@ -35,6 +35,19 @@ export function UIDepartmentList({ title = "Departments", height, onModify }: UI
   const reloadTable = () => {
     setReload(!reload);
   };
+
+  const onCreate = () => {
+    widget.createPopup("New Department", <UIDepartmentForm reloadParent={reloadTable} />);
+  };
+
+  const onDelete = (targetIds: number[]) => {
+    server.rpc.call(
+      "DepartmentService", "deleteByIds", { ids: targetIds }, 
+      (response: server.ServerResponse) => {
+        reloadTable();
+      }
+    )
+  }
 
   const onUseSearch = (sqlArgs: any) => {
     setSqlArgs(sqlArgs);
@@ -48,7 +61,7 @@ export function UIDepartmentList({ title = "Departments", height, onModify }: UI
   return (
     <widget.DataTable 
       title={title} height={height} columns={columns} records={departmentData}
-      onUseSearch={onUseSearch}
+      onCreateCallBack={onCreate} onDeleteCallBack={onDelete} onUseSearch={onUseSearch}
     />
   )
 }
@@ -74,7 +87,7 @@ export function UIDepartmentForm({ entity = {}, reloadParent = () => {} }: UIDep
   }
 
   return (
-    <div>
+    <>
       <input.FieldString 
         bean={departmentState} field="name" label="Title" onChange={handleInputChange}/>
       <input.FieldText 
@@ -83,6 +96,6 @@ export function UIDepartmentForm({ entity = {}, reloadParent = () => {} }: UIDep
         title={isNewEntity ? "Create" : "Save"} 
         onClick={onSave} icon={isNewEntity ? <icon.BsPlus /> : <icon.BsSave />}
       />
-    </div>
+    </>
   )
 }

@@ -43,7 +43,7 @@ public class JobLogic extends DBConnectService {
       FROM job
       WHERE
         (job.name ILIKE '%' || COALESCE(:pattern, job.name) || '%')
-        AND (job.storage_state IS NULL OR job.storage_state IN :storageState)
+        AND (job.storage_state IS NULL OR job.storage_state IN (:storageState))
         AND (job.modified_time >= COALESCE(:modifiedTime, job.modified_time))
     """;
     return this.search(SQL_QUERY, sqlArgs);

@@ -51,9 +51,8 @@ public class Account extends BaseEntity {
   @Column(name = "user_name", updatable = false)
   private String userName;
 
-  @NotNull
   @Column(name = "display_name")
-  private String displayName = getUserName();
+  private String displayName;
 
   @NotNull
   private String password;

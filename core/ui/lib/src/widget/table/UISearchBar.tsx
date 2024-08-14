@@ -43,10 +43,10 @@ export function SearchBar({ title, onUseSearch }: SearchBarProps) {
     <> 
       <div>
         <Popover 
-          title="Search Options" header="Search Options" placement="bottom"
+          title="Filters" header="Filters" placement="bottom" contentWidth={400}
           body={
             <>
-              <div style={{ width: "100%" }}>
+              <div style={{ width: 400 }}>
                 <FieldCheckBox
                   bean={sqlArgs} field="storageState" checked
                   value={StorageState.ACTIVE} label="Active" onChecked={handleCheckboxChange}/>
@@ -55,7 +55,7 @@ export function SearchBar({ title, onUseSearch }: SearchBarProps) {
                   value={StorageState.ARCHIVED} label="Archived" onChecked={handleCheckboxChange}/>
               </div>
               <FieldDate 
-                bean={sqlArgs} field="modifiedTime" onChange={handleInputChange}/>
+                bean={sqlArgs} field="modifiedTime" label="Modified Time" onChange={handleInputChange}/>
             </>
           }
         />  

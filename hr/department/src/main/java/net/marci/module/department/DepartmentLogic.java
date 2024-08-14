@@ -45,23 +45,23 @@ public class DepartmentLogic extends DBConnectService {
   public List<Record> search(Record sqlArgs) {
     final String SQL_QUERY = """
       SELECT
-        dept.id,
-        dept.name,
-        dept.parent_id,
-        dept.family_tree,
-        dept.description,
+        dept.id                      AS "id",
+        dept.name                    AS "name",
+        dept.parent_id               AS "parentId",
+        dept.family_tree             AS "familyTree",
+        dept.description             AS "description",
         \s
-        dept.created_time,
-        dept.creator,
-        dept.modified_time,
-        dept.modifier,
-        dept.storage_state
+        dept.created_time            AS "createdTime",
+        dept.creator                 AS "creator",
+        dept.modified_time           AS "modifiedTime",
+        dept.modifier                AS "modifier",
+        dept.storage_state           AS "storageState"
         \s
       FROM department dept
       WHERE
         (dept.name ILIKE '%' || COALESCE(:pattern, dept.name) || '%')
         AND (dept.storage_state IS NULL
-          OR dept.storage_state IN :storageState
+          OR dept.storage_state IN (:storageState)
         )
         AND dept.modified_time >= COALESCE(:modifiedTime, dept.modified_time)
     """;

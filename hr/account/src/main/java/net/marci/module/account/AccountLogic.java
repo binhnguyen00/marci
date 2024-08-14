@@ -79,7 +79,7 @@ public class AccountLogic extends DBConnectService {
         ( acc.user_name ILIKE '%' || COALESCE(:pattern, acc.user_name) || '%' OR
           acc.email ILIKE '%' || COALESCE(:pattern, acc.email) || '%'
         )
-        AND (acc.storage_state IS NULL OR acc.storage_state IN :storageState)
+        AND (acc.storage_state IS NULL OR acc.storage_state IN (:storageState))
         AND (acc.modified_time >= COALESCE(:modifiedTime, acc.modified_time))
     """;
     return this.search(SQL_QUERY, sqlArgs);

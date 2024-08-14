@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { optimization } = require('../../../core/ui/lib/webpack.config');
 
 const developing = process.argv[process.argv.indexOf('--mode') + 1] === 'development';
 const watching = process.argv[process.argv.indexOf('--watch')];

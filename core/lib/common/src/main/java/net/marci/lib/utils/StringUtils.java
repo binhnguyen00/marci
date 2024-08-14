@@ -11,7 +11,7 @@ public class StringUtils extends org.springframework.util.StringUtils {
     } else if (arr.length == 1) {
       return "'" + arr[0].toString() + "'";
     } else {
-      StringJoiner joiner = new StringJoiner(",", "(", ")");
+      StringJoiner joiner = new StringJoiner(",", "", "");
       for (Object o : arr) {
         joiner.add("'" + o.toString() + "'");
       }
@@ -25,7 +25,7 @@ public class StringUtils extends org.springframework.util.StringUtils {
     } else if (coll.size() == 1) {
       return "'" + coll.iterator().next().toString() + "'";
     } else {
-      StringJoiner joiner = new StringJoiner(",", "(", ")");
+      StringJoiner joiner = new StringJoiner(",", "", "");
       for (Object o : coll) {
         joiner.add("'" + o.toString() + "'");
       }
