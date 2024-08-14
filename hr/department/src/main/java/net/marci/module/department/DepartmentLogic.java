@@ -61,7 +61,7 @@ public class DepartmentLogic extends DBConnectService {
       WHERE
         (dept.name ILIKE '%' || COALESCE(:pattern, dept.name) || '%')
         AND (dept.storage_state IS NULL
-          OR dept.storage_state IN (:storageState)
+          OR dept.storage_state IN :storageState
         )
         AND dept.modified_time >= COALESCE(:modifiedTime, dept.modified_time)
     """;
