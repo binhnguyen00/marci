@@ -111,11 +111,12 @@ export function UIDepartmentForm({ entity = {}, reloadParent = () => {}, parentI
   };
 
   const onSave = () => {
+    const service = isNewEntity ? "create" : "save";
     const successCB = (response: server.ServerResponse) => {
       widget.closeCurrentPopup();
       reloadParent();
     };
-    server.rpc.call("DepartmentService", "save", { department: { ...departmentState, parentId: parentId } }, successCB);
+    server.rpc.call("DepartmentService", service, { department: { ...departmentState, parentId: parentId } }, successCB);
   }
 
   return (
