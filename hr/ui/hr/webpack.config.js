@@ -12,7 +12,7 @@ if (developing) devtool = 'source-map'
 let configPlugins = [
   new HtmlWebpackPlugin({ // This helps create index.html in dist.
     template: './public/index.html',
-    favicon: './public/assets/imgs/favicon.ico'
+    favicon: './public/assets/imgs/favicon.ico',
   }),
 ];
 if (watching) {
@@ -62,6 +62,9 @@ const config = {
 
   optimization: {
     minimize: !developing,
+    runtimeChunk: true,
+    concatenateModules: true,
+    emitOnErrors: true
   },
 
   watchOptions: {

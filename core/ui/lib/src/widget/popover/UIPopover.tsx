@@ -4,6 +4,8 @@ import {
   Overlay as ReactBsOverlay,
   Popover as ReactBsPopover,
 } from "react-bootstrap";
+import "./scss/_popover.scss"
+
 import { Button } from "widget/button/UIButton";
 
 interface PopoverProps {

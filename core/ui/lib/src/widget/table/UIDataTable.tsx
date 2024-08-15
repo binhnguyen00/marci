@@ -7,7 +7,7 @@ import * as PopupManager from "../popup/PopupManager";
 import { Button } from "../button/UIButton";
 import { SearchBar } from "./UISearchBar";
 
-import "./scss/stylesheet.scss"
+import "./scss/_table.scss"
 
 export interface DataTableColumn {
   field: string;

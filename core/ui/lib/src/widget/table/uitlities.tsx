@@ -5,9 +5,8 @@ import {
 
 import { StorageState } from "widget/Interface";
 import { DataTableColumn, DataTableProps } from "./UIDataTable";
-import { DateUtils } from "../../utilities/DateUtils";
 
-import "./scss/stylesheet.scss"
+import "./scss/_table.scss"
 
 export function getSelectedIds(table: Table<any>): number[] | undefined {
   try {

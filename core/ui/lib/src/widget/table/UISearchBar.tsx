@@ -1,12 +1,11 @@
 import React from "react";
 import * as icon from "react-icons/bs";
-import { FieldString } from "../../input/FieldString";
-import { Button } from "../button/UIButton";
-import { StorageState } from "../Interface";
-import { FieldCheckBox } from "input/FieldCheckBox";
+
 import * as TableUtils from "./uitlities";
-import { FieldDate } from "input";
-import { Popover } from "widget/popover/UIPopover";
+import { StorageState } from "../Interface";
+import { Button } from "../button/UIButton";
+import { Popover } from "../../widget/popover/UIPopover";
+import { FieldDate, FieldCheckBox, FieldString } from "../../input";
 
 interface SearchBarProps {
   title?: string;
