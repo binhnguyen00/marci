@@ -34,6 +34,7 @@ public class DepartmentLogic extends DBConnectService {
   }
 
   public Department save(Department department) {
+    if (department.isNew()) return create(department);
     department.setUserInteract();
     return repository.save(department);
   }
