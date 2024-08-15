@@ -1,8 +1,8 @@
 import React from "react";
 import * as icon from "react-icons/bs";
-import { widget, server, hook, input } from "@marci-ui/lib";
+import { widget, server, hook } from "@marci-ui/lib";
 import { IListProps } from "../interface/IListProps";
-import { IFormProps } from "../interface/IFormProps";
+import { UIDepartmentForm } from "./UIDepartmentForm";
 
 interface UIDepartmentListProps extends IListProps {}
 export function UIDepartmentList({ title = "Departments", height, onModify }: UIDepartmentListProps) {
@@ -93,41 +93,5 @@ export function UIDepartmentList({ title = "Departments", height, onModify }: UI
       title={title} height={height} columns={columns} records={departmentData}
       onCreateCallBack={onCreate} onDeleteCallBack={onDelete} onUseSearch={onUseSearch}
     />
-  )
-}
-
-interface UIDepartmentFormProps extends IFormProps {
-  parentId?: number;
-}
-export function UIDepartmentForm({ entity = {}, reloadParent = () => {}, parentId }: UIDepartmentFormProps) {
-  const [ departmentState, setDepartmentState ] = React.useState(entity);
-  const isNewEntity = !entity.id;
-
-  const handleInputChange = (field: string, newValue: any, rollbackValue: any) => {
-    setDepartmentState((prevState: any) => ({
-      ...prevState,
-      [field]: newValue,
-    }));
-  };
-
-  const onSave = () => {
-    const successCB = (response: server.ServerResponse) => {
-      widget.closeCurrentPopup();
-      reloadParent();
-    };
-    server.rpc.call("DepartmentService", "save", { department: { ...departmentState, parentId: parentId } }, successCB);
-  }
-
-  return (
-    <>
-      <input.FieldString 
-        bean={departmentState} field="name" label="Title" onChange={handleInputChange}/>
-      <input.FieldText 
-        bean={departmentState} field="description" label="Description" onChange={handleInputChange}/>
-      <widget.Button 
-        title={isNewEntity ? "Create" : "Save"} 
-        onClick={onSave} icon={isNewEntity ? <icon.BsPlus /> : <icon.BsSave />}
-      />
-    </>
   )
 }

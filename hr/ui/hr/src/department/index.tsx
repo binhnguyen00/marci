@@ -1,1 +1,2 @@
-export { UIDepartmentList, UIDepartmentForm } from "./UIDepartmentList"
+export { UIDepartmentList } from "./UIDepartmentList"
+export { UIDepartmentForm } from "./UIDepartmentForm"
