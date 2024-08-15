@@ -58,8 +58,7 @@ export function SearchBar({ title, onUseSearch }: SearchBarProps) {
                 </div>
               </div>
               <FieldDate 
-                bean={sqlArgs} field="modifiedTime" label="Modified Time" 
-                onChange={handleInputChange} hasTime/>
+                bean={sqlArgs} field="modifiedTime" label="Modified Time" onChange={handleInputChange}/>
             </>
           }
         />  

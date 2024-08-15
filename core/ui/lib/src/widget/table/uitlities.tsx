@@ -88,12 +88,14 @@ export function processColumnVisibility(columns: DataTableColumn[]): VisibilityS
   return columnVisibility;
 }
 
-export function initSqlArgs() {
+export function initSqlArgs(
+  pattern = "", 
+  modifiedTime = DateUtils.subtractMonthsFromNow(3), 
+  storageState = [StorageState.ACTIVE]
+) {
   return {
-    pattern: "",
-    modifiedTime: `${DateUtils.getCurrentDate()} 00:00:00`,
-    storageState: [ 
-      StorageState.ACTIVE 
-    ],
+    pattern: pattern,
+    modifiedTime: modifiedTime,
+    storageState: storageState,
   }
 }

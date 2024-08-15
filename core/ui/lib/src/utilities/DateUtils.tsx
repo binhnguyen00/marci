@@ -14,6 +14,14 @@ export class DateUtils {
     return moment().format(format);
   }
 
+  static subtractMonthsFromNow(month: number, format: string = this.date) {
+    return moment().subtract(month, 'months').format(format);
+  }
+
+  static addMonthsToNow(month: number, format: string = this.date) {
+    return moment().add(month, 'months').format(format);
+  }
+
   static getTimestamp(format: string = this.timestamp): string {
     return moment().format(format);
   }
