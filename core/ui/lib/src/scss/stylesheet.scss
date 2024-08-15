@@ -2,12 +2,16 @@
   display: flex;
   flex-direction: column !important;
   flex-grow: 1;
+  // justify-content: flex-start;
 }
 
 .flex-h {
   display: flex;
   flex-direction: row !important;
-  flex-grow: 1;
+  justify-content: flex-start;
 }
+
+@import "../widget/popover/scss/_popover.scss";
+@import "../widget/table/scss/_table.scss";
 
 // more classes...

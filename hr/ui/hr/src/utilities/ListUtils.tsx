@@ -31,11 +31,14 @@ export function renderCellGetRecordById(request: ShowRowDetailsRequest) {
   }
 
   return (
-    <a style={{ textDecoration: "none" }} href="#" onClick={() => {
-      server.rpc.call(rpcRequest.component, rpcRequest.service, { id: id }, successCB, failCB);
-    }}>
-      <div className="cell-clickable"> {cellValue} </div>
-    </a>
+    <div 
+      className="cell-clickable"
+      onClick={() => {
+        server.rpc.call(rpcRequest.component, rpcRequest.service, { id: id }, successCB, failCB);
+      }}
+    > 
+      {cellValue} 
+    </div>
   )
 }
 

@@ -35,11 +35,17 @@ export function DataTable(props: DataTableProps) {
     title = "", className = "", height = "100%", debug = false, enableRowSelection = false,
     records, columns, onCreateCallBack, onDeleteCallBack, onUseSearch
   } = props;
-  const columnConfigs = React.useMemo(() =>
-    TableUtils.createColumnConfigs(props), [columns]
-  );
+
+  const columnConfigs = React.useMemo(() => TableUtils.createColumnConfigs(props), [columns]);
   const [rowSelection, setRowSelection] = React.useState({}) // Row selection state
   const [expandedRows, setExpandedRows] = React.useState({}) // Row expansion state
+
+  const toggleRowExpansion = (rowId) => {
+    setExpandedRows((prevState) => ({
+      ...prevState,
+      [rowId]: !prevState[rowId],
+    }));
+  };
 
   const table = Tanstack.useReactTable({
     state: {
@@ -57,55 +63,6 @@ export function DataTable(props: DataTableProps) {
     debugColumns: debug,
   } as Tanstack.TableOptions<any>)
 
-  const toggleRowExpansion = (rowId) => {
-    setExpandedRows((prevState) => ({
-      ...prevState,
-      [rowId]: !prevState[rowId],
-    }));
-  };
-
-  const renderRows = (rows: Tanstack.Row<any>[], level = 0) => {
-    // Filter rows to find the ones without a parentId (root-level rows)
-    const rootRows = rows.filter(row => !row.original["parentId"]);
-
-    // Function to recursively render rows and their children
-    const renderRowWithChildren = (row: Tanstack.Row<any>, currentLevel: number) => {
-      // Find all rows that have the current row as their parent
-      const childRows = rows.filter(r => r.original["parentId"] === row.original["id"]);
-      const isExpanded = expandedRows[row.id];
-
-      return (
-        <React.Fragment key={row.id}>
-          <tr>
-            {row.getVisibleCells().map((cell, cellIndex) => (
-              <td
-                key={cell.id}
-                style={{
-                  width: cell.column.getSize(),
-                  paddingLeft: cellIndex === 0 ? `${currentLevel * 20}px` : undefined, // Only indent the first cell
-                  ...TableUtils.getPinedColumnCSS(cell.column),
-                }}
-              >
-                {/* Render the expand/collapse button only in the first cell of the row */}
-                {cellIndex === 0 && childRows.length > 0 && (
-                  <button onClick={(event: any) => toggleRowExpansion(row.id)}>
-                    {isExpanded ? '-' : '+'}
-                  </button>
-                )}
-                {Tanstack.flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-          </tr>
-
-          {isExpanded && childRows.map(childRow => renderRowWithChildren(childRow, currentLevel + 1))}
-        </React.Fragment>
-      );
-    };
-
-    // Start rendering with root rows
-    return rootRows.map(rootRow => renderRowWithChildren(rootRow, level));
-  };
-
   return (
     <div className={`${className}`}>
 
@@ -116,7 +73,7 @@ export function DataTable(props: DataTableProps) {
       <div className="flex-h justify-content-between">
 
         {/* toolbar: buttons */}
-        <div className="flex-h justify-content-start my-1">
+        <div className="flex-h my-1">
           {onCreateCallBack && <Button icon={<icon.BsPlus />} title="Create" onClick={() => onCreateCallBack()} />}
           {onDeleteCallBack && (
             <Button
@@ -160,7 +117,7 @@ export function DataTable(props: DataTableProps) {
                           ...TableUtils.getPinedColumnCSS(column) // <-- IMPORTANT: use for Pinning the column 
                         }}
                       >
-                        <div className="flex-h">
+                        <div className="flex-h justify-content-between">
                           {/* render Header's label */}
                           <div className="whitespace-nowrap">
                             {header.isPlaceholder
@@ -168,7 +125,7 @@ export function DataTable(props: DataTableProps) {
                               : Tanstack.flexRender(column.columnDef.header, header.getContext())
                             }
                           </div>
-                          <div className="flex-h justify-content-end">
+                          <div className="flex-h">
                             {/* pin controller */}
                             {!header.isPlaceholder && column.getCanPin() && !isSelection
                               ? (<>
@@ -204,25 +161,46 @@ export function DataTable(props: DataTableProps) {
 
             {/* table: body */}
             <tbody>
-              {/* {table.getRowModel().rows.map(row => (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map(cell => {
-                    const { column } = cell;
+              {(() => {
+                  const rows = table.getRowModel().rows;
+                  const rootRows = rows.filter(row => !row.original["parentId"]); 
+                  const renderRowWithChildren = (row: Tanstack.Row<any>, currentLevel: number) => {
+                    const childRows = rows.filter(r => r.original["parentId"] === row.original["id"]);
+                    const isExpanded = expandedRows[row.id];
                     return (
-                      <td
-                        key={cell.id}
-                        style={{ 
-                          width: column.getSize(),
-                          ...TableUtils.getPinedColumnCSS(column) // <-- IMPORTANT: use for Pinning the column 
-                        }}
-                      >
-                        {Tanstack.flexRender(column.columnDef.cell, cell.getContext())}
-                      </td>
-                    )
-                  })}
-                </tr>
-              ))} */}
-              {renderRows(table.getRowModel().rows)}
+                      <React.Fragment key={row.id}>
+                        <tr>
+                          {row.getVisibleCells().map((cell, cellIndex) => {
+                            const isFirstRootCell = cellIndex === 0 && childRows.length > 0;
+                            return (
+                              <td
+                                key={cell.id}
+                                style={{
+                                  width: cell.column.getSize(),
+                                  paddingLeft: cellIndex === 0 ? `${currentLevel * 20}px` : undefined, // Only indent the first cell
+                                  ...TableUtils.getPinedColumnCSS(cell.column), // <-- IMPORTANT: use for Pinning the column
+                                }}
+                              >
+                                {/* Render the expand/collapse button only in the first cell of the row */}
+                                {isFirstRootCell && (
+                                  <>{isExpanded 
+                                    ? <icon.BsChevronDown className="my-1" onClick={(event: any) => toggleRowExpansion(row.id)}/>
+                                    : <icon.BsChevronRight className="my-1" onClick={(event: any) => toggleRowExpansion(row.id)}/>
+                                  }</>
+                                )}
+                                {Tanstack.flexRender(cell.column.columnDef.cell, cell.getContext())}
+                              </td>
+                            )}
+                          )}
+                        </tr>
+
+                        {isExpanded && childRows.map(childRow => renderRowWithChildren(childRow, currentLevel + 1))}
+                      </React.Fragment>
+                    );
+                  };
+
+                  return rootRows.map(rootRow => renderRowWithChildren(rootRow, 0)); // Start with level 0
+              })()}
             </tbody>
 
           </table>
