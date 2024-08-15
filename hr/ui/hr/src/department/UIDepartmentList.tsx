@@ -6,7 +6,7 @@ import { IFormProps } from "../interface/IFormProps";
 import { ListUtils } from "../utilities/ListUtils";
 
 interface UIDepartmentListProps extends IListProps {}
-export function UIDepartmentList({ title = "Departments 123", height, onModify }: UIDepartmentListProps) {
+export function UIDepartmentList({ title = "Departments", height, onModify }: UIDepartmentListProps) {
   const [ departmentData, setDepartmentData ] = React.useState<any[]>([]);
   const [ sqlArgs, setSqlArgs ] = React.useState<any>(widget.initSqlArgs());
   const [ reload, setReload ] = React.useState(false);

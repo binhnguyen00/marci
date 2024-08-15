@@ -31,14 +31,16 @@ export interface DataTableProps {
 }
 
 export function DataTable(props: DataTableProps) {
-  let { 
-    title = "", className = "", height = "100%", debug = false, enableRowSelection = false, 
+  let {
+    title = "", className = "", height = "100%", debug = false, enableRowSelection = false,
     records, columns, onCreateCallBack, onDeleteCallBack, onUseSearch
   } = props;
-  const columnConfigs = React.useMemo(() => 
+  const columnConfigs = React.useMemo(() =>
     TableUtils.createColumnConfigs(props), [columns]
   );
   const [rowSelection, setRowSelection] = React.useState({}) // Row selection state
+  const [expandedRows, setExpandedRows] = React.useState({}) // Row expansion state
+
   const table = Tanstack.useReactTable({
     state: {
       rowSelection,
@@ -55,12 +57,61 @@ export function DataTable(props: DataTableProps) {
     debugColumns: debug,
   } as Tanstack.TableOptions<any>)
 
+  const toggleRowExpansion = (rowId) => {
+    setExpandedRows((prevState) => ({
+      ...prevState,
+      [rowId]: !prevState[rowId],
+    }));
+  };
+
+  const renderRows = (rows: Tanstack.Row<any>[], level = 0) => {
+    // Filter rows to find the ones without a parentId (root-level rows)
+    const rootRows = rows.filter(row => !row.original["parentId"]);
+
+    // Function to recursively render rows and their children
+    const renderRowWithChildren = (row: Tanstack.Row<any>, currentLevel: number) => {
+      // Find all rows that have the current row as their parent
+      const childRows = rows.filter(r => r.original["parentId"] === row.original["id"]);
+      const isExpanded = expandedRows[row.id];
+
+      return (
+        <React.Fragment key={row.id}>
+          <tr>
+            {row.getVisibleCells().map((cell, cellIndex) => (
+              <td
+                key={cell.id}
+                style={{
+                  width: cell.column.getSize(),
+                  paddingLeft: cellIndex === 0 ? `${currentLevel * 20}px` : undefined, // Only indent the first cell
+                  ...TableUtils.getPinedColumnCSS(cell.column),
+                }}
+              >
+                {/* Render the expand/collapse button only in the first cell of the row */}
+                {cellIndex === 0 && childRows.length > 0 && (
+                  <button onClick={(event: any) => toggleRowExpansion(row.id)}>
+                    {isExpanded ? '-' : '+'}
+                  </button>
+                )}
+                {Tanstack.flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </td>
+            ))}
+          </tr>
+
+          {isExpanded && childRows.map(childRow => renderRowWithChildren(childRow, currentLevel + 1))}
+        </React.Fragment>
+      );
+    };
+
+    // Start rendering with root rows
+    return rootRows.map(rootRow => renderRowWithChildren(rootRow, level));
+  };
+
   return (
     <div className={`${className}`}>
 
       {/* title */}
       <div className="h5"> {title} </div>
-      
+
       {/* toolbar */}
       <div className="flex-h justify-content-between">
 
@@ -68,12 +119,12 @@ export function DataTable(props: DataTableProps) {
         <div className="flex-h justify-content-start my-1">
           {onCreateCallBack && <Button icon={<icon.BsPlus />} title="Create" onClick={() => onCreateCallBack()} />}
           {onDeleteCallBack && (
-            <Button 
-              className="mx-1" icon={<icon.BsTrash />} title="Delete" 
+            <Button
+              className="mx-1" icon={<icon.BsTrash />} title="Delete"
               onClick={() => {
                 const ids = TableUtils.getSelectedIds(table);
                 if (!ids?.length) {
-                  PopupManager.createWarningPopup(<div> {"Please select at least 1 record"} </div>); 
+                  PopupManager.createWarningPopup(<div> {"Please select at least 1 record"} </div>);
                   return;
                 } else onDeleteCallBack(ids);
               }} />
@@ -82,7 +133,7 @@ export function DataTable(props: DataTableProps) {
 
         {/* toolbar: search */}
         <div className="flex-h justify-content-end">
-          {onUseSearch && <SearchBar onUseSearch={onUseSearch} title={title}/>}
+          {onUseSearch && <SearchBar onUseSearch={onUseSearch} title={title} />}
         </div>
 
       </div>
@@ -101,42 +152,42 @@ export function DataTable(props: DataTableProps) {
                     let { column } = header;
                     const isSelection: boolean = column.id == "selection"
                     return (
-                      <th 
-                        key={header.id} 
-                        colSpan={header.colSpan} 
-                        style={{ 
-                          width: header.getSize(), 
+                      <th
+                        key={header.id}
+                        colSpan={header.colSpan}
+                        style={{
+                          width: header.getSize(),
                           ...TableUtils.getPinedColumnCSS(column) // <-- IMPORTANT: use for Pinning the column 
                         }}
                       >
                         <div className="flex-h">
                           {/* render Header's label */}
-                          <div className="whitespace-nowrap"> 
+                          <div className="whitespace-nowrap">
                             {header.isPlaceholder
-                            ? null
-                            : Tanstack.flexRender(column.columnDef.header, header.getContext())
+                              ? null
+                              : Tanstack.flexRender(column.columnDef.header, header.getContext())
                             }
                           </div>
                           <div className="flex-h justify-content-end">
                             {/* pin controller */}
                             {!header.isPlaceholder && column.getCanPin() && !isSelection
-                            ? (<>
-                              {column.getIsPinned() !== 'left' && !isSelection ? (
-                                <button className="border rounded px-2" onClick={() => column.pin('left')}> {"<"} </button>
-                              ) : null
-                              }
-                              {column.getIsPinned() && !isSelection ? (
-                                <button className="border rounded px-2" onClick={() => column.pin(false)}> {"X"} </button> 
-                              ) : null
-                              }
-                              {column.getIsPinned() !== 'right' && !isSelection ? (
-                                <button className="border rounded px-2" onClick={() => column.pin('right')}> {">"} </button> 
-                              ) : null
-                              }
-                            </>) : null
+                              ? (<>
+                                {column.getIsPinned() !== 'left' && !isSelection ? (
+                                  <button className="border rounded px-2" onClick={() => column.pin('left')}> {"<"} </button>
+                                ) : null
+                                }
+                                {column.getIsPinned() && !isSelection ? (
+                                  <button className="border rounded px-2" onClick={() => column.pin(false)}> {"X"} </button>
+                                ) : null
+                                }
+                                {column.getIsPinned() !== 'right' && !isSelection ? (
+                                  <button className="border rounded px-2" onClick={() => column.pin('right')}> {">"} </button>
+                                ) : null
+                                }
+                              </>) : null
                             }
                             {/* resize div */}
-                            <div  
+                            <div
                               onDoubleClick={() => header.column.resetSize()}
                               onMouseDown={header.getResizeHandler()}
                               onTouchStart={header.getResizeHandler()}
@@ -153,7 +204,7 @@ export function DataTable(props: DataTableProps) {
 
             {/* table: body */}
             <tbody>
-              {table.getRowModel().rows.map(row => (
+              {/* {table.getRowModel().rows.map(row => (
                 <tr key={row.id}>
                   {row.getVisibleCells().map(cell => {
                     const { column } = cell;
@@ -170,11 +221,12 @@ export function DataTable(props: DataTableProps) {
                     )
                   })}
                 </tr>
-              ))}
+              ))} */}
+              {renderRows(table.getRowModel().rows)}
             </tbody>
 
           </table>
-          
+
         </div>
       </div>
     </div>
