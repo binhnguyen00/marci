@@ -1,5 +1,6 @@
 import React from "react";
-import * as icon from "react-icons/bs";
+import * as BsIcon from "react-icons/bs";
+import * as FaIcon from "react-icons/fa6"
 import * as Tanstack from '@tanstack/react-table'
 import * as TableUtils from "./uitlities";
 import * as PopupManager from "../popup/PopupManager";
@@ -28,12 +29,13 @@ export interface DataTableProps {
   onDeleteCallBack?: (targetIds: number[]) => void;
   onUseSearch?: (sqlArgs: any) => void;
   enableRowSelection?: boolean;
+  expandRows?: boolean;
 }
 
 export function DataTable(props: DataTableProps) {
   let {
     title = "", className = "", height = "100%", debug = false, enableRowSelection = false,
-    records, columns, onCreateCallBack, onDeleteCallBack, onUseSearch
+    records, columns, expandRows, onCreateCallBack, onDeleteCallBack, onUseSearch
   } = props;
 
   const columnConfigs = React.useMemo(() => TableUtils.createColumnConfigs(props), [columns]);
@@ -74,10 +76,10 @@ export function DataTable(props: DataTableProps) {
 
         {/* toolbar: buttons */}
         <div className="flex-h my-1">
-          {onCreateCallBack && <Button icon={<icon.BsPlus />} title="Create" onClick={() => onCreateCallBack()} />}
+          {onCreateCallBack && <Button icon={<BsIcon.BsPlus />} title="Create" onClick={() => onCreateCallBack()} />}
           {onDeleteCallBack && (
             <Button
-              className="mx-1" icon={<icon.BsTrash />} title="Delete"
+              className="mx-1" icon={<BsIcon.BsTrash />} title="Delete"
               onClick={() => {
                 const ids = TableUtils.getSelectedIds(table);
                 if (!ids?.length) {
@@ -166,26 +168,31 @@ export function DataTable(props: DataTableProps) {
                   const rootRows = rows.filter(row => !row.original["parentId"]); 
                   const renderRowWithChildren = (row: Tanstack.Row<any>, currentLevel: number) => {
                     const childRows = rows.filter(r => r.original["parentId"] === row.original["id"]);
-                    const isExpanded = expandedRows[row.id];
+                    const isExpanded = expandRows ? true : expandedRows[row.id];
                     return (
                       <React.Fragment key={row.id}>
                         <tr>
-                          {row.getVisibleCells().map((cell, cellIndex) => {
+                          {row.getVisibleCells().map((cell: Tanstack.Cell<any, unknown>, cellIndex: number) => {
                             const isFirstRootCell = cellIndex === 0 && childRows.length > 0;
                             return (
                               <td
+                                className={isFirstRootCell && "flex-h justify-content-start"}
                                 key={cell.id}
                                 style={{
                                   width: cell.column.getSize(),
-                                  paddingLeft: cellIndex === 0 ? `${currentLevel * 20}px` : undefined, // Only indent the first cell
+                                  paddingLeft: cellIndex === 0 ? `${currentLevel * 25}px` : undefined, // Only indent the first cell
                                   ...TableUtils.getPinedColumnCSS(cell.column), // <-- IMPORTANT: use for Pinning the column
                                 }}
                               >
                                 {/* Render the expand/collapse button only in the first cell of the row */}
                                 {isFirstRootCell && (
                                   <>{isExpanded 
-                                    ? <icon.BsChevronDown className="my-1" onClick={(event: any) => toggleRowExpansion(row.id)}/>
-                                    : <icon.BsChevronRight className="my-1" onClick={(event: any) => toggleRowExpansion(row.id)}/>
+                                    ? <FaIcon.FaRegFolderOpen 
+                                        style={{ cursor: "pointer" }} className="m-1" 
+                                        onClick={(event: any) => toggleRowExpansion(row.id)}/>
+                                    : <FaIcon.FaRegFolderClosed 
+                                        style={{ cursor: "pointer" }} className="m-1" 
+                                        onClick={(event: any) => toggleRowExpansion(row.id)}/>
                                   }</>
                                 )}
                                 {Tanstack.flexRender(cell.column.columnDef.cell, cell.getContext())}

@@ -45,7 +45,7 @@ export function UIDemoDataTable() {
 
   return (
     <widget.DataTable 
-      title="Data Table yeu em tran minh thu" enableRowSelection 
+      title="Data Table" enableRowSelection 
       columns={defaultColumns} records={defaultData} onDeleteCallBack={onDeleteCallBack}/>
   );
 }
