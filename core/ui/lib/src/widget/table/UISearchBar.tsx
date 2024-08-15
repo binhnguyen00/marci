@@ -5,7 +5,7 @@ import * as TableUtils from "./uitlities";
 import { StorageState } from "../Interface";
 import { Button } from "../button/UIButton";
 import { Popover } from "../../widget/popover/UIPopover";
-import { Label } from "../../widget/bootstrap/UILabel";
+import { Label } from "../common/UILabel";
 import { FieldDate, FieldCheckBox, FieldString } from "../../input";
 
 interface SearchBarProps {

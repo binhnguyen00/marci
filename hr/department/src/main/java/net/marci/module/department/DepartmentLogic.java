@@ -27,7 +27,9 @@ public class DepartmentLogic extends DBConnectService {
   }
 
   public Department create(Department department) {
-    Department parent = repository.findById(department.getParentId()).orElse(null);
+    Department parent = null;
+    final Long parentId = department.getParentId();
+    if (Objects.nonNull(parentId)) parent = repository.getReferenceById(parentId);
     if (Objects.nonNull(parent)) department.delegateToParent(parent);
     department.setUserInteract();
     return repository.save(department);
