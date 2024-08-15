@@ -45,7 +45,7 @@ export function UIDemoDataTable() {
 
   return (
     <widget.DataTable 
-      title="Data Table" enableRowSelection 
+      title="Data Table Binh Nguyen" enableRowSelection 
       columns={defaultColumns} records={defaultData} onDeleteCallBack={onDeleteCallBack}/>
   );
 }

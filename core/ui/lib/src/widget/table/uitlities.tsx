@@ -1,12 +1,10 @@
 import React from "react";
-import {
-  ColumnDef, Column, Table, VisibilityState, Row
-} from '@tanstack/react-table'
-
-import { StorageState } from "widget/Interface";
-import { DataTableColumn, DataTableProps } from "./UIDataTable";
 
 import "./scss/_table.scss"
+import { ColumnDef, Column, Table, VisibilityState, Row } from '@tanstack/react-table'
+import { StorageState } from "../Interface";
+import { DateUtils } from "../../utilities/DateUtils";
+import { DataTableColumn, DataTableProps } from "./UIDataTable";
 
 export function getSelectedIds(table: Table<any>): number[] | undefined {
   try {
@@ -93,7 +91,7 @@ export function processColumnVisibility(columns: DataTableColumn[]): VisibilityS
 export function initSqlArgs() {
   return {
     pattern: "",
-    modifiedTime: null,
+    modifiedTime: `${DateUtils.getCurrentDate()} 00:00:00`,
     storageState: [ 
       StorageState.ACTIVE 
     ],

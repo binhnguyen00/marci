@@ -5,6 +5,7 @@ import * as TableUtils from "./uitlities";
 import { StorageState } from "../Interface";
 import { Button } from "../button/UIButton";
 import { Popover } from "../../widget/popover/UIPopover";
+import { Label } from "../../widget/bootstrap/UILabel";
 import { FieldDate, FieldCheckBox, FieldString } from "../../input";
 
 interface SearchBarProps {
@@ -45,16 +46,20 @@ export function SearchBar({ title, onUseSearch }: SearchBarProps) {
           title="Filters" header="Filters" placement="bottom" contentWidth={400}
           body={
             <>
-              <div style={{ width: 400 }}>
-                <FieldCheckBox
-                  bean={sqlArgs} field="storageState" checked
-                  value={StorageState.ACTIVE} label="Active" onChecked={handleCheckboxChange}/>
-                <FieldCheckBox
-                  bean={sqlArgs} field="storageState" 
-                  value={StorageState.ARCHIVED} label="Archived" onChecked={handleCheckboxChange}/>
+              <div className="flex-v">
+                <Label value="Storage State"/>
+                <div>
+                  <FieldCheckBox
+                    bean={sqlArgs} field="storageState" checked
+                    value={StorageState.ACTIVE} label="Active" onChecked={handleCheckboxChange}/>
+                  <FieldCheckBox
+                    bean={sqlArgs} field="storageState" 
+                    value={StorageState.ARCHIVED} label="Archived" onChecked={handleCheckboxChange}/>
+                </div>
               </div>
               <FieldDate 
-                bean={sqlArgs} field="modifiedTime" label="Modified Time" onChange={handleInputChange}/>
+                bean={sqlArgs} field="modifiedTime" label="Modified Time" 
+                onChange={handleInputChange} hasTime/>
             </>
           }
         />  

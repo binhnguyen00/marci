@@ -2,14 +2,13 @@ import React from "react";
 import { FieldProps } from "./Field";
 
 interface FieldDateProps extends FieldProps {
-  format?: string;
   hasTime?: boolean;
 }
 
 export function FieldDate(props: FieldDateProps) {
   let { 
     bean, field, placeholder = "Enter date...", label, className, onChange, 
-    disabled = false, hide = false, hasTime, format 
+    disabled = false, hide = false, hasTime,
   } = props;
 
   let [ beanState, setBeanState ] = React.useState(bean);
@@ -25,20 +24,16 @@ export function FieldDate(props: FieldDateProps) {
       ...previousState,
       [field]: newValue,
     }));
-
-    // Debug
-    console.log("Date", newValue);
-
     if (onChange) onChange(field, newValue, rollbackValue);
   }
 
   if (hide) return null;
   return (
     <div className="flex-v">
-      {label && <div className="text-capitalize font-weight-bold"> {label} </div>}
+      {label && <label className="form-label text-capitalize font-weight-bold"> {label} </label>}
       <input 
         className={`form-control ${className || ""}`}
-        type="date"
+        type={hasTime ? "datetime-local" : "date"}
         value={beanState[field]}
         onChange={onInputChange}
         placeholder={placeholder}

@@ -1,9 +1,14 @@
 import moment from "moment";
 
 export class DateUtils {
-  private static date = "DD-MM-YYYY";
-  private static timestamp = "DD-MM-YYYY HH:mm:ss";
-  private static timestampTz = "DD-MM-YYYY HH:mm:ssZ";
+  // these formats is to match the PSQL date format
+  private static date = "YYYY-MM-DD";
+  private static timestamp = "YYYY-MM-DD HH:mm:ss";
+  private static timestampTz = "YYYY-MM-DD HH:mm:ssZ";
+  // normal date format
+  public static DATE = "DD-MM-YYYY";
+  public static DATETIME = "DD-MM-YYYY HH:mm:ss";
+  public static DATETIME_TZ = "DD-MM-YYYY HH:mm:ssZ";
   
   static getCurrentDate(format: string = this.date): string {
     return moment().format(format);
@@ -17,11 +22,23 @@ export class DateUtils {
     return moment().format(format);
   }
 
-  static extractDate(target: string) {
-    return moment(target).format(this.date);
+  static extractDate(target: string): string {
+    let result = "";
+    try {
+      result = moment(target).format(this.date);
+    } catch (error) {
+      console.error(error);
+    }
+    return result;
   }
 
-  static extractDateTime(target: string) {
-    return moment(target).format(this.timestamp);
+  static extractDateTime(target: string): string {
+    let result = "";
+    try {
+      result = moment(target).format(this.timestamp);
+    } catch (error) {
+      console.error(error);
+    }
+    return result;
   }
 }
