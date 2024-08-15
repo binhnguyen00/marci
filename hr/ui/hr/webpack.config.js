@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -12,11 +11,10 @@ if (developing) devtool = 'source-map'
 // Plugins
 let configPlugins = [
   new HtmlWebpackPlugin({ // This helps create index.html in dist.
-    template: './public/index.html'
+    template: './public/index.html',
+    favicon: './public/assets/imgs/favicon.ico'
   }),
-  new webpack.HotModuleReplacementPlugin(),
 ];
-
 if (watching) {
 }
 
@@ -25,7 +23,7 @@ const config = {
 
   entry: [
     "./src/index.tsx", 
-    "./src/main.tsx"
+    "./src/main.tsx",
   ],
 
   output: {
@@ -33,7 +31,7 @@ const config = {
     filename: '[name].js',
     chunkFilename: '[name].js',
     library: { // Required for exporting custom library
-      name: 'marci-ui/lib',
+      name: 'marci-ui/hr',
       type: 'umd2',
       umdNamedDefine: true
     },
@@ -43,7 +41,7 @@ const config = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        loader: 'ts-loader',
         exclude: /node_modules/,
       },
       {
@@ -67,7 +65,7 @@ const config = {
   },
 
   watchOptions: {
-    ignored: new RegExp('.*^((?!(/src/)).)*$'), // To exclude all files and directories except those in /src.
+    ignored: /node_modules/,
   },
 
   /** This reduces the bundle size.
@@ -81,7 +79,6 @@ const config = {
 
   devServer: {
     port: 3000,
-    hot: true,
   },
   
   plugins: configPlugins

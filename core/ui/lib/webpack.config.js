@@ -14,7 +14,6 @@ let configPlugins = [
     template: './public/index.html'
   }),
 ];
-
 if (watching) {
 }
 
@@ -44,8 +43,11 @@ const config = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        loader: 'ts-loader',
         exclude: /node_modules/,
+        // options: {
+        //   transpileOnly: watching ? true : false
+        // }
       },
       {
         test: /\.(css|s[ac]ss)$/i,
