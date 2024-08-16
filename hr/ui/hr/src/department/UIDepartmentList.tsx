@@ -47,9 +47,7 @@ export function UIDepartmentList({ title = "Departments", height, onModify }: UI
           {record.name} 
         </div>
 
-        <widget.Tooltip position="top" content={"Create Department"} tooltip={
-          <icon.BsPlus className="m-1" style={{ cursor: "pointer" }} onClick={createDepartment}/>
-        }/>
+        <icon.BsPlus className="m-1" style={{ cursor: "pointer" }} onClick={createDepartment}/>
       </div>
     )
   }

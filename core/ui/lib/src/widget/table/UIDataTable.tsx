@@ -9,6 +9,7 @@ import { Button } from "../button/UIButton";
 import { SearchBar } from "./UISearchBar";
 
 import "./scss/_table.scss"
+import { Tooltip } from "widget/common/UITooltip";
 
 export interface DataTableColumn {
   field: string;
@@ -87,7 +88,19 @@ export function DataTable(props: DataTableProps) {
                 } else onDeleteCallBack(ids);
               }} />
           )}
-          {expandedRows && <FaIcon.FaFolderTree />}
+          {(() => { // Render expand all rows Button
+            const rows = table.getRowModel().rows;
+            const hasChild = rows.some(row => rows.some(childRow => childRow.original["parentId"] === row.original["id"]));
+            if (hasChild) {
+              return (
+                <Tooltip position="top" content={"Expand All"} tooltip={
+                  <FaIcon.FaFolderTree 
+                    className="mt-1" style={{ cursor: "pointer" }} 
+                    onClick={() => {if (rows.length) rows.forEach(row => toggleRowExpansion(row.id))}}/>
+                }/>
+              )
+            } else return null
+          })()}
         </div>
 
         {/* toolbar: search */}
@@ -173,14 +186,17 @@ export function DataTable(props: DataTableProps) {
                       <React.Fragment key={row.id}>
                         <tr>
                           {row.getVisibleCells().map((cell: Tanstack.Cell<any, unknown>, cellIndex: number) => {
-                            const isFirstRootCell = cellIndex === 0 && childRows.length > 0;
+                            const isFirstRootCell = enableRowSelection 
+                              ? (cellIndex === 1 && childRows.length > 0) 
+                              : (cellIndex === 0 && childRows.length > 0);
+                            const isPaddingCell = enableRowSelection ? cellIndex === 1 : cellIndex === 0;
                             return (
                               <td
                                 className={isFirstRootCell && "flex-h justify-content-start"}
                                 key={cell.id}
                                 style={{
                                   width: cell.column.getSize(),
-                                  paddingLeft: cellIndex === 0 ? `${currentLevel * 25}px` : undefined, // Only indent the first cell
+                                  paddingLeft: isPaddingCell ? `${currentLevel * 25}px` : undefined, // Only indent the first cell
                                   ...TableUtils.getPinedColumnCSS(cell.column), // <-- IMPORTANT: use for Pinning the column
                                 }}
                               >

@@ -9,15 +9,19 @@ export function UIDemo() {
 
   return (
     <div className="flex-v">
+
       <div className="border-bottom py-2">
         <UIDemoApiCall/>
       </div>
+
       <div className="border-bottom py-2">
         <UIDemoPopup/>
       </div>
-      <div className="border-bottom py-2">
+
+      <div className="py-2">
         <UIDemoDataTable/>
       </div>
+
       <div className="border-bottom py-2">
         <h4>Tooltips</h4>
         <widget.Tooltip position="right"
@@ -33,6 +37,7 @@ export function UIDemo() {
           tooltip={<widget.Button disabled className="mx-1" title="Left Tooltip"/>}
           content={"This is a left tooltip"}/>
       </div>
+
     </div>
   );
 }
