@@ -10,8 +10,8 @@ import { Button } from "widget/button/UIButton";
 
 interface PopoverProps {
   title?: string;
-  header: React.ReactElement | string;
-  body: React.ReactElement | string;
+  header: React.ReactElement | any;
+  body: React.ReactElement | any;
   placement: "auto" | "top" | "right" | "bottom" | "left";
 
   contentWidth?: number;

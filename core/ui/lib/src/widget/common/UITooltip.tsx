@@ -2,9 +2,9 @@ import React from "react";
 
 interface TooltipProps {
   className?: string;
-  tooltip?: any;
-  content?: any;
-  position?: "top" | "right" | "bottom" | "left";
+  tooltip: React.ReactElement | any;
+  content: React.ReactElement | any;
+  position?: "top" | "right" | "bottom" | "left" | "auto";
 }
 
 export function Tooltip({ className = "", tooltip = "", content = "", position = "top"}: TooltipProps) {
