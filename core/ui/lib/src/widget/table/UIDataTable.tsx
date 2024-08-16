@@ -29,13 +29,12 @@ export interface DataTableProps {
   onDeleteCallBack?: (targetIds: number[]) => void;
   onUseSearch?: (sqlArgs: any) => void;
   enableRowSelection?: boolean;
-  expandRows?: boolean;
 }
 
 export function DataTable(props: DataTableProps) {
   let {
     title = "", className = "", height = "100%", debug = false, enableRowSelection = false,
-    records, columns, expandRows, onCreateCallBack, onDeleteCallBack, onUseSearch
+    records, columns, onCreateCallBack, onDeleteCallBack, onUseSearch
   } = props;
 
   const columnConfigs = React.useMemo(() => TableUtils.createColumnConfigs(props), [columns]);
@@ -88,6 +87,7 @@ export function DataTable(props: DataTableProps) {
                 } else onDeleteCallBack(ids);
               }} />
           )}
+          {expandedRows && <FaIcon.FaFolderTree />}
         </div>
 
         {/* toolbar: search */}
@@ -168,7 +168,7 @@ export function DataTable(props: DataTableProps) {
                   const rootRows = rows.filter(row => !row.original["parentId"]); 
                   const renderRowWithChildren = (row: Tanstack.Row<any>, currentLevel: number) => {
                     const childRows = rows.filter(r => r.original["parentId"] === row.original["id"]);
-                    const isExpanded = expandRows ? true : expandedRows[row.id];
+                    const isExpanded = expandedRows[row.id];
                     return (
                       <React.Fragment key={row.id}>
                         <tr>

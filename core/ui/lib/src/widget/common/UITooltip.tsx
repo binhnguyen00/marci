@@ -16,11 +16,11 @@ export function Tooltip({ className = "", tooltip = "", content = "", position =
     left: "tooltip-left",
   }
   const pos = positionMap[position];
-
+  
   return (
-    <div className={`tooltip ${pos} ${className && className}`}> 
-      {tooltip}
-      <div className="tooltip-content"> {content} </div>
+    <div className={`tooltip ${className && className}`}> 
+      {tooltip && tooltip}
+      {content && <div className={`tooltip-content ${pos}`}> {content} </div>}
     </div>
   )
 }
