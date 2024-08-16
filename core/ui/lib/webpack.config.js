@@ -39,6 +39,12 @@ const config = {
     minimize: !developing,
   },
 
+  performance: {
+    hints: false,               // or "warning" to keep the warnings but allow the build
+    maxEntrypointSize: 512000,  // 500 KiB
+    maxAssetSize: 512000,       // 500 KiB
+  },
+
   module: {
     rules: [
       {
