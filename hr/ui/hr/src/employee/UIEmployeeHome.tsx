@@ -5,12 +5,33 @@ import { UIEmployeeList } from "./UIEmployeeList";
 export function UIEmployeeHome() {
   const [ departments, setDepartments ] = React.useState<any[]>([]);
   const [ reload, setReload ] = React.useState<boolean>(false);
+  const [ employeeSqlArgs, setEmployeeSqlArgs ] = React.useState<any>(widget.initSqlArgs());
 
   const forceUpdate = () => {
     setReload(!reload);
   }
 
-  hook.useSearch({
+  const renderDepartmentExplorer = () => {
+
+    const onSelectDepartment = (department: any) => {
+      setEmployeeSqlArgs({ ...employeeSqlArgs, departmentId: department.id });
+    }
+
+    return (
+      <widget.Tree 
+        title="Departments" 
+        records={departments} 
+        displayField="name"
+        renderDisplay={(record: any, shouldHavePadding?: boolean) => (
+          <span className="clickable" onClick={(event: any) => onSelectDepartment(record)}>
+            {record.name}
+          </span>
+        )}
+      />
+    )
+  }
+
+  hook.useSearch({ // Search Departments on component mount
     component: "DepartmentService", service: "search", sqlArgs: widget.initSqlArgs(),
     updateData: setDepartments, dependencies: [reload],
   })
@@ -22,22 +43,13 @@ export function UIEmployeeHome() {
         style={{ width: "20%", overflow: "auto", whiteSpace: "nowrap" }} // <- Horizontal scroll
       >
         {departments.length > 0 ? (
-          <widget.Tree 
-            title="Departments" 
-            records={departments} 
-            displayField="name"
-            renderDisplay={(record: any, shouldHavePadding?: boolean) => (
-              <span className="clickable" onClick={() => { /* Update sqlArgs: search employees by departmentId */ }}>
-                {record.name}
-              </span>
-            )}
-          />
+          renderDepartmentExplorer()
         ) : (
           widget.createLoading({ loadingText: "Loading...", reloadParent: forceUpdate })
         )}
       </div>
       <div className="p-2" style={{ width: "80%" }}>
-        <UIEmployeeList/>
+        <UIEmployeeList sqlArgs={employeeSqlArgs}/>
       </div>
     </div>
   )

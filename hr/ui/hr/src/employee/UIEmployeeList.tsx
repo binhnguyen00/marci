@@ -6,9 +6,9 @@ import { IListProps } from "interface/IListProps";
 
 interface UIEmployeeListProps extends IListProps {}
 export function UIEmployeeList(props: UIEmployeeListProps) {
-  const { title = "Employees", height } = props;
+  const { title = "Employees", height, sqlArgs = widget.initSqlArgs() } = props;
   const [ employeeData, setEmployeeData ] = React.useState<any[]>([]);
-  const [ sqlArgs, setSqlArgs ] = React.useState<any>(widget.initSqlArgs());
+  const [ sqlArgsState, setSqlArgs ] = React.useState<any>(sqlArgs);
   const [ reload, setReload ] = React.useState(false);
 
   const columns: widget.DataTableColumn[] = [ 
@@ -57,8 +57,8 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
   }
 
   hook.useSearch({ 
-    component: "EmployeeService", service: "search", sqlArgs: sqlArgs, 
-    dependencies: [reload, sqlArgs], updateData: setEmployeeData,
+    component: "EmployeeService", service: "search", sqlArgs: sqlArgsState, 
+    dependencies: [reload, sqlArgsState], updateData: setEmployeeData,
   });
 
   return (

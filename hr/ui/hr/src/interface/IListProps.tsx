@@ -11,4 +11,5 @@ export interface IListProps {
   title?: string;
   height?: number;
   onModify?: (field: string, newValue: any, rollbackValue: any) => void;
+  sqlArgs?: any;
 }

@@ -113,6 +113,8 @@ public class EmployeeLogic extends DBConnectService {
         e.creator             AS "creator",
         e.created_time        AS "createdTime"
       FROM employee e
+      INNER JOIN employee_department_rel dept_rel
+        ON dept_rel.department_id = :departmentId
       WHERE
         ( e.full_name ILIKE '%' || COALESCE(:pattern, e.full_name) || '%' OR
           e.nick_name ILIKE '%' || COALESCE(:pattern, e.nick_name) || '%'
