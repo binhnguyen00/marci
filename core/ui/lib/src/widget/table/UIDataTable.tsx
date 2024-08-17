@@ -24,7 +24,6 @@ export interface DataTableProps {
   columns: DataTableColumn[];
   title?: string;
   height?: number | string;
-  className?: string;
   debug?: boolean;
   onCreateCallBack?: () => void;
   onDeleteCallBack?: (targetIds: number[]) => void;
@@ -34,7 +33,7 @@ export interface DataTableProps {
 
 export function DataTable(props: DataTableProps) {
   let {
-    title = "", className = "", height = "100%", debug = false, enableRowSelection = false,
+    title = "", height = "100%", debug = false, enableRowSelection = false,
     records, columns, onCreateCallBack, onDeleteCallBack, onUseSearch
   } = props;
 
@@ -66,7 +65,7 @@ export function DataTable(props: DataTableProps) {
   } as Tanstack.TableOptions<any>)
 
   return (
-    <div className={`${className}`}>
+    <React.Fragment>
 
       {/* title */}
       <div className="h5"> {title} </div>
@@ -230,6 +229,6 @@ export function DataTable(props: DataTableProps) {
 
         </div>
       </div>
-    </div>
+    </React.Fragment>
   )
 }

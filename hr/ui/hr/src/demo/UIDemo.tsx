@@ -1,5 +1,6 @@
 import React from "react";
 
+import { widget } from "@marci-ui/lib";
 import { UIDemoPopup } from "./UIDemoPopup";
 import { UIDemoApiCall } from "./UIDemoApiCall";
 import { UIDemoDataTable } from "./UIDemoDataTable";
@@ -29,6 +30,10 @@ export function UIDemo() {
 
       <div className="border-bottom py-2">
         <UIDemoFileExplorer />
+      </div>
+
+      <div className="border-bottom">
+        {widget.createLoading({ loadingText: "Loading demo...", timeoutIn: 4 })}
       </div>
 
     </div>
