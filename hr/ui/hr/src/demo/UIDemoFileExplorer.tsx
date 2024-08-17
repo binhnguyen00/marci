@@ -68,8 +68,8 @@ export function UIDemoFileExplorer() {
             renderDisplay={(record: any, shouldHavePadding?: boolean) => {
               return (
                 <strong 
-                  className="text-primary cell-clickable" 
-                  style={{ paddingLeft: shouldHavePadding && 20, cursor: "pointer" }}
+                  className="text-primary clickable" 
+                  style={{ paddingLeft: shouldHavePadding && 20 }}
                   onClick={() => { alert("This is overried :)") }}
                 >
                   {record.fullName}

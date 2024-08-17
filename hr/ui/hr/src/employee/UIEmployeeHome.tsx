@@ -22,7 +22,16 @@ export function UIEmployeeHome() {
         style={{ width: "20%", overflow: "auto", whiteSpace: "nowrap" }} // <- Horizontal scroll
       >
         {departments.length > 0 ? (
-          <widget.Tree title="Departments" records={departments} displayField="name"/>
+          <widget.Tree 
+            title="Departments" 
+            records={departments} 
+            displayField="name"
+            renderDisplay={(record: any, shouldHavePadding?: boolean) => (
+              <span className="clickable" onClick={() => { /* Update sqlArgs: search employees by departmentId */ }}>
+                {record.name}
+              </span>
+            )}
+          />
         ) : (
           widget.createLoading({ loadingText: "Loading...", reloadParent: forceUpdate })
         )}
