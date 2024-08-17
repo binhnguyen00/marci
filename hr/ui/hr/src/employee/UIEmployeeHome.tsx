@@ -16,15 +16,18 @@ export function UIEmployeeHome() {
   })
 
   return (
-    <div className="flex-h h-100 justify-content-between">
-      <div className="border-end w-25">
+    <div className="flex-h h-100">
+      <div 
+        className="border-end" 
+        style={{ width: "20%", overflow: "auto", whiteSpace: "nowrap" }} // <- Horizontal scroll
+      >
         {departments.length > 0 ? (
-          <widget.Tree records={departments} displayField="name"/>
+          <widget.Tree title="Departments" records={departments} displayField="name"/>
         ) : (
           widget.createLoading({ loadingText: "Loading...", reloadParent: forceUpdate })
         )}
       </div>
-      <div style={{ width: "80%" }}>
+      <div className="p-2" style={{ width: "80%" }}>
         <UIEmployeeList/>
       </div>
     </div>

@@ -3,11 +3,12 @@ import { FaRegFolderOpen, FaRegFolderClosed } from 'react-icons/fa6';
 
 interface TreeProps {
   records: any[];
+  title?: string;
   parentField?: string;
   displayField: string;
   renderDisplay?: (record: any, shouldHavePadding?: boolean) => HTMLElement | any;
 }
-export function Tree({ records = [], parentField = "parentId", displayField, renderDisplay }: TreeProps) {
+export function Tree({ records = [], parentField = "parentId", displayField, renderDisplay, title }: TreeProps) {
   const [activeNodes, setActiveNodes] = React.useState<Set<number>>(new Set());
 
   const toggleNode = (id: number) => {
@@ -42,7 +43,7 @@ export function Tree({ records = [], parentField = "parentId", displayField, ren
   };
 
   const renderTree = (nodes: any[]): JSX.Element => (
-    <div>
+    <>
       {nodes.map((node) => {
         const isExpanded = activeNodes.has(node["id"]);
         const isChild = activeNodes.has(node[parentField]);
@@ -76,13 +77,14 @@ export function Tree({ records = [], parentField = "parentId", displayField, ren
           </div>
         );
       })}
-    </div>
+    </>
   );
 
   const treeData = buildTree(records);
 
   return (
-    <div className='m-0 p-0'>
+    <div className='m-0 p-2'>
+      {title && <h5>{title}</h5>}
       {renderTree(treeData)}
     </div>
   );
