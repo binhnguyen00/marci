@@ -1,1 +1,5 @@
 base.setArchivesName('marci-hr-department')
+
+dependencies {
+  api project(':marci-hr-employee')
+}

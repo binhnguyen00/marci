@@ -5,6 +5,9 @@ import net.marci.lib.common.Record;
 import net.marci.module.dbConnectService.DBConnectService;
 import net.marci.module.department.entity.Department;
 import net.marci.module.department.repository.DepartmentRepository;
+import net.marci.module.employee.EmployeeLogic;
+import net.marci.module.employee.entity.relation.EmployeeDepartment;
+import net.marci.module.employee.repository.EmployeeDepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,12 +21,14 @@ public class DepartmentLogic extends DBConnectService {
   @Autowired
   private DepartmentRepository repository;
 
-  public Department getById(Long id) {
-    Department target = repository.findById(id).orElse(null);
-    if (Objects.isNull(target)) {
-      log.error("Department with id: {} is not found", id);
-    }
-    return target;
+  @Autowired
+  private EmployeeDepartmentRepository empDeptRepository;
+
+  @Autowired
+  private EmployeeLogic employeeLogic;
+
+  public Department getById(long id) {
+    return repository.getReferenceById(id);
   }
 
   public Department create(Department department) {
@@ -69,5 +74,21 @@ public class DepartmentLogic extends DBConnectService {
         AND dept.modified_time >= COALESCE(:modifiedTime, dept.modified_time)
     """;
     return this.search(SQL_QUERY, sqlArgs);
+  }
+
+  public void delegateEmployee(long departmentId, long employeeId) {
+    EmployeeDepartment rel = empDeptRepository.getByEmployee(employeeId, departmentId);
+    if (Objects.isNull(rel)) {
+      rel = new EmployeeDepartment();
+      rel.setEmployeeId(employeeId);
+      rel.setDepartmentId(departmentId);
+    } else {
+      rel.setDepartmentId(departmentId);
+    }
+    empDeptRepository.save(rel);
+  }
+
+  public void delegateEmployees(long departmentId, List<Long> employeeIds) {
+    employeeIds.forEach(id -> delegateEmployee(departmentId, id));
   }
 }

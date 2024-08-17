@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.marci.common.BaseEntity;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = EmployeeStatus.TABLE_NAME)
 @NoArgsConstructor @Getter @Setter
@@ -21,8 +23,17 @@ public class EmployeeStatus extends BaseEntity {
   @Column(name = "job_id")
   private Long jobId;
 
-  @Column(name = "manager_id")
-  private Long managerId;
+  @Column(name = "salary_id")
+  private Long salaryId;
+
+  @Column(name = "start_date")
+  private LocalDate startDate;
+
+  @Column(name = "end_date")
+  private LocalDate endDate;
+
+  @Column(name = "department_relation_id")
+  private Long departmentRelationId;
 
   @Column
   private String description;

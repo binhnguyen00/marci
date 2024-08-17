@@ -31,7 +31,7 @@ import java.util.Objects;
 )
 @DeleteGraphs({
   @DeleteGraph(target = Education.class, joinField = "employee_id", joinType = DeleteGraphJoinType.OneToMany),
-  @DeleteGraph(target = EmployeeStatus.class, joinField = "employee_id", joinType = DeleteGraphJoinType.ManyToMany),
+  @DeleteGraph(target = EmployeeStatus.class, joinField = "employee_id", joinType = DeleteGraphJoinType.OneToMany),
 })
 @NoArgsConstructor @Getter @Setter
 public class Employee extends BaseEntity {

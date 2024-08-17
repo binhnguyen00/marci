@@ -15,7 +15,7 @@ public class DepartmentService {
   private DepartmentLogic logic;
 
   @Transactional
-  public Department getById(Long id) {
+  public Department getById(long id) {
     return logic.getById(id);
   }
 

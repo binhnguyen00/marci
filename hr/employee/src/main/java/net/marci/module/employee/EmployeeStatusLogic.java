@@ -14,6 +14,10 @@ public class EmployeeStatusLogic {
   @Autowired
   private EmployeeStatusRepository repository;
 
+  public EmployeeStatus getById(long id) {
+    return repository.findById(id).orElse(null);
+  }
+
   public EmployeeStatus save(EmployeeStatus status) {
     status.setUserInteract();
     return repository.save(status);
@@ -26,10 +30,5 @@ public class EmployeeStatusLogic {
     repository.saveAll(statusList);
   }
 
-  public void removeManager(Long managerId) {
-    List<EmployeeStatus> statusList = repository.findByManagerId(managerId);
-    if (statusList.isEmpty()) return;
-    statusList.forEach(status -> status.setManagerId(null));
-    repository.saveAll(statusList);
-  }
+
 }
