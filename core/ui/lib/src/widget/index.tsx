@@ -1,5 +1,6 @@
 export { Button } from "./button/UIButton";
 export { DataTable, DataTableColumn, DataTableProps } from "./table/UIDataTable";
+export { Tree } from "./tree/UITree";
 export { createLoading } from "./common/UILoading";
 export { Label } from "./common/UILabel";
 export { Tooltip } from "./common/UITooltip";
