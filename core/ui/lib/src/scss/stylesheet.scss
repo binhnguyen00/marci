@@ -11,6 +11,16 @@
   justify-content: flex-start;
 }
 
+.clickable {
+  color: #007bff;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+
 @import "../widget/popover/scss/_popover.scss";
 @import "../widget/table/scss/_table.scss";
 @import "../widget/common/scss/_tooltip.scss";
