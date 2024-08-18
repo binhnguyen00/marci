@@ -23,7 +23,7 @@ export function UIEmployeeHome() {
         records={departments} 
         displayField="name"
         renderDisplay={(record: any, shouldHavePadding?: boolean) => (
-          <span className="clickable" onClick={(event: any) => onSelectDepartment(record)}>
+          <span className="clickable mx-1" onClick={(event: any) => onSelectDepartment(record)}>
             {record.name}
           </span>
         )}

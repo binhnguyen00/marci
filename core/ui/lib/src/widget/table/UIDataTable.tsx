@@ -191,7 +191,7 @@ export function DataTable(props: DataTableProps) {
                             const isPaddingCell = enableRowSelection ? cellIndex === 1 : cellIndex === 0;
                             return (
                               <td
-                                className={isFirstRootCell && "flex-h justify-content-start"}
+                                className={isFirstRootCell ? "flex-h justify-content-start" : undefined}
                                 key={cell.id}
                                 style={{
                                   width: cell.column.getSize(),

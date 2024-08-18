@@ -58,13 +58,11 @@ export function UIDemoFileExplorer() {
       <h5>File Explorer</h5>
       <div className="flex-h justify-content-between">
         <div className="w-50 border-end p-2">
-          <h6>Default</h6>
-          <widget.Tree records={defaultData} displayField="fullName"/>
+          <widget.Tree title="Default" records={defaultData} displayField="fullName"/>
         </div>
         <div className="w-50 p-2">
-          <h6>Render Overried</h6>
           <widget.Tree 
-            records={defaultData} displayField="fullName" 
+            title="Render Overried" records={defaultData} displayField="fullName" 
             renderDisplay={(record: any, shouldHavePadding?: boolean) => {
               return (
                 <strong 

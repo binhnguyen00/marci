@@ -1,14 +1,16 @@
 import React from 'react';
-import { FaRegFolderOpen, FaRegFolderClosed } from 'react-icons/fa6';
+import { FaRegFolderOpen, FaRegFolderClosed, FaFolderTree } from 'react-icons/fa6';
+import { Tooltip } from '../../widget/common/UITooltip';
 
 interface TreeProps {
   records: any[];
   title?: string;
   parentField?: string;
   displayField: string;
+  displayClassName?: string;
   renderDisplay?: (record: any, shouldHavePadding?: boolean) => HTMLElement | any;
 }
-export function Tree({ records = [], parentField = "parentId", displayField, renderDisplay, title }: TreeProps) {
+export function Tree({ records = [], parentField = "parentId", displayField, renderDisplay, title, displayClassName }: TreeProps) {
   const [activeNodes, setActiveNodes] = React.useState<Set<number>>(new Set());
 
   const toggleNode = (id: number) => {
@@ -63,13 +65,15 @@ export function Tree({ records = [], parentField = "parentId", displayField, ren
                   />
                 )}
                 {renderDisplay ? renderDisplay(node) : (
-                  <span>{node[displayField]}</span>
+                  <span className={`${displayClassName ? displayClassName : undefined}`}>
+                    {node[displayField]}
+                  </span>
                 )}
                 {isExpanded && renderTree(node.children)}
               </>
             ) : (
               renderDisplay ? renderDisplay(node, isChild) : (
-                <span style={{ paddingLeft: isChild && 20 }}>
+                <span style={{ paddingLeft: isChild && 20 }} className={displayClassName ? displayClassName : undefined}>
                   {node[displayField]}
                 </span>
               )
@@ -83,9 +87,38 @@ export function Tree({ records = [], parentField = "parentId", displayField, ren
   const treeData = buildTree(records);
 
   return (
-    <div className='m-0 p-2'>
-      {title && <h5>{title}</h5>}
-      {renderTree(treeData)}
-    </div>
+    <React.Fragment>
+      {/* Render Tree Title */}
+      {title ? (
+        <div className='flex-h'>
+          <h5>{title}</h5>
+          <Tooltip className='mx-1' position="bottom" content={"Expand All"} tooltip={
+            <FaFolderTree 
+              className="mt-1" style={{ cursor: "pointer" }} 
+              onClick={() => {
+                records.forEach((record) => toggleNode(record["id"]));
+              }}/>
+          }/>
+        </div>
+      ) : (
+        <>
+          <Tooltip position="bottom" content={"Expand All"} tooltip={
+            <FaFolderTree 
+              className="mt-1" style={{ cursor: "pointer" }} 
+              onClick={() => {
+                records.forEach((record) => toggleNode(record["id"]));
+              }}/>
+          }/>
+        </>
+      )}
+      {/* Render Tree Body */}
+      {treeData.length > 0 && (
+        <>
+          <div className='m-0 p-1'>
+            {renderTree(treeData)}
+          </div>
+        </>
+      )}
+    </React.Fragment>
   );
 }
