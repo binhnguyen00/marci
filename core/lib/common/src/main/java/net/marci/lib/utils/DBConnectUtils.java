@@ -126,6 +126,9 @@ public class DBConnectUtils {
    */
   public String assignSqlHolderWithValue(String SQL_QUERY, Record keyValues) {
     final Record ensured = ensureKeyValues(keyValues);
+
+    System.out.println(DataSerializer.JSON.toString(keyValues));
+
     if (Objects.isNull(ensured)) return null;
 
     for (Map.Entry<String, Object> entry : ensured.entrySet()) {
@@ -140,6 +143,7 @@ public class DBConnectUtils {
           else formatValue = "'" + value + "'";
         }
         case null, default -> {
+          System.out.println(value);
           if (Objects.isNull(value)) formatValue = "NULL";
           else formatValue = String.valueOf(value);
         }
@@ -156,11 +160,9 @@ public class DBConnectUtils {
     if (Objects.isNull(keyValues)) {
       log.warn("Search KeyValues (Parameters) is null");
       return null;
-    }
-    if (keyValues.isEmpty()) {
+    } else if (keyValues.isEmpty()) {
       log.warn("Search KeyValues (Parameters) is empty");
       return null;
-    }
-    return keyValues;
+    } else return keyValues;
   }
 }

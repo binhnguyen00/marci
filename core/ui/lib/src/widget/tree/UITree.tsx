@@ -90,8 +90,8 @@ export function Tree({ records = [], parentField = "parentId", displayField, ren
     <React.Fragment>
       {/* Render Tree Title */}
       {title ? (
-        <div className='flex-h'>
-          <h5>{title}</h5>
+        <div className='flex-h p-2 border-bottom'>
+          <h5 className='m-0'>{title}</h5>
           <Tooltip className='mx-1' position="bottom" content={"Expand All"} tooltip={
             <FaFolderTree 
               className="mt-1" style={{ cursor: "pointer" }} 

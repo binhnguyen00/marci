@@ -7,6 +7,9 @@ import { IListProps } from "interface/IListProps";
 interface UIEmployeeListProps extends IListProps {}
 export function UIEmployeeList(props: UIEmployeeListProps) {
   const { title = "Employees", height, sqlArgs = widget.initSqlArgs() } = props;
+
+  console.log(sqlArgs);
+  
   const [ employeeData, setEmployeeData ] = React.useState<any[]>([]);
   const [ sqlArgsState, setSqlArgs ] = React.useState<any>(sqlArgs);
   const [ reload, setReload ] = React.useState(false);
@@ -58,7 +61,7 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
 
   hook.useSearch({ 
     component: "EmployeeService", service: "search", sqlArgs: sqlArgsState, 
-    dependencies: [reload, sqlArgsState], updateData: setEmployeeData,
+    dependencies: [reload, sqlArgsState, sqlArgs], updateData: setEmployeeData,
   });
 
   return (

@@ -1,11 +1,15 @@
 import React from "react";
+import * as icon from "react-icons/bs";
 import { widget, hook } from "@marci-ui/lib";
 import { UIEmployeeList } from "./UIEmployeeList";
 
 export function UIEmployeeHome() {
   const [ departments, setDepartments ] = React.useState<any[]>([]);
   const [ reload, setReload ] = React.useState<boolean>(false);
-  const [ employeeSqlArgs, setEmployeeSqlArgs ] = React.useState<any>(widget.initSqlArgs());
+  const [ employeeSqlArgs, setEmployeeSqlArgs ] = React.useState<any>({
+    ...widget.initSqlArgs(),
+    departmentId: null,
+  });
 
   const forceUpdate = () => {
     setReload(!reload);
@@ -17,15 +21,25 @@ export function UIEmployeeHome() {
       setEmployeeSqlArgs({ ...employeeSqlArgs, departmentId: department.id });
     }
 
+    const delegateEmployee = () => {
+      widget.createPopup(
+        "Select Employee",
+        <UIEmployeeList
+          sqlArgs={employeeSqlArgs}
+        />
+      )
+    }
+
     return (
       <widget.Tree 
-        title="Departments" 
+        title="Departments TEST TEST XOIIIII" 
         records={departments} 
         displayField="name"
         renderDisplay={(record: any, shouldHavePadding?: boolean) => (
-          <span className="clickable mx-1" onClick={(event: any) => onSelectDepartment(record)}>
-            {record.name}
-          </span>
+          <span className="clickable mx-1 fw-bold"> {record.name} </span>
+          // <span className="flex-h justify-content-between" onClick={(event: any) => onSelectDepartment(record)}>
+          //   {/* <icon.BsPlus className="m-1" style={{ cursor: "pointer" }} onClick={delegateEmployee}/> */}
+          // </span>
         )}
       />
     )

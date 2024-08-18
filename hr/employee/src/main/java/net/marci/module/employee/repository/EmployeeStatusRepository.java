@@ -13,6 +13,4 @@ public interface EmployeeStatusRepository extends JpaRepository<EmployeeStatus, 
   List<EmployeeStatus> findByJobId(Long jobId);
 
   List<EmployeeStatus> findByEmployeeId(Long employeeId);
-
-  List<EmployeeStatus> findByManagerId(Long managerId);
 }

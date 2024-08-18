@@ -4,6 +4,11 @@ import { Popup } from "./UIPopup";
 
 let activePopups: string[] = []; // Array to track active popup IDs
 
+/**
+ * @param {React.ReactElement<any> | string} header 
+ * @param {React.ReactElement<any>} body 
+ * @usage Create a React root, then render <Popup/>
+ */
 export function createPopup(header?: React.ReactElement<any> | string, body?: React.ReactElement<any>) {
   const POPUP_MODAL_ID = `popup-modal-${createPopupId()}`; // Generate a short unique ID for each popup
   let popup = document.getElementById(POPUP_MODAL_ID);
