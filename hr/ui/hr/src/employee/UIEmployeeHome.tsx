@@ -32,14 +32,16 @@ export function UIEmployeeHome() {
 
     return (
       <widget.Tree 
-        title="Departments TEST TEST XOIIIII" 
+        title="Departments Tran Bim" 
         records={departments} 
         displayField="name"
         renderDisplay={(record: any, shouldHavePadding?: boolean) => (
-          <span className="clickable mx-1 fw-bold"> {record.name} </span>
-          // <span className="flex-h justify-content-between" onClick={(event: any) => onSelectDepartment(record)}>
-          //   {/* <icon.BsPlus className="m-1" style={{ cursor: "pointer" }} onClick={delegateEmployee}/> */}
-          // </span>
+          <div className="flex-h">
+            <span className="clickable mx-1 fw-bold" onClick={() => onSelectDepartment(record)}> 
+              {record.name} 
+            </span>
+            <icon.BsFillPersonPlusFill className="m-1" style={{ cursor: "pointer" }} onClick={delegateEmployee}/>
+          </div>
         )}
       />
     )
@@ -54,7 +56,7 @@ export function UIEmployeeHome() {
     <div className="flex-h h-100">
       <div 
         className="border-end" 
-        style={{ width: "20%", overflow: "auto", whiteSpace: "nowrap" }} // <- Horizontal scroll
+        style={{ width: 300 }} // <- Horizontal scroll
       >
         {departments.length > 0 ? (
           renderDepartmentExplorer()
@@ -62,7 +64,7 @@ export function UIEmployeeHome() {
           widget.createLoading({ loadingText: "Loading...", reloadParent: forceUpdate })
         )}
       </div>
-      <div className="p-2" style={{ width: "80%" }}>
+      <div className="p-2" style={{ width: "75%" }}>
         <UIEmployeeList sqlArgs={employeeSqlArgs}/>
       </div>
     </div>

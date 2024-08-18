@@ -53,22 +53,24 @@ export function Tree({ records = [], parentField = "parentId", displayField, ren
           <div key={node.id} style={{ paddingLeft: isChild && 20 }}>
             {node.children && node.children.length > 0 ? (
               <>
-                {isExpanded ? (
-                  <FaRegFolderOpen
-                    style={{ cursor: "pointer" }} className="m-1"
-                    onClick={() => toggleNode(node["id"])}
-                  />
-                ) : (
-                  <FaRegFolderClosed
-                    style={{ cursor: "pointer" }} className="m-1"
-                    onClick={() => toggleNode(node["id"])}
-                  />
-                )}
-                {renderDisplay ? renderDisplay(node) : (
-                  <span className={`${displayClassName ? displayClassName : undefined}`}>
-                    {node[displayField]}
-                  </span>
-                )}
+                <div className='flex-h'>
+                  {isExpanded ? (
+                    <div><FaRegFolderOpen
+                      style={{ cursor: "pointer" }} className="m-1"
+                      onClick={() => toggleNode(node["id"])}
+                    /></div>
+                  ) : (
+                    <div><FaRegFolderClosed
+                        style={{ cursor: "pointer" }} className="m-1"
+                        onClick={() => toggleNode(node["id"])}
+                    /></div>
+                  )}
+                  {renderDisplay ? renderDisplay(node) : (
+                    <span className={`${displayClassName ? displayClassName : undefined}`}>
+                      {node[displayField]}
+                    </span>
+                  )}
+                </div>
                 {isExpanded && renderTree(node.children)}
               </>
             ) : (
@@ -87,7 +89,7 @@ export function Tree({ records = [], parentField = "parentId", displayField, ren
   const treeData = buildTree(records);
 
   return (
-    <React.Fragment>
+    <div>
       {/* Render Tree Title */}
       {title ? (
         <div className='flex-h p-2 border-bottom'>
@@ -113,12 +115,10 @@ export function Tree({ records = [], parentField = "parentId", displayField, ren
       )}
       {/* Render Tree Body */}
       {treeData.length > 0 && (
-        <>
-          <div className='m-0 p-1'>
-            {renderTree(treeData)}
-          </div>
-        </>
+        <div className='m-0 p-1' style={{ overflowX: "auto", maxWidth: "100%", whiteSpace: "nowrap" }}> 
+          {renderTree(treeData)}
+        </div>
       )}
-    </React.Fragment>
+    </div>
   );
 }
