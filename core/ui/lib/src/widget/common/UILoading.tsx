@@ -43,11 +43,11 @@ function Loading({ loadingText, timeoutIn, timeoutContent, reloadParent }: Loadi
 }
 
 /**
- * @param loadingText the content placed right next to the spinner. Default value = "Loading..."
- * @param timeoutContent the content that replace the loading content after duration.
- * @param timeoutIn duration of the loading (seconds). Default value = 3s.
- * @param reloadParent reload the parent component.
- * @returns React.ReactElement
+ * @param {string} loadingText The content placed right next to the spinner. Default value = "Loading..."
+ * @param {any} timeoutContent The content that replace the loading content after duration. If not provided, a retry button will be shown.
+ * @param {number} timeoutIn Duration of the loading (seconds). Default value = 3s.
+ * @param {function} reloadParent Reload the parent component.
+ * @returns               
  */
 export function createLoading({
   loadingText = "Loading...",

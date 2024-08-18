@@ -6,6 +6,7 @@ import { UIDemoApiCall } from "./UIDemoApiCall";
 import { UIDemoDataTable } from "./UIDemoDataTable";
 import { UIDemoTooltip } from "./UIDemoTooltip";
 import { UIDemoFileExplorer } from "./UIDemoFileExplorer";
+import { UIDemoReload } from "./UIDemoReload";
 
 export function UIDemo() {
 
@@ -29,11 +30,11 @@ export function UIDemo() {
       </div>
 
       <div className="border-bottom py-2">
-        <UIDemoFileExplorer />
+        <UIDemoFileExplorer/>
       </div>
 
-      <div className="border-bottom">
-        {widget.createLoading({ loadingText: "Loading demo...", timeoutIn: 4 })}
+      <div className="border-bottom py-2">
+        <UIDemoReload/>
       </div>
 
     </div>
