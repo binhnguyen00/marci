@@ -6,7 +6,13 @@ import { IListProps } from "interface/IListProps";
 
 interface UIEmployeeListProps extends IListProps {}
 export function UIEmployeeList(props: UIEmployeeListProps) {
-  const { title = "Employees", height, sqlArgs = widget.initSqlArgs() } = props;
+  const { 
+    title = "Employees", height, isSelector, selectCallback,
+    sqlArgs = { 
+      ...widget.initSqlArgs(), 
+      departmentId: null 
+    },
+  } = props;
 
   console.log(sqlArgs);
   
@@ -56,6 +62,7 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
   }
 
   const onUseSearch = (sqlArgs: any) => {
+    sqlArgs = { ...props.sqlArgs, ...sqlArgs };
     setSqlArgs(sqlArgs);
   }
 
@@ -67,6 +74,8 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
   return (
     <widget.DataTable 
       title={title} height={height} columns={columns} records={employeeData} enableRowSelection
-      onCreateCallBack={onCreate} onDeleteCallBack={onDelete} onUseSearch={onUseSearch}/>
+      onCreateCallBack={isSelector ? null : onCreate} 
+      onDeleteCallBack={isSelector ? null : onDelete} 
+      onUseSearch={onUseSearch}/>
   );
 }

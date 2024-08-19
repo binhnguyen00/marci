@@ -12,4 +12,6 @@ export interface IListProps {
   height?: number;
   onModify?: (field: string, newValue: any, rollbackValue: any) => void;
   sqlArgs?: any;
+  isSelector?: boolean;
+  selectCallback?: (selectedRecords: any[]) => void;
 }
