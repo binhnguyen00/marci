@@ -126,7 +126,6 @@ public class DBConnectUtils {
    */
   public String assignSqlHolderWithValue(String SQL_QUERY, Record keyValues) {
     final Record ensured = ensureKeyValues(keyValues);
-
     System.out.println(DataSerializer.JSON.toString(keyValues));
 
     if (Objects.isNull(ensured)) return null;
@@ -148,8 +147,14 @@ public class DBConnectUtils {
           else formatValue = String.valueOf(value);
         }
       }
+
       final String target = ":" + key;
-      SQL_QUERY = SQL_QUERY.replace(target, formatValue);
+      if (SQL_QUERY.contains(target)) {
+        SQL_QUERY = SQL_QUERY.replace(target, formatValue);
+      } else {
+        log.warn("Key {} not found in SQL_QUERY \n{}", target, SQL_QUERY);
+        return null;
+      }
     }
 
     log.info("\nExecuted SQL: \n{}", SQL_QUERY);
