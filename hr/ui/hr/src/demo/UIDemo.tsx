@@ -7,6 +7,7 @@ import { UIDemoDataTable } from "./UIDemoDataTable";
 import { UIDemoTooltip } from "./UIDemoTooltip";
 import { UIDemoFileExplorer } from "./UIDemoFileExplorer";
 import { UIDemoReload } from "./UIDemoReload";
+import { UIDemoVScreenSplit } from "./UIDemoVScreenSplit";
 
 export function UIDemo() {
 
@@ -38,10 +39,7 @@ export function UIDemo() {
       </div>
 
       <div className="border-bottom py-2">
-        <widget.VScreenSplit components={[
-          <UIDemoFileExplorer/>, 
-          <UIDemoDataTable/>, 
-        ]}/>
+        <UIDemoVScreenSplit/>
       </div>
 
     </div>
