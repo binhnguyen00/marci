@@ -23,6 +23,23 @@ export function getSelectedIds(table: Table<any>): number[] | undefined {
   }
 }
 
+export function getSelectedRows(table: Table<any>): any[] | undefined {
+  try {
+    let records = [] as any[]
+    const selectedRows: Row<any>[] = table.getSelectedRowModel().rows;
+    if (!selectedRows.length) return records;
+    else {
+      records = table.getSelectedRowModel().rows.map((row) => {
+        return row.original as any
+      });
+      return records as any[];
+    } 
+  } catch (error) {
+    console.error(error);
+    return;
+  }
+} 
+
 export function getPinedColumnCSS(column: Column<any>): React.CSSProperties {
   const isPinned = column.getIsPinned();
   return {
@@ -34,8 +51,7 @@ export function getPinedColumnCSS(column: Column<any>): React.CSSProperties {
   }
 }
 
-export function createColumnConfigs(props: DataTableProps) {
-  const { columns, enableRowSelection } = props;
+export function createColumnConfigs({ columns, enableRowSelection }: DataTableProps) {
   try {
     const columnConfigs: ColumnDef<any>[] = columns.map((column: DataTableColumn) => {
       let { customRender, field, header, width = 300 } = column;

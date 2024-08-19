@@ -38,4 +38,9 @@ public class DepartmentService {
   public List<Record> search(Record sqlArgs) {
     return logic.search(sqlArgs);
   }
+
+  @Transactional
+  public List<Long> delegateEmployees(long departmentId, List<Long> employeeIds) {
+    return logic.delegateEmployees(departmentId, employeeIds);
+  }
 }

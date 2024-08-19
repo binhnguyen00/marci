@@ -1,6 +1,6 @@
 import React from "react";
 import * as icon from "react-icons/bs";
-import { widget, hook } from "@marci-ui/lib";
+import { widget, hook, server } from "@marci-ui/lib";
 import { UIEmployeeList } from "./UIEmployeeList";
 
 export function UIEmployeeHome() {
@@ -21,10 +21,24 @@ export function UIEmployeeHome() {
       setEmployeeSqlArgs({ ...employeeSqlArgs, departmentId: department.id });
     };
 
-    const delegateEmployee = () => {
+    const delegateEmployee = (department: any) => {
+
+      const onSelectEmployees = (selectedRecords: any[]) => {
+        const employeeIds = selectedRecords.map((record: any) => record.id);
+        server.rpc.call(
+          "DepartmentService", "delegateEmployees", { departmentId: department.id, employeeIds: employeeIds },
+          (response: server.ServerResponse) => {
+            widget.createSuccessPopup(<>Employees delegated successfully</>);
+          },
+          (response: server.ServerResponse) => {
+            widget.createDangerPopup(<>Failed to delegate employees</>);
+          } 
+        );
+      }
+
       widget.createPopup(
-        "Select Employee",
-        <UIEmployeeList sqlArgs={employeeSqlArgs} />
+        "Select Employees",
+        <UIEmployeeList sqlArgs={employeeSqlArgs} isSelector selectRowsCallBack={onSelectEmployees}/>
       );
     };
 
@@ -45,7 +59,7 @@ export function UIEmployeeHome() {
               <div><icon.BsFillPersonPlusFill
                 className="m-1"
                 style={{ cursor: "pointer" }}
-                onClick={delegateEmployee}
+                onClick={() => delegateEmployee(record)}
               /></div>
             </div>
           )}

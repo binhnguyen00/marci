@@ -121,6 +121,7 @@ public class EmployeeLogic extends DBConnectService {
         )
         AND (e.storage_state IS NULL OR e.storage_state IN (:storageState))
         AND (e.modified_time >= COALESCE(:modifiedTime, e.modified_time))
+      GROUP BY e.id
     """;
     return this.search(SQL_QUERY, sqlArgs);
   }

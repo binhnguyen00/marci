@@ -7,18 +7,15 @@ import { IListProps } from "interface/IListProps";
 interface UIEmployeeListProps extends IListProps {}
 export function UIEmployeeList(props: UIEmployeeListProps) {
   const { 
-    title = "Employees", height, isSelector, selectCallback,
-    sqlArgs = { 
-      ...widget.initSqlArgs(), 
-      departmentId: null 
-    },
+    title, height, isSelector, selectRowsCallBack,
+    sqlArgs,
   } = props;
-
-  console.log(sqlArgs);
   
   const [ employeeData, setEmployeeData ] = React.useState<any[]>([]);
-  const [ sqlArgsState, setSqlArgs ] = React.useState<any>(sqlArgs);
+  const [ sqlArgsState, setSqlArgsState ] = React.useState<any>(sqlArgs);
   const [ reload, setReload ] = React.useState(false);
+
+  console.log(sqlArgsState);
 
   const columns: widget.DataTableColumn[] = [ 
     { 
@@ -63,7 +60,7 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
 
   const onUseSearch = (sqlArgs: any) => {
     sqlArgs = { ...props.sqlArgs, ...sqlArgs };
-    setSqlArgs(sqlArgs);
+    setSqlArgsState(sqlArgs);
   }
 
   hook.useSearch({ 
@@ -74,8 +71,10 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
   return (
     <widget.DataTable 
       title={title} height={height} columns={columns} records={employeeData} enableRowSelection
-      onCreateCallBack={isSelector ? null : onCreate} 
-      onDeleteCallBack={isSelector ? null : onDelete} 
-      onUseSearch={onUseSearch}/>
+      onCreateCallBack={!isSelector && onCreate} 
+      onDeleteCallBack={!isSelector && onDelete} 
+      onRowSelection={isSelector && selectRowsCallBack}
+      onUseSearch={onUseSearch}
+    />
   );
 }

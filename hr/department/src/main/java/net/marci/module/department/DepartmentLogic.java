@@ -11,6 +11,7 @@ import net.marci.module.employee.repository.EmployeeDepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -76,7 +77,7 @@ public class DepartmentLogic extends DBConnectService {
     return this.search(SQL_QUERY, sqlArgs);
   }
 
-  public void delegateEmployee(long departmentId, long employeeId) {
+  public Long delegateEmployee(long departmentId, long employeeId) {
     EmployeeDepartment rel = empDeptRepository.getByEmployee(employeeId, departmentId);
     if (Objects.isNull(rel)) {
       rel = new EmployeeDepartment();
@@ -85,10 +86,16 @@ public class DepartmentLogic extends DBConnectService {
     } else {
       rel.setDepartmentId(departmentId);
     }
-    empDeptRepository.save(rel);
+    rel = empDeptRepository.save(rel);
+    return rel.getId();
   }
 
-  public void delegateEmployees(long departmentId, List<Long> employeeIds) {
-    employeeIds.forEach(id -> delegateEmployee(departmentId, id));
+  public List<Long> delegateEmployees(long departmentId, List<Long> employeeIds) {
+    List<Long> success = new ArrayList<>();
+    employeeIds.forEach(id -> {
+      Long relationId = delegateEmployee(departmentId, id);
+      if (Objects.nonNull(relationId)) success.add(relationId);
+    });
+    return success;
   }
 }

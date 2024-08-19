@@ -28,16 +28,19 @@ export interface DataTableProps {
   onCreateCallBack?: () => void;
   onDeleteCallBack?: (targetIds: number[]) => void;
   onUseSearch?: (sqlArgs: any) => void;
+  onRowSelection?: (selectedRecords: any[]) => void;
   enableRowSelection?: boolean;
 }
 
-export function DataTable(props: DataTableProps) {
-  let {
-    title = "", height = "100%", debug = false, enableRowSelection = false,
-    records, columns, onCreateCallBack, onDeleteCallBack, onUseSearch
-  } = props;
+export function DataTable({ 
+    title, height = "100%", debug = false, records, columns, enableRowSelection = false, 
+    onCreateCallBack, onDeleteCallBack, onUseSearch, onRowSelection
+  }: DataTableProps) {
 
-  const columnConfigs = React.useMemo(() => TableUtils.createColumnConfigs(props), [columns]);
+  const columnConfigs = React.useMemo(
+    () => TableUtils.createColumnConfigs({columns, enableRowSelection} as DataTableProps), 
+    [columns]
+  );
   const [rowSelection, setRowSelection] = React.useState({}) // Row selection state
   const [expandedRows, setExpandedRows] = React.useState({}) // Row expansion state
 
@@ -224,6 +227,22 @@ export function DataTable(props: DataTableProps) {
                   return rootRows.map(rootRow => renderRowWithChildren(rootRow, 0)); // Start with level 0
               })()}
             </tbody>
+
+            {/* table: footer */}
+            <tfoot>
+              {onRowSelection && (
+                <Button 
+                  title="Select" icon={<div><FaIcon.FaListCheck/></div>}
+                  onClick={(event: Event) => {
+                    const selectedRecords = TableUtils.getSelectedRows(table);
+                    if (!selectedRecords.length) {
+                      PopupManager.createWarningPopup(<div> {"Please select at least 1 record"} </div>);
+                      return;
+                    } else onRowSelection(selectedRecords);
+                  }}
+                />
+              )}
+            </tfoot>
 
           </table>
 
