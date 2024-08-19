@@ -37,6 +37,13 @@ export function UIDemo() {
         <UIDemoReload/>
       </div>
 
+      <div className="border-bottom py-2">
+        <widget.VScreenSplit components={[
+          <UIDemoFileExplorer/>, 
+          <UIDemoDataTable/>, 
+        ]}/>
+      </div>
+
     </div>
   );
 }
