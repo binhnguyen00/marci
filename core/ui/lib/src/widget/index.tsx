@@ -8,4 +8,6 @@ export {
   closeCurrentPopup, 
   createDangerPopup, createSuccessPopup, createWarningPopup, createPopup 
 } from "./popup/PopupManager";
+export { VScreenSplit } from "./screen-split/VScreenSplit";
+
 export { initSqlArgs } from "./table/uitlities";
