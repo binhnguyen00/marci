@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column !important;
   flex-grow: 1;
-  // justify-content: flex-start;
 }
 
 .flex-h {
@@ -20,6 +19,16 @@
   }
 }
 
+.left-pane {
+  flex-shrink: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.right-pane {
+  flex-grow: 1; // Takes up the remaining space
+  overflow: auto; // Handle any potential overflow
+}
 
 @import "../widget/popover/scss/_popover.scss";
 @import "../widget/table/scss/_table.scss";
