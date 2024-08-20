@@ -113,14 +113,15 @@ public class EmployeeLogic extends DBConnectService {
         e.creator             AS "creator",
         e.created_time        AS "createdTime"
       FROM employee e
-      LEFT JOIN employee_department_rel dept_rel
-        ON dept_rel.department_id = COALESCE(:departmentId, dept_rel.department_id)
+      LEFT JOIN
+        employee_department_rel dept_rel ON dept_rel.employee_id = e.id
       WHERE
         ( e.full_name ILIKE '%' || COALESCE(:pattern, e.full_name) || '%' OR
           e.nick_name ILIKE '%' || COALESCE(:pattern, e.nick_name) || '%'
         )
         AND (e.storage_state IS NULL OR e.storage_state IN (:storageState))
         AND (e.modified_time >= COALESCE(:modifiedTime, e.modified_time))
+        AND (dept_rel.department_id = COALESCE(:departmentId, dept_rel.department_id))
       GROUP BY e.id
     """;
     return this.search(SQL_QUERY, sqlArgs);

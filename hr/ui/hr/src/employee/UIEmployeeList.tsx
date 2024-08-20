@@ -6,9 +6,8 @@ import { IListProps } from "interface/IListProps";
 
 interface UIEmployeeListProps extends IListProps {}
 export function UIEmployeeList(props: UIEmployeeListProps) {
-  const { 
-    title, height, isSelector, selectRowsCallBack,
-    sqlArgs,
+  let { 
+    title, height, isSelector, selectRowsCallBack, sqlArgs,
   } = props;
   
   const [ employeeData, setEmployeeData ] = React.useState<any[]>([]);
@@ -58,8 +57,8 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
     );
   }
 
-  const onUseSearch = (sqlArgs: any) => {
-    sqlArgs = { ...props.sqlArgs, ...sqlArgs };
+  const onUseSearch = (sqlArguments: any) => {
+    sqlArgs = { ...sqlArgs, ...sqlArguments };
     setSqlArgsState(sqlArgs);
   }
 
