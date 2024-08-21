@@ -83,6 +83,8 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
     dependencies: [reload, sqlArgsState], updateData: setEmployeeData,
   });
 
+  console.log(tableCtx);
+
   return (
     <widget.DataTable 
       title={title} height={height} columns={columns} records={employeeData} enableRowSelection
@@ -93,7 +95,7 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
       customButtons={[
         <UIButtonRemoveEmployeeFromDepartment 
           departmentId={departmentId} 
-          selectedEmployeeIds={tableUtils.getSelectedIds(tableCtx.getSelectedRowModel().rows)}
+          selectedEmployeeIds={tableUtils.getSelectedIds([])}
         />
       ]}
       getTableContext={setTableContext}
