@@ -20,6 +20,8 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
   const [ reload, setReload ] = React.useState(false);
   const [ tableCtx, setTableContext ] = React.useState<TanStackTable<any>>(null);
 
+  console.log(tableCtx);
+
   const columns: widget.DataTableColumn[] = [ 
     { 
       field: "fullName", header: "Full Name", 
@@ -106,7 +108,16 @@ function UIButtonRemoveEmployeeFromDepartment({ departmentId, selectedEmployeeId
   
   if (!departmentId) return null;
   const onClick = (event: Event) => {
-    
+    if (!selectedEmployeeIds || selectedEmployeeIds.length === 0) {
+      widget.createWarningPopup(<>{"Please select at least 1 record"}</>)
+      return;
+    }
+    server.rpc.call(
+      "DepartmentService", "removeEmployees", { departmentId: departmentId, employeeIds: selectedEmployeeIds },
+      (response: server.ServerResponse) => {
+        widget.createSuccessPopup(<>{"Employees removed"}</>);
+      }
+    )
   }
 
   return (
