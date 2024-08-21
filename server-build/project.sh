@@ -1,6 +1,6 @@
 source ./utils.sh
 
-CORE_HOME=`cd $CURRENT_DIR/../core; pwd`
+CORE_HOME=`cd $CURRENT_DIR/../../core; pwd`
 HR_HOME=`cd $CURRENT_DIR/../hr; pwd`
 REALEASE_HOME=`cd $HR_HOME/app/core; pwd`
 

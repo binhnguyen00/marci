@@ -81,7 +81,6 @@ public class EmployeeLogic extends DBConnectService {
     employee.setDateOfBirth(model.getDateOfBirth());
     employee.setEducations(model.getEducations());
     employee = save(employee);
-
     return employee;
   }
 
