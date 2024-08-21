@@ -43,4 +43,9 @@ public class DepartmentService {
   public List<Long> delegateEmployees(long departmentId, List<Long> employeeIds) {
     return logic.delegateEmployees(departmentId, employeeIds);
   }
+
+  @Transactional
+  public List<Long> removeEmployees(long departmentId, List<Long> employeeIds) {
+    return logic.removeEmployees(departmentId, employeeIds);
+  }
 }

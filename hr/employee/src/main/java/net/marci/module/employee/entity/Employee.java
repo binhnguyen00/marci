@@ -11,6 +11,7 @@ import net.marci.module.deletegraph.DeleteGraph;
 import net.marci.module.deletegraph.DeleteGraphJoinType;
 import net.marci.module.deletegraph.DeleteGraphs;
 import net.marci.module.education.entity.Education;
+import net.marci.module.employee.entity.relation.EmployeeDepartment;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import java.util.Objects;
 )
 @DeleteGraphs({
   @DeleteGraph(target = Education.class, joinField = "employee_id", joinType = DeleteGraphJoinType.OneToMany),
+  @DeleteGraph(target = EmployeeDepartment.class, joinField = "employee_id", joinType = DeleteGraphJoinType.OneToMany),
   @DeleteGraph(target = EmployeeStatus.class, joinField = "employee_id", joinType = DeleteGraphJoinType.OneToMany),
 })
 @NoArgsConstructor @Getter @Setter

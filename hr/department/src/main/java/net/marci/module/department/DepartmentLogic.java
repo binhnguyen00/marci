@@ -98,4 +98,16 @@ public class DepartmentLogic extends DBConnectService {
     });
     return success;
   }
+
+  public Long removeEmployee(long departmentId, long employeeId) {
+    EmployeeDepartment rel = empDeptRepository.getByEmployee(employeeId, departmentId);
+    if (Objects.isNull(rel)) return null;
+    empDeptRepository.deleteById(Objects.requireNonNull(rel.getId()));
+    return employeeId;
+  }
+
+  public List<Long> removeEmployees(long departmentId, List<Long> employeeIds) {
+    employeeIds.forEach(id -> removeEmployee(departmentId, id));
+    return employeeIds;
+  }
 }
