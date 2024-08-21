@@ -4,24 +4,7 @@
 - React Typescript, Webpack
 # Setup
 ### Requirements
-1. JDK 21
-- MacOS    : https://www.oracle.com/in/java/technologies/downloads/#jdk21-mac
-- Windows  : https://www.oracle.com/in/java/technologies/downloads/#jdk21-windows
-2. Gradle 8.x
-- Download : https://gradle.org/next-steps/?version=8.8&format=all
-3. PostgresSQL
-- MacOS    : https://sbp.enterprisedb.com/getfile.jsp?fileid=1259021
-- Windows  : https://sbp.enterprisedb.com/getfile.jsp?fileid=1259105
-4. NodeJS
-- Download : https://nodejs.org/en/download/package-manager
-- After finished, Please install pnpm. I **strongly recommend**.
-  ```plaintext
-  npm install -g pnpm
-  ```
-5. My Library
-- The Library contains:
-  - Java Spring libs
-  - React libs
+1. My Library (Java Spring & React libs)
 - Clone my library
 ```plaintext
 https://github.com/binhnguyen00/core
@@ -34,7 +17,20 @@ root
 |__ marci
 |__ |__ hr
 ```
-
+2. JDK 21
+- MacOS    : https://www.oracle.com/in/java/technologies/downloads/#jdk21-mac
+- Windows  : https://www.oracle.com/in/java/technologies/downloads/#jdk21-windows
+3. Gradle 8.x
+- Download : https://gradle.org/next-steps/?version=8.8&format=all
+4. PostgresSQL
+- MacOS    : https://sbp.enterprisedb.com/getfile.jsp?fileid=1259021
+- Windows  : https://sbp.enterprisedb.com/getfile.jsp?fileid=1259105
+5. NodeJS
+- Download : https://nodejs.org/en/download/package-manager
+- After finished, Please install pnpm. I **strongly recommend**.
+  ```plaintext
+  npm install -g pnpm
+  ```
 ### Compile and Deploy Project
 ```plaintext
 cd /server-build && ./project.sh deploy
