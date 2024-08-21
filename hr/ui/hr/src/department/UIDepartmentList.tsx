@@ -1,13 +1,13 @@
 import React from "react";
 import * as icon from "react-icons/bs";
-import { widget, server, hook } from "@marci-ui/lib";
+import { widget, server, hook, tableUtils } from "@marci-ui/lib";
 import { IListProps } from "../interface/IListProps";
 import { UIDepartmentForm } from "./UIDepartmentForm";
 
 interface UIDepartmentListProps extends IListProps {}
 export function UIDepartmentList({ title = "Departments", height, onModify }: UIDepartmentListProps) {
   const [ departmentData, setDepartmentData ] = React.useState<any[]>([]);
-  const [ sqlArgs, setSqlArgs ] = React.useState<any>(widget.initSqlArgs());
+  const [ sqlArgs, setSqlArgs ] = React.useState<any>(tableUtils.initSqlArgs());
   const [ reload, setReload ] = React.useState(false);
 
   const renderCellGetRecordById = (record: any, index: number) => {

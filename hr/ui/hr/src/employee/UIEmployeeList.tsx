@@ -1,5 +1,7 @@
 import React from "react";
-import { server, widget, hook } from "@marci-ui/lib";
+import { Table as TanStackTable } from "@tanstack/react-table";
+import { BsFillPersonDashFill  } from "react-icons/bs";
+import { server, widget, hook, tableUtils } from "@marci-ui/lib";
 import { ListUtils, ShowRowDetailsRequest } from "utilities/ListUtils";
 import { UIEmployeeForm } from "./UIEmployeeForm";
 import { IListProps } from "interface/IListProps";
@@ -12,12 +14,11 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
 
   const [ employeeData, setEmployeeData ] = React.useState<any[]>([]);
   const [ sqlArgsState, setSqlArgsState ] = React.useState<any>({
-    ...widget.initSqlArgs(),
+    ...tableUtils.initSqlArgs(),
     departmentId: departmentId,
   });
   const [ reload, setReload ] = React.useState(false);
-
-  console.log(sqlArgsState);
+  const [ tableCtx, setTableContext ] = React.useState<TanStackTable<any>>(null);
 
   const columns: widget.DataTableColumn[] = [ 
     { 
@@ -87,6 +88,36 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
       onDeleteCallBack={!isSelector && onDelete} 
       onRowSelection={isSelector && selectRowsCallBack}
       onUseSearch={onUseSearch}
+      customButtons={[
+        <UIButtonRemoveEmployeeFromDepartment 
+          departmentId={departmentId} 
+          selectedEmployeeIds={tableUtils.getSelectedIds(tableCtx.getSelectedRowModel().rows)}
+        />
+      ]}
+      getTableContext={setTableContext}
     />
   );
+}
+
+function UIButtonRemoveEmployeeFromDepartment({ departmentId, selectedEmployeeIds }: { 
+  departmentId?: number,
+  selectedEmployeeIds?: number[],
+}) {
+  
+  if (!departmentId) return null;
+  const onClick = (event: Event) => {
+    
+  }
+
+  return (
+    <widget.Tooltip 
+      content={"Remove employees from department"}
+      tooltip={
+        <widget.Button 
+          title="Remove" onClick={onClick}
+          icon={<div><BsFillPersonDashFill/></div>}
+        />
+      }
+    />
+  )
 }

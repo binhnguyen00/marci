@@ -1,6 +1,6 @@
 import React from "react";
 import * as icon from "react-icons/bs";
-import { widget, input, server, hook } from "@marci-ui/lib";
+import { widget, input, server, hook, tableUtils } from "@marci-ui/lib";
 import { IFormProps } from "interface/IFormProps";
 import { ListUtils, ShowRowDetailsRequest } from "utilities/ListUtils";
 import { IListProps } from "interface/IListProps";
@@ -62,7 +62,7 @@ interface UIAccountListProps extends IListProps {}
 export function UIAccountList(props: UIAccountListProps) {
   const { title = "Accounts", height } = props;
   const [ accountRecords, setAccountData ] = React.useState<Array<any>>([]);
-  const [ sqlArgs, setSqlArgs ] = React.useState<any>(widget.initSqlArgs());
+  const [ sqlArgs, setSqlArgs ] = React.useState<any>(tableUtils.initSqlArgs());
   const [ reload, setReload ] = React.useState(false);
 
   const columns: widget.DataTableColumn[] = [ 

@@ -1,6 +1,6 @@
 import React from "react";
 import * as icon from "react-icons/bs";
-import { widget, server, hook, input } from "@marci-ui/lib";
+import { widget, server, hook, input, tableUtils } from "@marci-ui/lib";
 
 import { IListProps } from "../../interface/IListProps";
 import { IFormProps } from "../../interface/IFormProps";
@@ -10,7 +10,7 @@ interface UIJobListProps extends IListProps {}
 export function UIJobList(props: UIJobListProps) {
   const { title = "Jobs", height, onModify } = props;
   const [ jobData, setJobData ] = React.useState<any[]>([]); 
-  const [ sqlArgs, setSqlArgs ] = React.useState<any>(widget.initSqlArgs());
+  const [ sqlArgs, setSqlArgs ] = React.useState<any>(tableUtils.initSqlArgs());
   const [ reload, setReload ] = React.useState(false);
 
   const columns: widget.DataTableColumn[] = [ 

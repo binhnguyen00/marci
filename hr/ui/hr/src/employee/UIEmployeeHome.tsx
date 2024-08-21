@@ -1,6 +1,6 @@
 import React from "react";
 import * as icon from "react-icons/bs";
-import { widget, hook, server } from "@marci-ui/lib";
+import { widget, hook, server, tableUtils } from "@marci-ui/lib";
 import { UIEmployeeList } from "./UIEmployeeList";
 
 export function UIEmployeeHome() {
@@ -78,7 +78,7 @@ export function UIEmployeeHome() {
   };
 
   hook.useSearch({
-    component: "DepartmentService", service: "search", sqlArgs: widget.initSqlArgs(),
+    component: "DepartmentService", service: "search", sqlArgs: tableUtils.initSqlArgs(),
     updateData: setDepartments, dependencies: [reload],
   });
 
