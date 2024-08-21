@@ -14,6 +14,10 @@ export function UIEmployeeHome() {
 
   const renderDepartmentExplorer = () => {
 
+    const onSelectRootDepartment = () => {
+      setSelectedDepartmentId(null);
+    };
+
     const onSelectDepartment = (department: any) => {
       setSelectedDepartmentId(department.id);
     };
@@ -22,7 +26,7 @@ export function UIEmployeeHome() {
       widget.createPopup(
         "Select Employees",
         <UIEmployeeList 
-          departmentId={department.id} isSelector 
+          departmentId={null} isSelector 
           selectRowsCallBack={(selectedRecords: any[]) => {
             const employeeIds = selectedRecords.map((record: any) => record.id);
             server.rpc.call(
@@ -45,6 +49,9 @@ export function UIEmployeeHome() {
           title="Departments"
           records={departments}
           displayField="name"
+          parentField="parentId"
+          rootTitle="Root"
+          onSelectRoot={onSelectRootDepartment}
           renderDisplay={(record: any, shouldHavePadding?: boolean) => (
             <div className="flex-h">
               <span
