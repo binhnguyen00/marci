@@ -18,6 +18,23 @@
   ```plaintext
   npm install -g pnpm
   ```
+5. My Library
+- The Library contains:
+  - Java Spring libs
+  - React libs
+- Clone my library
+```plaintext
+https://github.com/binhnguyen00/core
+```
+- Where to place?
+```plaintext
+The tree structure should be identicaly like this for the scripts and other code to work:
+root
+|__ core
+|__ marci
+|__ |__ hr
+```
+
 ### Compile and Deploy Project
 ```plaintext
 cd /server-build && ./project.sh deploy
