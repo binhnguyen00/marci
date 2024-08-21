@@ -67,6 +67,14 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
     });
   }
 
+  // Automatically update sqlArgsState when departmentId changes
+  React.useEffect(() => {
+    setSqlArgsState((prevState: any) => ({
+      ...prevState,
+      departmentId: departmentId,
+    }));
+  }, [departmentId]);
+
   hook.useSearch({ 
     component: "EmployeeService", service: "search", sqlArgs: sqlArgsState, 
     dependencies: [reload, sqlArgsState], updateData: setEmployeeData,
