@@ -45,7 +45,7 @@ export function SearchBar({ title, onUseSearch }: SearchBarProps) {
         <Popover 
           title="Filters" header="Filters" placement="bottom" contentWidth={400}
           body={
-            <>
+            <div className="p-1">
               <div className="flex-v">
                 <Label value="Storage State"/>
                 <div>
@@ -59,7 +59,7 @@ export function SearchBar({ title, onUseSearch }: SearchBarProps) {
               </div>
               <FieldDate 
                 bean={sqlArgs} field="modifiedTime" label="Modified Time" onChange={handleInputChange}/>
-            </>
+            </div>
           }
         />  
       </div>

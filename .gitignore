@@ -66,3 +66,4 @@ pnpm-lock.yaml
 
 # Marci Gradle release folder
 release/
+core/

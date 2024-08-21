@@ -6,10 +6,7 @@ import { UIEmployeeList } from "./UIEmployeeList";
 export function UIEmployeeHome() {
   const [departments, setDepartments] = React.useState<any[]>([]);
   const [reload, setReload] = React.useState<boolean>(false);
-  const [employeeSqlArgs, setEmployeeSqlArgs] = React.useState<any>({
-    ...widget.initSqlArgs(),
-    departmentId: null,
-  });
+  const [ selectedDepartment, setSelectedDepartment ] = React.useState<any>({});
 
   const forceUpdate = () => {
     setReload(!reload);
@@ -18,7 +15,7 @@ export function UIEmployeeHome() {
   const renderDepartmentExplorer = () => {
 
     const onSelectDepartment = (department: any) => {
-      setEmployeeSqlArgs({ ...employeeSqlArgs, departmentId: department.id });
+      setSelectedDepartment(department);
     };
 
     const delegateEmployee = (department: any) => {
@@ -38,7 +35,7 @@ export function UIEmployeeHome() {
 
       widget.createPopup(
         "Select Employees",
-        <UIEmployeeList sqlArgs={employeeSqlArgs} isSelector selectRowsCallBack={onSelectEmployees}/>
+        <UIEmployeeList departmentId={department.id} isSelector selectRowsCallBack={onSelectEmployees}/>
       );
     };
 
@@ -78,11 +75,12 @@ export function UIEmployeeHome() {
     updateData: setDepartments, dependencies: [reload],
   });
 
+  const UIDepartmentExplorer = () => renderDepartmentExplorer();
   return (
     <div className="h-100">
       <widget.VScreenSplit components={[
-        renderDepartmentExplorer(),
-        <UIEmployeeList sqlArgs={employeeSqlArgs} />
+        <UIDepartmentExplorer/>,
+        <UIEmployeeList title="Employees" departmentId={selectedDepartment?.id || null}/>
       ]}/>
     </div>
   );

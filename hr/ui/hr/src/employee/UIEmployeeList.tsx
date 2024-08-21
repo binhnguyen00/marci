@@ -4,14 +4,17 @@ import { ListUtils, ShowRowDetailsRequest } from "utilities/ListUtils";
 import { UIEmployeeForm } from "./UIEmployeeForm";
 import { IListProps } from "interface/IListProps";
 
-interface UIEmployeeListProps extends IListProps {}
+interface UIEmployeeListProps extends IListProps {
+  departmentId?: number;
+}
 export function UIEmployeeList(props: UIEmployeeListProps) {
-  let { 
-    title, height, isSelector, selectRowsCallBack, sqlArgs,
-  } = props;
-  
+  let { title, height, isSelector, selectRowsCallBack, departmentId } = props;
+
   const [ employeeData, setEmployeeData ] = React.useState<any[]>([]);
-  const [ sqlArgsState, setSqlArgsState ] = React.useState<any>(sqlArgs);
+  const [ sqlArgsState, setSqlArgsState ] = React.useState<any>({
+    ...widget.initSqlArgs(),
+    departmentId: departmentId,
+  });
   const [ reload, setReload ] = React.useState(false);
 
   console.log(sqlArgsState);
@@ -58,13 +61,15 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
   }
 
   const onUseSearch = (sqlArguments: any) => {
-    sqlArgs = { ...sqlArgs, ...sqlArguments };
-    setSqlArgsState(sqlArgs);
+    setSqlArgsState({
+      ...sqlArguments,
+      departmentId: departmentId,
+    });
   }
 
   hook.useSearch({ 
     component: "EmployeeService", service: "search", sqlArgs: sqlArgsState, 
-    dependencies: [reload, sqlArgsState, sqlArgs], updateData: setEmployeeData,
+    dependencies: [reload, sqlArgsState], updateData: setEmployeeData,
   });
 
   return (

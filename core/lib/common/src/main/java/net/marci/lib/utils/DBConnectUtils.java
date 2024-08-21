@@ -152,7 +152,7 @@ public class DBConnectUtils {
       if (SQL_QUERY.contains(target)) {
         SQL_QUERY = SQL_QUERY.replace(target, formatValue);
       } else {
-        log.warn("Key {} not found in SQL_QUERY \n{}", target, SQL_QUERY);
+        log.error("Key {} not found in SQL_QUERY \n{}", target, SQL_QUERY);
         return null;
       }
     }
