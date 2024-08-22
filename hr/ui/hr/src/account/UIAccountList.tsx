@@ -100,6 +100,24 @@ export function UIAccountList(props: UIAccountListProps) {
     widget.createPopup("Create Account", <UIAccountForm reloadParent={reloadTable}/>);
   }
 
+  const onActive = (targetIds: number[]) => {
+    server.rpc.call(
+      "AccountService", "activeByIds", { ids: targetIds }, 
+      (response: server.ServerResponse) => {
+        reloadTable();
+      }
+    );
+  }
+
+  const onArchive = (targetIds: number[]) => {
+    server.rpc.call(
+      "AccountService", "archiveByIds", { ids: targetIds }, 
+      (response: server.ServerResponse) => {
+        reloadTable();
+      }
+    );
+  }
+
   const onUseSearch = (sqlArgs: any) => {
     setSqlArgs(sqlArgs);
   }
@@ -112,6 +130,6 @@ export function UIAccountList(props: UIAccountListProps) {
   return (
     <widget.DataTable 
       title={title} height={height} columns={columns} records={accountRecords}
-      onCreate={onCreateAccount} onUseSearch={onUseSearch}/>
+      onCreate={onCreateAccount} onUseSearch={onUseSearch} onActive={onActive} onArchive={onArchive}/>
   )
 }

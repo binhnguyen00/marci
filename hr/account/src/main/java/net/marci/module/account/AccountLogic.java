@@ -84,4 +84,12 @@ public class AccountLogic extends DBConnectService {
     """;
     return this.search(SQL_QUERY, sqlArgs);
   }
+
+  public List<Long> active(List<Long> targetIds) {
+    if (targetIds.isEmpty()) return List.of();
+    repository.active(targetIds);
+    return targetIds;
+  }
+
+  
 }
