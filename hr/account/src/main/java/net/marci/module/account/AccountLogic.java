@@ -91,5 +91,9 @@ public class AccountLogic extends DBConnectService {
     return targetIds;
   }
 
-  
+  public List<Long> archive(List<Long> targetIds) {
+    if (targetIds.isEmpty()) return List.of();
+    repository.archive(targetIds);
+    return targetIds;
+  }
 }

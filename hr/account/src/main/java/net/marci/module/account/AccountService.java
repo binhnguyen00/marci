@@ -48,4 +48,14 @@ public class AccountService {
   public List<Record> search(Record sqlArgs) {
     return logic.search(sqlArgs);
   }
+
+  @Transactional
+  public List<Long> active(List<Long> targetIds) {
+    return logic.active(targetIds);
+  }
+
+  @Transactional
+  public List<Long> archive(List<Long> targetIds) {
+    return logic.archive(targetIds);
+  }
 }

@@ -102,7 +102,7 @@ export function UIAccountList(props: UIAccountListProps) {
 
   const onActive = (targetIds: number[]) => {
     server.rpc.call(
-      "AccountService", "activeByIds", { ids: targetIds }, 
+      "AccountService", "active", { targetIds: targetIds }, 
       (response: server.ServerResponse) => {
         reloadTable();
       }
@@ -111,7 +111,7 @@ export function UIAccountList(props: UIAccountListProps) {
 
   const onArchive = (targetIds: number[]) => {
     server.rpc.call(
-      "AccountService", "archiveByIds", { ids: targetIds }, 
+      "AccountService", "archive", { targetIds: targetIds }, 
       (response: server.ServerResponse) => {
         reloadTable();
       }
