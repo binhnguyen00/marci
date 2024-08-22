@@ -62,7 +62,7 @@ export function UIJobList(props: UIJobListProps) {
   return (
     <widget.DataTable 
       title={title} height={height} columns={columns} records={jobData} enableRowSelection
-      onCreateCallBack={onCreate} onDeleteCallBack={onDelete} onUseSearch={onUseSearch}
+      onCreate={onCreate} onDelete={onDelete} onUseSearch={onUseSearch}
     />
   )
 }

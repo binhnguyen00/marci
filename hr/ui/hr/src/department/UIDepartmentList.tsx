@@ -91,8 +91,8 @@ export function UIDepartmentList({ title = "Departments", height, onModify }: UI
   return (
     <widget.DataTable 
       title={title} height={height} columns={columns} records={departmentData} enableRowSelection
-      onCreateCallBack={onCreate} 
-      onDeleteCallBack={onDelete} 
+      onCreate={onCreate} 
+      onDelete={onDelete} 
       onUseSearch={onUseSearch}
     />
   )

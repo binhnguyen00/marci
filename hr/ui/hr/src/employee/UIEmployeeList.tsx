@@ -10,7 +10,7 @@ interface UIEmployeeListProps extends IListProps {
   departmentName?: string;
 }
 export function UIEmployeeList(props: UIEmployeeListProps) {
-  let { title, height, isSelector, selectRowsCallBack, departmentId, departmentName } = props;
+  let { title, height, isSelector, selectRowsCallBack, departmentId } = props;
 
   const [ employeeData, setEmployeeData ] = React.useState<any[]>([]);
   const [ sqlArgsState, setSqlArgsState ] = React.useState<any>({
@@ -88,8 +88,8 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
   return (
     <widget.DataTable 
       title={title} height={height} columns={columns} records={employeeData} enableRowSelection
-      onCreateCallBack={!isSelector && onCreate} 
-      onDeleteCallBack={!isSelector && onDelete} 
+      onCreate={!isSelector && onCreate} 
+      onDelete={!isSelector && onDelete} 
       onRowSelection={isSelector && selectRowsCallBack}
       onUseSearch={onUseSearch}
       toolbarButtons={[

@@ -40,7 +40,7 @@ export function UIEducationList(props: UIEducationListProps) {
       <widget.DataTable 
         title="Educations" height={height}
         enableRowSelection columns={columns} records={educationsState}
-        onDeleteCallBack={onDelete} onCreateCallBack={onCreate}/>
+        onDelete={onDelete} onCreate={onCreate}/>
     </div>
   )
 } 

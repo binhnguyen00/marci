@@ -76,6 +76,6 @@ export function UIDemoDataTable() {
   return (
     <widget.DataTable 
       title="Data Table" enableRowSelection 
-      columns={defaultColumns} records={defaultData} onDeleteCallBack={onDeleteCallBack}/>
+      columns={defaultColumns} records={defaultData} onDelete={onDeleteCallBack}/>
   );
 }
