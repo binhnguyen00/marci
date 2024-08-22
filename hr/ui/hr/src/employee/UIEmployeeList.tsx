@@ -1,5 +1,4 @@
 import React from "react";
-import { Table as TanStackTable } from "@tanstack/react-table";
 import { BsFillPersonDashFill  } from "react-icons/bs";
 import { server, widget, hook, tableUtils } from "@marci-ui/lib";
 import { ListUtils, ShowRowDetailsRequest } from "utilities/ListUtils";
@@ -18,9 +17,7 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
     departmentId: departmentId,
   });
   const [ reload, setReload ] = React.useState(false);
-  const [ tableCtx, setTableContext ] = React.useState<TanStackTable<any>>(null);
-
-  console.log(tableCtx);
+  const [ tableCtx, setTableContext ] = React.useState<widget.DataTableContext>(tableUtils.initTableCtx());
 
   const columns: widget.DataTableColumn[] = [ 
     { 
@@ -70,6 +67,10 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
     });
   }
 
+  const getTableContext = (tableInstance: widget.DataTableContext) => {
+    setTableContext(tableInstance);
+  };
+
   // Automatically update sqlArgsState when departmentId changes
   React.useEffect(() => {
     setSqlArgsState((prevState: any) => ({
@@ -80,10 +81,8 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
 
   hook.useSearch({ 
     component: "EmployeeService", service: "search", sqlArgs: sqlArgsState, 
-    dependencies: [reload, sqlArgsState], updateData: setEmployeeData,
+    dependencies: [ reload, sqlArgsState ], updateData: setEmployeeData,
   });
-
-  console.log(tableCtx);
 
   return (
     <widget.DataTable 
@@ -92,30 +91,30 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
       onDeleteCallBack={!isSelector && onDelete} 
       onRowSelection={isSelector && selectRowsCallBack}
       onUseSearch={onUseSearch}
-      customButtons={[
+      toolbarButtons={[
         <UIButtonRemoveEmployeeFromDepartment 
           departmentId={departmentId} 
-          selectedEmployeeIds={tableUtils.getSelectedIds([])}
+          selectedEmployeesIds={tableCtx.selectedRecordsIds}
         />
       ]}
-      getTableContext={setTableContext}
+      getTableContext={getTableContext}
     />
   );
 }
 
-function UIButtonRemoveEmployeeFromDepartment({ departmentId, selectedEmployeeIds }: { 
+function UIButtonRemoveEmployeeFromDepartment({ departmentId, selectedEmployeesIds }: { 
   departmentId?: number,
-  selectedEmployeeIds?: number[],
+  selectedEmployeesIds?: number[],
 }) {
   
   if (!departmentId) return null;
   const onClick = (event: Event) => {
-    if (!selectedEmployeeIds || selectedEmployeeIds.length === 0) {
+    if (!selectedEmployeesIds || selectedEmployeesIds.length === 0) {
       widget.createWarningPopup(<>{"Please select at least 1 record"}</>)
       return;
     }
     server.rpc.call(
-      "DepartmentService", "removeEmployees", { departmentId: departmentId, employeeIds: selectedEmployeeIds },
+      "DepartmentService", "removeEmployees", { departmentId: departmentId, employeeIds: selectedEmployeesIds },
       (response: server.ServerResponse) => {
         widget.createSuccessPopup(<>{"Employees removed"}</>);
       }
