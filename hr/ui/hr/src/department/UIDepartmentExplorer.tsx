@@ -19,23 +19,29 @@ export function UIDepartmentExplorer({
     setReload(!reload);
   };
 
+
   const delegateEmployee = (department: any) => {
+
+    const selectRowsCallBack = (selectedRecords: any[]) => {
+      const employeeIds = selectedRecords.map((record: any) => record.id);
+      server.rpc.call(
+        "DepartmentService", "delegateEmployees", { departmentId: department.id, employeeIds: employeeIds },
+        (response: server.ServerResponse) => {
+          widget.closeCurrentPopup();
+          widget.createSuccessPopup(<>{"Employees delegated successfully"}</>);
+        },
+        (response: server.ServerResponse) => {
+          widget.closeCurrentPopup();
+          widget.createDangerPopup(<>{"Failed to delegate employees"}</>);
+        } 
+      );
+    }
+
     widget.createPopup(
       "Select Employees",
       <UIEmployeeList 
-        departmentId={null} isSelector 
-        selectRowsCallBack={(selectedRecords: any[]) => {
-          const employeeIds = selectedRecords.map((record: any) => record.id);
-          server.rpc.call(
-            "DepartmentService", "delegateEmployees", { departmentId: department.id, employeeIds: employeeIds },
-            (response: server.ServerResponse) => {
-              widget.createSuccessPopup(<>Employees delegated successfully</>);
-            },
-            (response: server.ServerResponse) => {
-              widget.createDangerPopup(<>Failed to delegate employees</>);
-            } 
-          );
-        }}
+        departmentId={null}
+        selectRowsCallBack={selectRowsCallBack} isSelector
       />
     );
   };

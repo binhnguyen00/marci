@@ -4,14 +4,14 @@ import { UIEmployeeList } from "./UIEmployeeList";
 import { UIDepartmentExplorer } from "../department/UIDepartmentExplorer";
 
 export function UIEmployeeHome() {
-  const [ selectedDepartmentId, setSelectedDepartmentId ] = React.useState<number | null>(null);
+  const [ selectedDepartment, setSelectedDepartment ] = React.useState<any>(null);
 
   const onSelectDepartment = (department: any) => {
-    setSelectedDepartmentId(department.id);
+    setSelectedDepartment(department);
   }
 
   const onSelectRootDepartment = () => {
-    setSelectedDepartmentId(null);
+    setSelectedDepartment(null);
   };
 
   return (
@@ -21,7 +21,9 @@ export function UIEmployeeHome() {
           onSelectDepartment={onSelectDepartment}
           onSelectRootDepartment={onSelectRootDepartment}
         />,
-        <UIEmployeeList title="Employees" departmentId={selectedDepartmentId}/>
+        <UIEmployeeList 
+          title={`Employees ${selectedDepartment ? `(${selectedDepartment.name})` : ""}`} 
+          departmentId={selectedDepartment ? selectedDepartment.id : null}/>
       ]}/>
     </div>
   );

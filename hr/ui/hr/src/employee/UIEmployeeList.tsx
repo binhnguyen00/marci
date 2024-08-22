@@ -7,9 +7,10 @@ import { IListProps } from "interface/IListProps";
 
 interface UIEmployeeListProps extends IListProps {
   departmentId?: number;
+  departmentName?: string;
 }
 export function UIEmployeeList(props: UIEmployeeListProps) {
-  let { title, height, isSelector, selectRowsCallBack, departmentId } = props;
+  let { title, height, isSelector, selectRowsCallBack, departmentId, departmentName } = props;
 
   const [ employeeData, setEmployeeData ] = React.useState<any[]>([]);
   const [ sqlArgsState, setSqlArgsState ] = React.useState<any>({
@@ -95,6 +96,7 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
         <UIButtonRemoveEmployeeFromDepartment 
           departmentId={departmentId} 
           selectedEmployeesIds={tableCtx.selectedRecordsIds}
+          reloadParent={reloadTable}
         />
       ]}
       getTableContext={getTableContext}
@@ -102,9 +104,10 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
   );
 }
 
-function UIButtonRemoveEmployeeFromDepartment({ departmentId, selectedEmployeesIds }: { 
+function UIButtonRemoveEmployeeFromDepartment({ departmentId, selectedEmployeesIds, reloadParent }: { 
   departmentId?: number,
   selectedEmployeesIds?: number[],
+  reloadParent?: () => void
 }) {
   
   if (!departmentId) return null;
@@ -117,6 +120,7 @@ function UIButtonRemoveEmployeeFromDepartment({ departmentId, selectedEmployeesI
       "DepartmentService", "removeEmployees", { departmentId: departmentId, employeeIds: selectedEmployeesIds },
       (response: server.ServerResponse) => {
         widget.createSuccessPopup(<>{"Employees removed"}</>);
+        reloadParent && reloadParent();
       }
     )
   }
