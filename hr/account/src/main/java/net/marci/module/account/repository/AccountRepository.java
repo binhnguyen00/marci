@@ -20,10 +20,10 @@ public interface AccountRepository extends JpaRepository<Account, Serializable> 
   Account getByEmail(@Param("email") String email);
 
   @Modifying
-  @Query("UPDATE Account SET account.storageState = 'ACTIVE' WHERE id IN (:ids)")
+  @Query("UPDATE Account SET storageState = 'ACTIVE' WHERE id IN (:ids)")
   void active(@Param("ids") List<Long> ids);
 
   @Modifying
-  @Query("UPDATE Account SET account.storageState = 'ARCHIVED' WHERE id IN (:ids)")
+  @Query("UPDATE Account SET storageState = 'ARCHIVED' WHERE id IN (:ids)")
   void archive(@Param("ids") List<Long> ids);
 }
