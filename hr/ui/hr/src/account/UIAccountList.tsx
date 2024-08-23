@@ -23,7 +23,7 @@ export function UIAccountForm(props: UIAccountFormProps) {
       const account = response.body as any;
       const html = (<div> {JSON.stringify(account, null, 2)} </div>)
       widget.closeCurrentPopup();  
-      widget.createPopup("Success", html);
+      widget.createSuccessPopup(html);
       reloadParent();
     }
 
@@ -35,25 +35,27 @@ export function UIAccountForm(props: UIAccountFormProps) {
         </div>
       )
       widget.closeCurrentPopup();
-      widget.createPopup("Fail", html);
+      widget.createDangerPopup(html, "Create Failed");
     }
 
     server.rpc.call("AccountService", "save", { target: account }, successCB, failCB);
   }
 
   return (
-    <div className="form-group p-1 border">
+    <div className="form-group p-1">
       <input.FieldString 
-        bean={account} field="userName" label="Username" onChange={handleInputChange} disabled/>
+        bean={account} field="userName" label="Username" onChange={handleInputChange} disabled={entity.id}/>
       <input.FieldString 
         bean={account} field="displayName" label="Display Name" onChange={handleInputChange}/>
       <input.FieldString 
         bean={account} field="password" label="Password" onChange={handleInputChange}/>
       <input.FieldString
         bean={account} field="email" label="Email" onChange={handleInputChange}/>
-      <widget.Button 
-        icon={<icon.BsSaveFill />}
-        title="Save" type="primary" onClick={createAccount}/>
+      <div className="py-1">
+        <widget.Button 
+          icon={<icon.BsSaveFill />}
+          title="Save" type="primary" onClick={createAccount}/>
+      </div>
     </div>
   )
 }
@@ -101,6 +103,10 @@ export function UIAccountList(props: UIAccountListProps) {
   }
 
   const onActive = (targetIds: number[]) => {
+    if (!targetIds.length) {
+      widget.createWarningPopup(<>{"Please select at least 1 record"}</>);
+      return;
+    }
     server.rpc.call(
       "AccountService", "active", { targetIds: targetIds }, 
       (response: server.ServerResponse) => {
@@ -110,6 +116,10 @@ export function UIAccountList(props: UIAccountListProps) {
   }
 
   const onArchive = (targetIds: number[]) => {
+    if (!targetIds.length) {
+      widget.createWarningPopup(<>{"Please select at least 1 record"}</>);
+      return;
+    }
     server.rpc.call(
       "AccountService", "archive", { targetIds: targetIds }, 
       (response: server.ServerResponse) => {
@@ -129,7 +139,7 @@ export function UIAccountList(props: UIAccountListProps) {
 
   return (
     <widget.DataTable 
-      title={title} height={height} columns={columns} records={accountRecords}
+      title={title} height={height} columns={columns} records={accountRecords} enableRowSelection
       onCreate={onCreateAccount} onUseSearch={onUseSearch} onActive={onActive} onArchive={onArchive}
     />
   )

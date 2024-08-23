@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(
   basePackages = {
     "net.marci.module.config",
+    "net.binhnguyen.module.config",
   }
 )
 @Configuration
