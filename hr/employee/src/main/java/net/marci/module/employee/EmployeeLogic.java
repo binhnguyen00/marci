@@ -93,8 +93,8 @@ public class EmployeeLogic extends DBConnectService {
     repository.deleteById(id);
   }
 
-  public void deleteByIds(List<Long> ids) {
-    this.deleteByIds(Employee.class, ids);
+  public int deleteByIds(List<Long> ids) {
+    return this.deleteByIds(Employee.class, ids);
   }
 
   protected List<Record> search(Record sqlArgs) {

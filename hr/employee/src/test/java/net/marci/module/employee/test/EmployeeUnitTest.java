@@ -1,11 +1,9 @@
 package net.marci.module.employee.test;
 
-import net.binhnguyen.lib.utils.DBConnectUtils;
 import net.marci.module.config.AccountModuleConfig;
 import net.binhnguyen.module.config.DeleteGraphModuleConfig;
 import net.marci.module.config.EmployeeModuleConfig;
 import net.binhnguyen.module.config.HttpModuleConfig;
-import net.binhnguyen.module.deletegraph.DeleteGraphBuilder;
 import net.marci.module.employee.EmployeeLogic;
 import net.marci.module.employee.dto.ModelCreateEmployee;
 import net.marci.module.employee.entity.Employee;
@@ -19,9 +17,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
-import javax.sql.DataSource;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @SpringBootTest(
   webEnvironment= SpringBootTest.WebEnvironment.NONE,
@@ -41,9 +39,6 @@ import java.util.List;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class EmployeeUnitTest {
-
-  @Autowired
-  private DataSource dataSource;
 
   @Autowired
   private EmployeeLogic employeeLogic;
@@ -86,9 +81,7 @@ public class EmployeeUnitTest {
   @Test @Tag("unit")
   public void deleteEmployee() {
     Employee employeeInDb = employeeLogic.getByUserName("_jackjack68");
-    DBConnectUtils connectUtils = new DBConnectUtils(dataSource);
-    DeleteGraphBuilder deleteGraphBuilder = new DeleteGraphBuilder(connectUtils, Employee.class, List.of(employeeInDb.getId()));
-    int target = deleteGraphBuilder.doDelete();
+    int target = employeeLogic.deleteByIds(List.of(Objects.requireNonNull(employeeInDb.getId())));
     Assertions.assertEquals(1, target);
   }
 }

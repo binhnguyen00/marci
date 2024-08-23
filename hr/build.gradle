@@ -84,6 +84,7 @@ subprojects {
     api group: 'net.binhnguyen.core', name: 'module-http', version: "${coreVersion}"
     api group: 'net.binhnguyen.core', name: 'module-deletegraph', version: "${coreVersion}"
     api group: 'net.binhnguyen.core', name: 'module-db-connect-service', version: "${coreVersion}"
+    api group: 'net.binhnguyen.core', name: 'module-excel', version: "${coreVersion}"
 
     // Using Lib from this project
     // api project(':marci-modules-<module_name>')

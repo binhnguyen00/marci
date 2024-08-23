@@ -55,6 +55,7 @@ dependencies {
   marciAppJars group: 'net.binhnguyen.core', name: 'module-http', version: "${coreVersion}"
   marciAppJars group: 'net.binhnguyen.core', name: 'module-deletegraph', version: "${coreVersion}"
   marciAppJars group: 'net.binhnguyen.core', name: 'module-db-connect-service', version: "${coreVersion}"
+  marciAppJars group: 'net.binhnguyen.core', name: 'module-excel', version: "${coreVersion}"
   marciAppJars group: 'net.marci.hr', name: 'marci-hr-account', version: "${marciHrVersion}"
   marciAppJars group: 'net.marci.hr', name: 'marci-hr-employee', version: "${marciHrVersion}"
   marciAppJars group: 'net.marci.hr', name: 'marci-hr-department', version: "${marciHrVersion}"
