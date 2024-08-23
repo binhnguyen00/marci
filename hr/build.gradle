@@ -79,11 +79,11 @@ subprojects {
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: "${springBootVersion}"
 
     // Using Lib from other project
-    api group: 'net.marci.core', name: 'marci-lib-common', version: "${marciCoreVersion}"
-    api group: 'net.marci.core', name: 'marci-module-common', version: "${marciCoreVersion}"
-    api group: 'net.marci.core', name: 'marci-module-http', version: "${marciCoreVersion}"
-    api group: 'net.marci.core', name: 'marci-module-deletegraph', version: "${marciCoreVersion}"
-    api group: 'net.marci.core', name: 'marci-module-db-connect-service', version: "${marciCoreVersion}"
+    api group: 'net.binhnguyen.core', name: 'lib-common', version: "${coreVersion}"
+    api group: 'net.binhnguyen.core', name: 'module-common', version: "${coreVersion}"
+    api group: 'net.binhnguyen.core', name: 'module-http', version: "${coreVersion}"
+    api group: 'net.binhnguyen.core', name: 'module-deletegraph', version: "${coreVersion}"
+    api group: 'net.binhnguyen.core', name: 'module-db-connect-service', version: "${coreVersion}"
 
     // Using Lib from this project
     // api project(':marci-modules-<module_name>')

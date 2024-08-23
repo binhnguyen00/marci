@@ -130,6 +130,7 @@ export function UIAccountList(props: UIAccountListProps) {
   return (
     <widget.DataTable 
       title={title} height={height} columns={columns} records={accountRecords}
-      onCreate={onCreateAccount} onUseSearch={onUseSearch} onActive={onActive} onArchive={onArchive}/>
+      onCreate={onCreateAccount} onUseSearch={onUseSearch} onActive={onActive} onArchive={onArchive}
+    />
   )
 }

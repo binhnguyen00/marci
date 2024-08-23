@@ -50,11 +50,11 @@ dependencies {
   springJars group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: "${springBootVersion}"
 
   // Server Runtime Jars
-  marciAppJars group: 'net.marci.core', name: 'marci-lib-common', version: "${marciCoreVersion}"
-  marciAppJars group: 'net.marci.core', name: 'marci-module-common', version: "${marciCoreVersion}"
-  marciAppJars group: 'net.marci.core', name: 'marci-module-http', version: "${marciCoreVersion}"
-  marciAppJars group: 'net.marci.core', name: 'marci-module-deletegraph', version: "${marciCoreVersion}"
-  marciAppJars group: 'net.marci.core', name: 'marci-module-db-connect-service', version: "${marciCoreVersion}"
+  marciAppJars group: 'net.binhnguyen.core', name: 'lib-common', version: "${coreVersion}"
+  marciAppJars group: 'net.binhnguyen.core', name: 'module-common', version: "${coreVersion}"
+  marciAppJars group: 'net.binhnguyen.core', name: 'module-http', version: "${coreVersion}"
+  marciAppJars group: 'net.binhnguyen.core', name: 'module-deletegraph', version: "${coreVersion}"
+  marciAppJars group: 'net.binhnguyen.core', name: 'module-db-connect-service', version: "${coreVersion}"
   marciAppJars group: 'net.marci.hr', name: 'marci-hr-account', version: "${marciHrVersion}"
   marciAppJars group: 'net.marci.hr', name: 'marci-hr-employee', version: "${marciHrVersion}"
   marciAppJars group: 'net.marci.hr', name: 'marci-hr-department', version: "${marciHrVersion}"
