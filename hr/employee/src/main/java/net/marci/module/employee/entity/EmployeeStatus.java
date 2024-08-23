@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.marci.common.BaseEntity;
+import net.binhnguyen.common.BaseEntity;
 
 import java.time.LocalDate;
 

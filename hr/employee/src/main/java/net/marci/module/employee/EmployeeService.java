@@ -1,7 +1,7 @@
 package net.marci.module.employee;
 
 import lombok.extern.slf4j.Slf4j;
-import net.marci.lib.common.Record;
+import net.binhnguyen.lib.common.Record;
 import net.marci.module.employee.dto.ModelCreateEmployee;
 import net.marci.module.employee.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;

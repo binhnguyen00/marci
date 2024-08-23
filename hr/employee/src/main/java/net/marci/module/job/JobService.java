@@ -1,6 +1,6 @@
 package net.marci.module.job;
 
-import net.marci.lib.common.Record;
+import net.binhnguyen.lib.common.Record;
 import net.marci.module.job.entity.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

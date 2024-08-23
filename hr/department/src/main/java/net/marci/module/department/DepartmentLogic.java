@@ -1,8 +1,8 @@
 package net.marci.module.department;
 
 import lombok.extern.slf4j.Slf4j;
-import net.marci.lib.common.Record;
-import net.marci.module.dbConnectService.DBConnectService;
+import net.binhnguyen.lib.common.Record;
+import net.binhnguyen.module.dbConnectService.DBConnectService;
 import net.marci.module.department.entity.Department;
 import net.marci.module.department.repository.DepartmentRepository;
 import net.marci.module.employee.EmployeeLogic;

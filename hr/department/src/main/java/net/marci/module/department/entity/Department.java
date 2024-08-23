@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
-import net.marci.common.BaseEntity;
+import net.binhnguyen.common.BaseEntity;
 
 import java.util.Objects;
 

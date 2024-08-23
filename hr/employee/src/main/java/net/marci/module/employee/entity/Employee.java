@@ -5,11 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
-import net.marci.common.BaseEntity;
+import net.binhnguyen.common.BaseEntity;
 import net.marci.module.account.entity.Account;
-import net.marci.module.deletegraph.DeleteGraph;
-import net.marci.module.deletegraph.DeleteGraphJoinType;
-import net.marci.module.deletegraph.DeleteGraphs;
+import net.binhnguyen.module.deletegraph.DeleteGraph;
+import net.binhnguyen.module.deletegraph.DeleteGraphJoinType;
+import net.binhnguyen.module.deletegraph.DeleteGraphs;
 import net.marci.module.education.entity.Education;
 import net.marci.module.employee.entity.relation.EmployeeDepartment;
 

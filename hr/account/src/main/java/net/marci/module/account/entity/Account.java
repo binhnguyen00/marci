@@ -9,10 +9,10 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.marci.common.BaseEntity;
-import net.marci.module.deletegraph.DeleteGraph;
-import net.marci.module.deletegraph.DeleteGraphJoinType;
-import net.marci.module.deletegraph.DeleteGraphs;
+import net.binhnguyen.common.BaseEntity;
+import net.binhnguyen.module.deletegraph.DeleteGraph;
+import net.binhnguyen.module.deletegraph.DeleteGraphJoinType;
+import net.binhnguyen.module.deletegraph.DeleteGraphs;
 
 @Entity
 @Table(

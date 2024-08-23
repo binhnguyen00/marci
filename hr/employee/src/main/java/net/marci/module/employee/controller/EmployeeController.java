@@ -2,8 +2,8 @@ package net.marci.module.employee.controller;
 
 import net.marci.module.employee.EmployeeService;
 import net.marci.module.employee.entity.Employee;
-import net.marci.module.http.controller.BaseController;
-import net.marci.module.http.dto.ServerResponse;
+import net.binhnguyen.module.http.controller.BaseController;
+import net.binhnguyen.module.http.dto.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

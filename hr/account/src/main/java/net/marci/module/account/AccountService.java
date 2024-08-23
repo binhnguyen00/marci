@@ -1,6 +1,6 @@
 package net.marci.module.account;
 
-import net.marci.lib.common.Record;
+import net.binhnguyen.lib.common.Record;
 import net.marci.module.account.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

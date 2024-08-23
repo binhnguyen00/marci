@@ -1,7 +1,7 @@
 package net.marci.module.job;
 
-import net.marci.lib.common.Record;
-import net.marci.module.dbConnectService.DBConnectService;
+import net.binhnguyen.lib.common.Record;
+import net.binhnguyen.module.dbConnectService.DBConnectService;
 import net.marci.module.employee.EmployeeStatusLogic;
 import net.marci.module.job.entity.Job;
 import net.marci.module.job.repository.JobRepository;

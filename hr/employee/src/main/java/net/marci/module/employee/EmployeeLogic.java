@@ -1,10 +1,10 @@
 package net.marci.module.employee;
 
 import lombok.extern.slf4j.Slf4j;
-import net.marci.lib.common.Record;
+import net.binhnguyen.lib.common.Record;
 import net.marci.module.account.AccountLogic;
 import net.marci.module.account.entity.Account;
-import net.marci.module.dbConnectService.DBConnectService;
+import net.binhnguyen.module.dbConnectService.DBConnectService;
 import net.marci.module.employee.dto.ModelCreateEmployee;
 import net.marci.module.employee.entity.Employee;
 import net.marci.module.employee.repository.EmployeeRepository;

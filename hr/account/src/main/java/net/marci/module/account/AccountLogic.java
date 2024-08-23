@@ -1,10 +1,10 @@
 package net.marci.module.account;
 
 import lombok.extern.slf4j.Slf4j;
-import net.marci.lib.common.Record;
+import net.binhnguyen.lib.common.Record;
 import net.marci.module.account.entity.Account;
 import net.marci.module.account.repository.AccountRepository;
-import net.marci.module.dbConnectService.DBConnectService;
+import net.binhnguyen.module.dbConnectService.DBConnectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

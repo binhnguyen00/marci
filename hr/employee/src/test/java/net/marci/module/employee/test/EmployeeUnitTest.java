@@ -1,11 +1,11 @@
 package net.marci.module.employee.test;
 
-import net.marci.lib.utils.DBConnectUtils;
+import net.binhnguyen.lib.utils.DBConnectUtils;
 import net.marci.module.config.AccountModuleConfig;
-import net.marci.module.config.DeleteGraphModuleConfig;
+import net.binhnguyen.module.config.DeleteGraphModuleConfig;
 import net.marci.module.config.EmployeeModuleConfig;
-import net.marci.module.config.HttpModuleConfig;
-import net.marci.module.deletegraph.DeleteGraphBuilder;
+import net.binhnguyen.module.config.HttpModuleConfig;
+import net.binhnguyen.module.deletegraph.DeleteGraphBuilder;
 import net.marci.module.employee.EmployeeLogic;
 import net.marci.module.employee.dto.ModelCreateEmployee;
 import net.marci.module.employee.entity.Employee;
