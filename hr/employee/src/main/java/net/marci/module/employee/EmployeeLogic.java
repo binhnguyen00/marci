@@ -89,6 +89,10 @@ public class EmployeeLogic extends DBConnectService {
     return repository.save(employee);
   }
 
+  public List<Employee> saveBatch(List<Employee> employees) {
+    return repository.saveAll(employees);
+  }
+
   public void deleteById(long id) {
     repository.deleteById(id);
   }

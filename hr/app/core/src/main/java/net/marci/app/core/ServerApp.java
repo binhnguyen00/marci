@@ -9,6 +9,8 @@ import org.springframework.core.env.Environment;
 
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Bình Nguyễn
@@ -21,21 +23,23 @@ public class ServerApp {
   static ConfigurableApplicationContext context;
 
   static public void run(String[] args) {
+
+    List<Class<?>> primarySourcesList = new ArrayList<>();
+    primarySourcesList.add(ServerApp.class);
+    primarySourcesList.add(ServerAppConfig.class);
+
     StringBuilder b = new StringBuilder();
     b.append("----------------------------- \n");
     b.append("Launch CLI with Args: \n");
     for (String arg : args) {
+      if (arg.equals("new")) primarySourcesList.add(ServerDataInitialization.class); // Haven't Tested
       b.append("  ").append(arg).append("\n");
     }
     b.append("----------------------------- \n");
     System.out.println(b);
 
-    final Class<?>[] source = {
-      ServerApp.class,
-      ServerAppConfig.class,
-    };
-
-    SpringApplication springApp = new SpringApplication(source);
+    Class<?>[] primarySources = primarySourcesList.toArray(new Class[0]);
+    SpringApplication springApp = new SpringApplication(primarySources);
     customizeBanner(springApp);
 
     Runtime runtime = Runtime.getRuntime();
