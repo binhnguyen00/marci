@@ -2,15 +2,11 @@ package net.marci.module.initialization;
 
 import jakarta.annotation.PostConstruct;
 import net.binhnguyen.lib.common.Record;
-import net.binhnguyen.lib.utils.DataSerializer;
 import net.binhnguyen.module.excel.ExcelLogic;
 import net.marci.module.account.AccountLogic;
 import net.marci.module.account.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,6 +32,7 @@ public class AccountInitData {
       account.setUserName(record.getAsString("userName"));
       account.setDisplayName(record.getAsString("displayName"));
       account.setPassword(record.getAsString("password"));
+      account.setAddress(record.getAsString("address"));
       accounts.add(account);
     }
 

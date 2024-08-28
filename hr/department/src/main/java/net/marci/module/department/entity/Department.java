@@ -23,6 +23,9 @@ public class Department extends BaseEntity {
   @Column
   private String name;
 
+  @Column(name = "display_name")
+  private String displayName;
+
   @Column(name = "parent_id")
   private Long parentId;
 

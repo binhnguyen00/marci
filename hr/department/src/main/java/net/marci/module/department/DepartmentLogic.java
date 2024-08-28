@@ -1,5 +1,6 @@
 package net.marci.module.department;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import net.binhnguyen.lib.common.Record;
 import net.binhnguyen.module.dbConnectService.DBConnectService;
@@ -30,6 +31,10 @@ public class DepartmentLogic extends DBConnectService {
 
   public Department getById(long id) {
     return repository.getReferenceById(id);
+  }
+
+  public Department getByName(@NonNull String name) {
+    return repository.getByName(name);
   }
 
   public Department create(Department department) {
