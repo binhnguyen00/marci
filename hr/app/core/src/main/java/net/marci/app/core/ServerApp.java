@@ -9,8 +9,7 @@ import org.springframework.core.env.Environment;
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * @author Bình Nguyễn
@@ -23,22 +22,19 @@ public class ServerApp {
   static ConfigurableApplicationContext context;
 
   static public void run(String[] args) {
-
-    List<Class<?>> primarySourcesList = new ArrayList<>();
-    primarySourcesList.add(ServerApp.class);
-    primarySourcesList.add(ServerAppConfig.class);
-
     StringBuilder b = new StringBuilder();
     b.append("----------------------------- \n");
     b.append("Launch CLI with Args: \n");
     for (String arg : args) {
-      if (arg.equals("new")) primarySourcesList.add(ServerDataInitialization.class); // Haven't Tested
       b.append("  ").append(arg).append("\n");
     }
     b.append("----------------------------- \n");
     System.out.println(b);
 
-    Class<?>[] primarySources = primarySourcesList.toArray(new Class[0]);
+    final Class<?>[] primarySources = new Class[] {
+      ServerApp.class,
+      ServerAppConfig.class,
+    };
     SpringApplication springApp = new SpringApplication(primarySources);
     customizeBanner(springApp);
 
@@ -47,7 +43,12 @@ public class ServerApp {
     log.info("Maximum size of Heap: {}", runtime.maxMemory() / 1024 / 1024);
     log.info("Available processors: {}", runtime.availableProcessors());
     context = springApp.run(args);
+    
     isRunning(30000);
+  }
+
+  public static void main(String[] args) throws Exception {
+    run(args);
   }
 
   static private void isRunning(long waitTime) {
@@ -63,10 +64,6 @@ public class ServerApp {
     } catch (Exception ex) {
       log.error(ex.getMessage());
     }
-  }
-
-  public static void main(String[] args) throws Exception {
-    run(args);
   }
 
   private static void customizeBanner(SpringApplication springApp) {
