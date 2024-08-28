@@ -1,7 +1,7 @@
 # Human Resources Management
 ### Technical Stack
 - Java Spring, Gradle, PostgreSQL
-- React Typescript, Webpack
+- React Typescript, Webpack, NodeJS
 # Setup
 ### Requirements
 1. My Library (Java Spring & React libs)
