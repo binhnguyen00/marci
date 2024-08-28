@@ -51,8 +51,14 @@ function start() {
     --app.config.dir=$APP_CONFIG_HOME 
     --build.version=$DATETIME 
     --spring.config.location=$CONFIG_FILES
-    --initial.data=$INITIAL_DATA
   """
+
+  if [ "$INITIAL_DATA" = "true" ] ; then
+    ARGS="""
+      $ARGS 
+      --spring.profiles.active=initial-data
+    """
+  fi
 
   DAEMON_OPT=$(has_opt "-daemon" $@ )
   if [ "$DAEMON_OPT" = "true" ] ; then
