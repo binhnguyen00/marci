@@ -1,19 +1,20 @@
 package net.marci.module.account.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import net.binhnguyen.common.BaseEntity;
 import net.binhnguyen.module.deletegraph.DeleteGraph;
 import net.binhnguyen.module.deletegraph.DeleteGraphJoinType;
 import net.binhnguyen.module.deletegraph.DeleteGraphs;
 
+import java.util.Optional;
+
+@Slf4j
 @Entity
 @Table(
   name = Account.TABLE_NAME,
@@ -41,6 +42,9 @@ import net.binhnguyen.module.deletegraph.DeleteGraphs;
 public class Account extends BaseEntity {
 
   public static final String TABLE_NAME = "account";
+
+  @Enumerated(EnumType.STRING)
+  private Role role = Role.USER;
 
   @Email
   @NotNull
@@ -77,4 +81,18 @@ public class Account extends BaseEntity {
 
   @Column(name = "address")
   private String address;
+
+  public enum Role {
+    ADMIN, USER;
+
+    public static Optional<Role> fromString(String role) {
+      if (role == null) return Optional.empty();
+      try {
+        return Optional.of(Role.valueOf(role.toUpperCase()));
+      } catch (IllegalArgumentException e) {
+        log.error("Invalid role: {}", role);
+        return Optional.empty();
+      }
+    }
+  }
 }

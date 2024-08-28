@@ -33,6 +33,8 @@ dependencies {
   commonJars group: 'org.slf4j', name: 'jul-to-slf4j', version: "${slf4jVersion}"
   commonJars group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: "${apacheLoggingLog4jVersion}"
   commonJars group: 'ch.qos.logback', name: 'logback-classic', version: "${logbackVersion}"
+  commonJars group: 'org.apache.poi', name: 'poi', version: "${apachePoiVersion}"
+  commonJars group: 'org.apache.poi', name: 'poi-ooxml', version: "${apachePoiVersion}"
 
   // Hibernate Runtime Jars
   hibernateJars group: 'org.postgresql', name: 'postgresql', version: "${postgresVersion}"

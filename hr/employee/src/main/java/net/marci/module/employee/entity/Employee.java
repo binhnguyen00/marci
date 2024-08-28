@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import net.binhnguyen.common.BaseEntity;
 import net.marci.module.account.entity.Account;
 import net.binhnguyen.module.deletegraph.DeleteGraph;
@@ -17,7 +18,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
+@Slf4j
 @Entity
 @Table(
   name = Employee.TABLE_NAME,
@@ -86,6 +89,16 @@ public class Employee extends BaseEntity {
   }
 
   public enum Gender {
-    MALE, FEMALE
+    MALE, FEMALE;
+
+    public static Optional<Gender> fromString(String gender) {
+      if (gender == null) return Optional.empty();
+      try {
+        return Optional.of(Gender.valueOf(gender.toUpperCase()));
+      } catch (IllegalArgumentException e) {
+        log.error("Invalid gender: {}", gender);
+        return Optional.empty();
+      }
+    }
   }
 }

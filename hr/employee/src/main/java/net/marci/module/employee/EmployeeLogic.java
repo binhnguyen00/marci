@@ -1,6 +1,7 @@
 package net.marci.module.employee;
 
 import lombok.extern.slf4j.Slf4j;
+import net.binhnguyen.common.BaseEntity;
 import net.binhnguyen.lib.common.Record;
 import net.marci.module.account.AccountLogic;
 import net.marci.module.account.entity.Account;
@@ -90,6 +91,7 @@ public class EmployeeLogic extends DBConnectService {
   }
 
   public List<Employee> saveBatch(List<Employee> employees) {
+    employees.forEach(BaseEntity::setUserInteract);
     return repository.saveAll(employees);
   }
 
