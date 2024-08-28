@@ -35,11 +35,14 @@ fi
 function start() {
   DATETIME=$(date '+%Y.%m.%d.%H%M%S')
   PROFILE=$(get_opt --profile 'console' $@)
-  
+
+
   if [ $PROFILE_PRODUCTION = "true" ] ; then
     CONFIG_FILES="file:$APP_CONFIG_HOME/application-production.yaml"
+    INITIAL_DATA="false"
   else 
     CONFIG_FILES="file:$APP_CONFIG_HOME/application.yaml"
+    INITIAL_DATA="true"
   fi
 
   CLASS="net.marci.app.core.ServerApp"
@@ -48,6 +51,7 @@ function start() {
     --app.config.dir=$APP_CONFIG_HOME 
     --build.version=$DATETIME 
     --spring.config.location=$CONFIG_FILES
+    --initial.data=$INITIAL_DATA
   """
 
   DAEMON_OPT=$(has_opt "-daemon" $@ )
@@ -65,7 +69,7 @@ STARTING SERVER...
     echo ">> JAVA_HOME: $JAVA_HOME"
     echo ">> JAVA_OPTS: $JAVA_OPTS"
     echo ">> APP_HOME:  $APP_HOME"
-    exec "$JAVACMD" -cp "$CLASSPATH" $JAVA_OPTS $CLASS $ARGS $@
+    exec "$JAVACMD" -cp "$CLASSPATH" $JAVA_OPTS $CLASS $ARGS
   fi
 }
 
