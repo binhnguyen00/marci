@@ -46,14 +46,18 @@ cd /server-build && ./project.sh deploy
 ## Run Project
 
 ### 1. Start Server
+- 💡 **Note**, ```./database.sh``` script is running on my machine env. You should change both ```application.yaml``` and ```./common/database-env.sh``` to match your env
 - Before starting, you need to init database & user. Base on ```application.yaml```, it demands database 'marcidb' & user 'marci' (You can change that later).
+  ```
+  psql -U postgres -c "CREATE USER marci WITH PASSWORD '<your-application.yaml-password>'";
+  ```
+  
   ```plaintext
   cd server-build && ./database.sh initial
   ```
   
-- If the script got error, you can manually create user & database. Then run the script.
+- If the script got error, you can manually create database. Then run the script.
   ```
-  CREATE USER marci WITH PASSWORD 'marci@123';
   CREATE DATABASE marcidb;
   ```
 
@@ -62,7 +66,6 @@ cd /server-build && ./project.sh deploy
   cd /server-build && ./server.sh start
   ```
 
-- 💡 **Note**, ```./database.sh``` script is running on my machine env. You should change both ```application.yaml``` and ```./common/database-env.sh``` to match your env
 
 ### 2. Start UI
   ```plaintext
