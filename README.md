@@ -50,6 +50,12 @@ cd /server-build && ./project.sh deploy
   ```plaintext
   cd server-build && ./database.sh initial
   ```
+  
+- If the script got error, you can manually create user & database. Then run the script.
+  ```
+  CREATE USER marci WITH PASSWORD 'marci@123';
+  CREATE DATABASE marcidb;
+  ```
 
 - Then start the server with sample data
   ```plaintext
