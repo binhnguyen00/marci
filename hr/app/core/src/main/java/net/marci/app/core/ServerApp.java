@@ -23,8 +23,8 @@ public class ServerApp {
 
   static public void run(String[] args) {
     StringBuilder b = new StringBuilder();
-    b.append("----------------------------- \n");
-    b.append("Launch CLI with Args: \n");
+    b.append("\n----------------------------- \n");
+    b.append("Launching ServerApp with Args: \n");
     for (String arg : args) {
       b.append("  ").append(arg).append("\n");
     }
