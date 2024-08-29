@@ -1,9 +1,10 @@
-# Human Resources Management
-### Technical Stack
+<h1 align="center"> Human Resources Management </h1>
+
+# Technical Stack
 - Java Spring, Gradle, PostgreSQL
 - React Typescript, Webpack, NodeJS
 # Setup
-### Requirements
+## Requirements
 1. My Library (Java Spring & React libs)
 - Clone my library
 ```plaintext
@@ -31,14 +32,14 @@ root
   ```plaintext
   npm install -g pnpm
   ```
-### Compile and Deploy Project
+## Compile and Deploy Project
 ```plaintext
 cd /server-build && ./project.sh deploy
 ```
 💡 **For a better understanding**, please read scripts in ```/server-build```. Starting with ```project.sh```.
-### Run Project
+## Run Project
 1. Start Server
-- Before starting, you need to init database & user. Base on application.yaml, it demands database 'marcidb' & user 'marci'.
+- Before starting, you need to init database & user. Base on ```application.yaml```, it demands database 'marcidb' & user 'marci'.
   ```plaintext
   // Create User
   CREATE USER marci WITH PASSWORD 'your_password';
