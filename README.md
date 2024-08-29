@@ -37,15 +37,24 @@ cd /server-build && ./project.sh deploy
 ```
 💡 **For a better understanding**, please read scripts in ```/server-build```. Starting with ```project.sh```.
 ### Run Project
-- Start Server
+1. Start Server
+- Before starting, you need to init database & user. Base on application.yaml, it demands database 'marcidb' & user 'marci'.
+  ```plaintext
+  // Create User
+  CREATE USER marci WITH PASSWORD 'your_password';
+  // Create Database
+  CREATE DATABASE marciDb OWNER marci;
+  ```
+- After that, check out ```application.yaml``` and make any changes you wish.
+- Then start the server with sample data
   ```plaintext
   cd /server-build && ./server.sh start
   ```
-- Start UI
+2. Start UI
   ```plaintext
   cd /server-build && ./server.sh start-ui
   ```
-- Show helps
+3. Show helps
   ```plaintext
   cd /server-build && ./server.sh
   ```
