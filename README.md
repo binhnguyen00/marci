@@ -3,8 +3,11 @@
 # Technical Stack
 - Java Spring, Gradle, PostgreSQL
 - React Typescript, Webpack, NodeJS
+
 # Setup
+
 ## Requirements
+
 ### 1. My Library (Java Spring & React libs)
 - Clone my library
 ```plaintext
