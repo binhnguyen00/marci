@@ -66,3 +66,5 @@ pnpm-lock.yaml
 
 # Marci Gradle release folder
 release/
+db/
+database-env.sh

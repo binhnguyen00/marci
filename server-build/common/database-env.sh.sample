@@ -1,0 +1,11 @@
+# All of these variables are changeable. It should not be use in production. I haven't think of storing method yet.
+ADMIN_USER="postgres"
+ADMIN_PASSWORD="admin@123"
+DB_NAME="marcidb"       
+DB_USER="marci"         
+DB_PASSWORD="marci@123" 
+DB_HOST="localhost"
+DB_PORT="5432"
+DATE=$(date +%Y%m%d%H%M%S)
+DUMP_DIR="$CURRENT_DIR/db"
+DUMP_FILE="$DUMP_DIR/$DB_NAME-$DATE.tar"
