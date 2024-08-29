@@ -20,6 +20,10 @@ function init_db() {
   PGPASSWORD=$ADMIN_PASSWORD psql -h $DB_HOST -p $DB_PORT -U $ADMIN_USER -c "ALTER SCHEMA public OWNER TO $DB_USER"
 }
 
+function init_user() {
+  PGPASSWORD=$ADMIN_PASSWORD psql -h $DB_HOST -p $DB_PORT -U $ADMIN_USER -c "CREATE USER $DB_USER WITH PASSWORD '$DB_PASSWORD'"
+}
+
 function dump() {
   mkdir -p "$DUMP_DIR"
   PGPASSWORD=$DB_PASSWORD pg_dump -U "$DB_USER" -h "$DB_HOST" -p "$DB_PORT" -F t "$DB_NAME" > "$DUMP_FILE"
@@ -66,7 +70,10 @@ Restore
   ./database.sh restore [FILE]
 
 Initial Database
-  ./database.sh initial
+  ./database.sh initial-db
+
+Initial Admin User
+  ./database.sh initial-user
   
   """
 }
@@ -84,8 +91,10 @@ if [ "$COMMAND" = "dump" ] ; then
   dump
 elif [ "$COMMAND" = "restore" ] ; then
   restore $@
-elif [ "$COMMAND" = "initial" ] ; then
+elif [ "$COMMAND" = "initial-db" ] ; then
   init_db
+elif [ "$COMMAND" = "initial-user" ] ; then
+  init_user
 elif [ "$COMMAND" = "help" ] ; then
   showHelp
 else
