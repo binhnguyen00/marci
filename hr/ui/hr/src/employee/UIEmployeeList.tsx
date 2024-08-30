@@ -12,13 +12,16 @@ interface UIEmployeeListProps extends IListProps {
 export function UIEmployeeList(props: UIEmployeeListProps) {
   let { title, height, isSelector, selectRowsCallBack, departmentId } = props;
 
-  const [ employeeData, setEmployeeData ] = React.useState<any[]>([]);
   const [ sqlArgsState, setSqlArgsState ] = React.useState<any>({
     ...tableUtils.initSqlArgs(),
     departmentId: departmentId,
   });
   const [ reload, setReload ] = React.useState(false);
   const [ tableCtx, setTableContext ] = React.useState<widget.DataTableContext>(tableUtils.initTableCtx());
+  const [ isPending, error, data ] = hook.useSearch({ 
+    component: "EmployeeService", service: "search", sqlArgs: sqlArgsState, 
+    dependencies: [reload, sqlArgsState] 
+  }); 
 
   const columns: widget.DataTableColumn[] = [ 
     { 
@@ -80,14 +83,10 @@ export function UIEmployeeList(props: UIEmployeeListProps) {
     }));
   }, [departmentId]);
 
-  hook.useSearch({ 
-    component: "EmployeeService", service: "search", sqlArgs: sqlArgsState, 
-    dependencies: [ reload, sqlArgsState ], updateData: setEmployeeData,
-  });
-
+  if (isPending) return widget.createLoading({ loadingText: "Loading..." });
   return (
     <widget.DataTable 
-      title={title} height={height} columns={columns} records={employeeData} enableRowSelection
+      title={title} height={height} columns={columns} records={data} enableRowSelection
       onCreate={!isSelector && onCreate} 
       onDelete={!isSelector && onDelete} 
       onRowSelection={isSelector && selectRowsCallBack}
