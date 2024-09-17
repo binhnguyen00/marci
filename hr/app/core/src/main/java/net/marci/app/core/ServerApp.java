@@ -21,7 +21,11 @@ import java.util.Arrays;
 public class ServerApp {
   static ConfigurableApplicationContext context;
 
-  static public void run(String[] args) {
+  public static void main(String... args) {
+    run(args);
+  }
+
+  static public void run(String... args) {
     StringBuilder b = new StringBuilder();
     b.append("\n----------------------------- \n");
     b.append("Launching ServerApp with Args: \n");
@@ -45,10 +49,6 @@ public class ServerApp {
     context = springApp.run(args);
     
     isRunning(30000);
-  }
-
-  public static void main(String[] args) throws Exception {
-    run(args);
   }
 
   static private void isRunning(long waitTime) {
@@ -85,12 +85,7 @@ public class ServerApp {
         log.error("Error reading file: ", e);
       }
     }
-    Banner banner = new Banner() {
-      @Override
-      public void printBanner(Environment environment, Class<?> sourceClass, PrintStream out) {
-        out.println(sb);
-      }
-    };
+    Banner banner = (environment, sourceClass, out) -> out.println(sb);
     springApp.setBanner(banner);
   }
 }
